@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyKits", "HandyKits.csproj", "{2331975B-A615-494E-ABF8-8EDA67B65EC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandyKits", "HandyKits.csproj", "{2331975B-A615-494E-ABF8-8EDA67B65EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkForHandyKits", "..\BenchmarkForHandyKits\BenchmarkForHandyKits.csproj", "{09F110B6-A6A4-44EA-8CCA-D95A4F942653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2331975B-A615-494E-ABF8-8EDA67B65EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2331975B-A615-494E-ABF8-8EDA67B65EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2331975B-A615-494E-ABF8-8EDA67B65EC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F110B6-A6A4-44EA-8CCA-D95A4F942653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F110B6-A6A4-44EA-8CCA-D95A4F942653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F110B6-A6A4-44EA-8CCA-D95A4F942653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F110B6-A6A4-44EA-8CCA-D95A4F942653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
