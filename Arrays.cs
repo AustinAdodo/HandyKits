@@ -26,7 +26,7 @@ namespace HandyKits
                     IndexArr[i, 1] = 0; //zeros
                     for (int j = 0; j < count; j++)//optimize loop introduce aggregates
                     {
-                        bool condition = (IndexArr[i, 0] >= queries[j][0] && IndexArr[i, 0] <= queries[j][1]);
+                        bool condition = Enumerable.Range(queries[j][0], queries[j][1]).Contains(IndexArr[i, 0]); //bool Array
                         while (condition)
                         {
                             IndexArr[i, 1] += queries[j][2];
@@ -61,7 +61,7 @@ namespace HandyKits
                 {
                     IndexArr[i, 0] = i + 1; //indices
                     IndexArr[i, 1] = 0; //zeros
-                    for (int j = 0; j < count; j++)//optimize loop introduce aggregates
+                    for (int j = 0; j < count; j++)//optimize loop
                     {
                         bool condition = queries[j][0] <= IndexArr[i, 0] && IndexArr[i, 0] <= queries[j][1]; //(Enumerable.Range(1,100).Contains(x))
                         IndexArr[i, 1] += (condition) ? queries[j][2] : 0;
@@ -78,6 +78,11 @@ namespace HandyKits
                 }
             }
             return ResultArr[0];
+        }
+        public static long ArrayComplexManipulation3(int n, List<List<int>> queries)
+        {
+            long result = 0;
+            return result;
         }
         public static long ArrayComplexManipulation4(int n, List<List<int>> queries)
         {
