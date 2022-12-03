@@ -48,40 +48,34 @@ namespace HandyKits
         }
         public static long ArrayComplexManipulation2(int n, List<List<int>> queries)
         {
-            int[,] IndexArr = new int[n, 2];
-            List<int> ResultArr = new();
+            int[] IndexArr = new int[n]; int a = 0; long result = 0;
             int count = queries.Count;
-            //sample queries -> //;a b k
-            //1 5 3
-            //4 8 7
-            //6 9 1
-            if (n >= 3 && queries != null && n <= Math.Pow(10, 7))
+            for (int j = 0; j < count; j++)//optimize loop
             {
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i < count; i++)
                 {
-                    IndexArr[i, 0] = i + 1; //indices
-                    IndexArr[i, 1] = 0; //zeros
-                    for (int j = 0; j < count; j++)//optimize loop
-                    {
-                        bool condition = queries[j][0] <= IndexArr[i, 0] && IndexArr[i, 0] <= queries[j][1]; //(Enumerable.Range(1,100).Contains(x))
-                        IndexArr[i, 1] += (condition) ? queries[j][2] : 0;
-                    }
-                    if (ResultArr.Count == 0)
-                    {
-                        ResultArr.Add(IndexArr[i, 1]);
-                    }
-                    if (ResultArr.Count > 0 && IndexArr[i, 1] > ResultArr[0])
-                    {
-                        ResultArr.RemoveAt(0);
-                        ResultArr.Add(IndexArr[i, 1]);
-                    }
-                }
+                    a = i + 1;
+                    bool condition = queries[j][0] <= a && a <= queries[j][1];
+                    IndexArr[i] += (condition) ? queries[j][2] : 0;
+                    result = (IndexArr[i] > result) ? IndexArr[i] : result;
+                } 
             }
-            return ResultArr[0];
+            return result;
         }
         public static long ArrayComplexManipulation3(int n, List<List<int>> queries)
         {
-            long result = 0;
+            int[] IndexArr = new int[n]; int a = 0; long result = 0;
+            int count = queries.Count;
+            for (int j = 0; j < count; j++)//optimize loop
+            {
+                Parallel.For(0, count, i =>
+                {
+                    a = i + 1;
+                    bool condition = queries[j][0] <= a && a <= queries[j][1];
+                    IndexArr[i] += (condition) ? queries[j][2] : 0;
+                    result = (IndexArr[i] > result) ? IndexArr[i] : result;
+                });
+            }
             return result;
         }
         public static long ArrayComplexManipulation4(int n, List<List<int>> queries)
@@ -171,6 +165,7 @@ namespace HandyKits
             }
             return count;
         }
+
         public static int ArraySwaps2(int[] arr)
         {
             int a = 0; int b = 0; int count = 0; int LengthEvenCheck = arr.Length % 2;
@@ -193,6 +188,7 @@ namespace HandyKits
             }
             return count;
         }
+
         //New Year Chaos..Bribes
         public static void NYChaos(List<int> q)
         {
