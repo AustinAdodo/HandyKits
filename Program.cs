@@ -5,12 +5,12 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        List<List<int>> queries = new();
-        queries.Add(new List<int> { 1, 5, 3 });
-        queries.Add(new List<int> { 4, 8, 7 });
-        queries.Add(new List<int> { 6, 9, 1 });
-        long result = Arrays.ArrayComplexManipulation3(10, queries);
-        Console.WriteLine(result);
+        //List<List<int>> queries = new();
+        //queries.Add(new List<int> { 1, 5, 3 });
+        //queries.Add(new List<int> { 4, 8, 7 });
+        //queries.Add(new List<int> { 6, 9, 1 });
+        //long result = Arrays.ArrayComplexManipulation3(10, queries);
+        //Console.WriteLine(result);
         //Random rd = new Random(Guid.NewGuid().GetHashCode());
         //int det = rd.Next(1, 100);
         //int a = 1 * det; int b = 10 * det; int ThreeDdet = 3 * det;
@@ -53,5 +53,12 @@ internal class Program
         //............................................. GREEDYMAN
         //string s = "daba";
         //GreedyMan.Reverse(s);
+        //............................................. DATASTRUCTURES
+        //List<List<int>> queries = new();
+        //queries.Add(new List<int> { 11, 2, 4 });
+        //queries.Add(new List<int> { 4, 5, 6 });
+        //queries.Add(new List<int> { 10, 8, -12 });
+        //DataStructures.diagonalDifference(queries);
+        DataStructures.staircase(6);
     }
 }
