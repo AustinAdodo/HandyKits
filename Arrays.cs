@@ -15,36 +15,13 @@ namespace HandyKits
         //Complex Manipulation
         public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
         {
-            int[,] IndexArr = new int[n, 2];
-            List<int> ResultArr = new();
-            int count = queries.Count;
-            if (n >= 3 && queries != null && n <= Math.Pow(10, 7))
+            int result = 0;
+            for (int i = 0; i < n; i++)
             {
-                for (int i = 0; i < n; i++)
-                {
-                    IndexArr[i, 0] = i + 1; //indices
-                    IndexArr[i, 1] = 0; //zeros
-                    for (int j = 0; j < count; j++)//optimize loop introduce aggregates
-                    {
-                        bool condition = Enumerable.Range(queries[j][0], queries[j][1]).Contains(IndexArr[i, 0]); //bool Array
-                        while (condition)
-                        {
-                            IndexArr[i, 1] += queries[j][2];
-                            break;
-                        }
-                        if (ResultArr.Count == 0)
-                        {
-                            ResultArr.Add(IndexArr[i, 1]);
-                        }
-                        if (ResultArr.Count > 0 && IndexArr[i, 1] > ResultArr[0])
-                        {
-                            ResultArr.RemoveAt(0);
-                            ResultArr.Add(IndexArr[i, 1]);
-                        }
-                    }
-                }
+            var queriesLookup = queries.ToLookup(x => x[2]);
+            //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
             }
-            return ResultArr[0];
+            return result;
         }
         public static long ArrayComplexManipulation2(int n, List<List<int>> queries)
         {
@@ -77,36 +54,6 @@ namespace HandyKits
                 });
             }
             return result;
-        }
-        public static long ArrayComplexManipulation4(int n, List<List<int>> queries)
-        {
-            int[,] IndexArr = new int[n, 2];
-            List<int> ResultArr = new();
-            int count = queries.Count;
-            if (n >= 3 && queries != null && n <= Math.Pow(10, 7))
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    IndexArr[i, 0] = i + 1; //indices
-                    IndexArr[i, 1] = 0; //zeros
-                    Parallel.For(0, count, j =>
-                    {
-                        bool condition = queries[j][0] <= IndexArr[i, 0] && IndexArr[i, 0] <= queries[j][1]; //(Enumerable.Range(1,100).Contains(x))
-                        IndexArr[i, 1] += (condition) ? queries[j][2] : 0;
-                    });
-
-                    if (ResultArr.Count == 0)
-                    {
-                        ResultArr.Add(IndexArr[i, 1]);
-                    }
-                    if (ResultArr.Count > 0 && IndexArr[i, 1] > ResultArr[0])
-                    {
-                        ResultArr.RemoveAt(0);
-                        ResultArr.Add(IndexArr[i, 1]);
-                    }
-                }
-            }
-            return ResultArr[0];
         }
 
         //inline swaps minimum req swaps.
