@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HandyKits
@@ -103,6 +104,81 @@ namespace HandyKits
             {
                 Console.WriteLine(jagged[j]);
             }
+        }
+
+        //min and Maximum sum in 4 out of 5
+        public static void miniMaxSum(List<int> arr)
+        {
+            long[] cur = new long[arr.Count]; int a = 0;
+            List<long> arr1 = arr.Select(s => (long)s).ToList();
+            if (arr1[1] == arr1[0])
+            {
+                arr1.Remove(arr[0]);
+            }
+            for (int i = 0; i < arr1.Count; i++)
+            {
+                if (arr1[1] != arr1[0])
+                {
+                    cur[i] = arr1.Where(s => s != arr1[i]).ToArray().Aggregate(func: (result, item) => result + item);
+                }
+                if (arr1[1] == arr1[0])
+                {
+                    cur[i] = arr1.Aggregate(func: (result, item) => result + item);
+                }
+            }
+            if (cur[1] == cur[2])
+            {
+                Console.WriteLine(cur[1] + " " + cur[2]);
+            }
+            else
+            {
+                Console.WriteLine(cur.ToList().Min() + " " + cur.ToList().Max());
+            }
+        }
+
+        //birthday Candles
+        public static int birthdayCakeCandles(List<int> candles)
+        {
+            int count = 0; int max = candles.Max();
+            int[] ar = candles.ToArray();
+            int firstItem = ar[0];
+            bool allEqual = ar.Skip(1)
+              .All(s => string.Equals(firstItem.ToString(), s.ToString(), StringComparison.InvariantCultureIgnoreCase));
+            if (allEqual)
+            {
+                count = candles.Count();
+            }
+            else
+            {
+                count = candles.Count(x => x == max);
+            }
+            return count;
+        }
+
+        //Military Clock @"[\d-]"
+        public static string timeConversion(string s)
+        {
+            //Regex numComponent = new Regex();
+            string[] arr = s.Split(":");
+            string result = String.Empty;
+            string a = arr[0]; string amPM = Regex.Replace(arr[2].Trim(), @"[\d]", string.Empty);
+            if (arr[0].ToString().Trim() == "12" && amPM == "AM")
+            {
+                result = "00" + ":" + arr[1] + ":" + arr[2].Replace("AM", "").Trim();
+            }
+            if (arr[0].ToString().Trim() == "12" && amPM == "PM")
+            {
+                result = arr[0] + ":" + arr[1] + ":" + arr[2].Replace("PM", "").Trim();
+            }
+            if (arr[0].ToString().Trim() != "12" && amPM == "PM")
+            {
+                result = int.Parse(arr[0]) + 12 + ":" + arr[1] + ":" + arr[2].Replace("PM", "").Trim();
+            }
+            if (arr[0].ToString().Trim() != "12" && amPM == "AM")
+            {
+                result = arr[0] + ":" + arr[1] + ":" + arr[2].Replace("AM", "").Trim();
+            }
+            return result;
         }
     }
 }

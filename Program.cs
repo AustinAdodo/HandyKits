@@ -9,7 +9,7 @@ internal class Program
         //queries.Add(new List<int> { 1, 5, 3 });
         //queries.Add(new List<int> { 4, 8, 7 });
         //queries.Add(new List<int> { 6, 9, 1 });
-        //long result = Arrays.ArrayComplexManipulation3(10, queries);
+        //long result = Arrays.ArrayComplexManipulation1(10, queries);
         //Console.WriteLine(result);
         //Random rd = new Random(Guid.NewGuid().GetHashCode());
         //int det = rd.Next(1, 100);
@@ -59,6 +59,20 @@ internal class Program
         //queries.Add(new List<int> { 4, 5, 6 });
         //queries.Add(new List<int> { 10, 8, -12 });
         //DataStructures.diagonalDifference(queries);
-        DataStructures.staircase(6);
+        //DataStructures.staircase(6);
+        //List<int> arr = new();
+        //arr.Add(156873294);
+        //arr.Add(719583602);
+        //arr.Add(581240736);
+        //arr.Add(1605827319);
+        //arr.Add(895647130);
+        //arr.Add(5);
+        //arr.Add(5);
+        //arr.Add(5);
+        //arr.Add(5);
+        //arr.Add(5);
+        //DataStructures.miniMaxSum(arr);
+        string s = "12:45:54PM";
+        DataStructures.timeConversion(s);
     }
 }

@@ -15,27 +15,32 @@ namespace HandyKits
         //Complex Manipulation
         public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
         {
-            int result = 0;
-            for (int i = 0; i < n; i++)
+            int[] IndexArr = new int[n]; int a = 0; long result = 0;
+            int count = queries.Count; List<int> arrlist = IndexArr.ToList();
+            for (int j = 0; j < count; j++)
             {
-            var queriesLookup = queries.ToLookup(x => x[2]);
-            //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
+                IndexArr.Where(p => queries[j][0] <= arrlist.IndexOf(p) + 1 && arrlist.IndexOf(p) + 1 <= queries[j][1])
+                    .Select(s => s + queries[j][2]);
+                //IndexArr[i] += (condition) ? queries[j][2] : 0;
+                result = arrlist.Max();
             }
             return result;
         }
+        //var queriesLookup = queries.ToLookup(x => x[2]);
+        //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
         public static long ArrayComplexManipulation2(int n, List<List<int>> queries)
         {
             int[] IndexArr = new int[n]; int a = 0; long result = 0;
             int count = queries.Count;
             for (int j = 0; j < count; j++)//optimize loop
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < n; i++)
                 {
                     a = i + 1;
                     bool condition = queries[j][0] <= a && a <= queries[j][1];
                     IndexArr[i] += (condition) ? queries[j][2] : 0;
-                    result = (IndexArr[i] > result) ? IndexArr[i] : result;
-                } 
+                    result = IndexArr.ToList().Max();
+                }
             }
             return result;
         }
