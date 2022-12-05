@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -12,17 +13,44 @@ namespace HandyKits
 {
     public class Arrays
     {
+        //hour Glass
+        public static int hourglassSum(List<List<int>> arr)
+        {
+            List<List<int>> GlassArr = new();int a = 0;
+           List<int> ResultArr = new(); 
+            for (int i = 0; i < arr.Count - 2; i++)
+            {
+                for (int j = 0; j < arr.LongCount() - 2; j++)
+                {
+                    GlassArr.Add(new List<int> { arr[i][j], arr[i][j + 1], arr[i][j + 2], arr[i + 1][j + 1], 
+                        arr[i + 2][j], arr[i + 2][j + 1], arr[i + 2][j + 2] });
+                }
+            }
+            for (int i = 0; i < GlassArr.Count; i++)
+            {
+                a += GlassArr[i].Aggregate(func: (result, item) => result + item);
+                ResultArr.Add(a);
+                a = 0;
+            }
+            return ResultArr.Max();
+        }
+
         //Complex Manipulation
         public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
         {
             int[] IndexArr = new int[n]; int a = 0; long result = 0;
-            int count = queries.Count; List<int> arrlist = IndexArr.ToList();
-            for (int j = 0; j < count; j++)
+            int count = queries.Count;
+            for (int j = 0; j < count; ++j)
             {
-                IndexArr.Where(p => queries[j][0] <= arrlist.IndexOf(p) + 1 && arrlist.IndexOf(p) + 1 <= queries[j][1])
-                    .Select(s => s + queries[j][2]);
-                //IndexArr[i] += (condition) ? queries[j][2] : 0;
-                result = arrlist.Max();
+                for (int i = 0; i < n; ++i)
+                {
+                    a = i + 1;
+                    if (queries[j][0] <= a && a <= queries[j][1])
+                    {
+                        IndexArr[i] += queries[j][2];
+                    }
+                    result = IndexArr.Max();
+                }
             }
             return result;
         }
@@ -208,17 +236,18 @@ namespace HandyKits
             Console.WriteLine(result);
         }
 
+        //Left Rotation.
         //Left Shift
-        public static List<int> CounterClockwise(List<int> a, int d)
+        public static List<int> CounterClockwise(List<int> arr, int d)
         {
             List<int> cut = new List<int>();
             for (int i = 0; i < d; i++)
             {
-                cut.Add(a[i]);
+                cut.Add(arr[i]);
             }
-            a.RemoveRange(0, d);
-            a.AddRange(cut);
-            return a;
+            arr.RemoveRange(0, d);
+            arr.AddRange(cut);
+            return arr;
         }
 
         //to Refactor

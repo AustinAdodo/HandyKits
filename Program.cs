@@ -17,6 +17,21 @@ internal class Program
         //int Randomer1 = rd.Next(a, b);
         //int Randomer2 = rd.Next(Randomer1, b);
         //int Randomer3 = rd.Next(a, b);
+        List<List<int>> queries = new();
+        queries.Add(new List<int> { -9 ,- 9 ,- 9 , 1, 1, 1 });
+        queries.Add(new List<int> { 0 ,- 9 , 0 , 4, 3, 2, });
+        queries.Add(new List<int> { -9 ,- 9 ,- 9 , 1, 2,3 });
+        queries.Add(new List<int> { 0  ,0 , 8 , 6, 6,0 });
+        queries.Add(new List<int> { 0 , 0, 0 ,- 2 ,0 ,0 });
+        queries.Add(new List<int> { 0,  0 , 1 , 2, 4,0 });
+        long result = Arrays.hourglassSum(queries);
+        Console.WriteLine(result);
+       
+ 
+
+
+ 
+ 
 
         //List<List<int>> queries = new();
         //for (int i = 0; i < ThreeDdet; ++i)
@@ -25,26 +40,6 @@ internal class Program
         //}
         //long result = Arrays.ArrayComplexManipulation2(10, queries);
         //Console.WriteLine(result);
-
-        //case 2
-        //int[] arr = { 7, 1, 3, 2, 4, 5, 6 };
-        //int[] arr = { 2,3,4,1,5 };
-        //int[] arr = { 3 ,7, 6 ,9, 1, 8 ,10, 4 ,2 ,5 };
-        //int[] arr = { 4,3,1,2 };
-        //Console.WriteLine(Arrays.ArraySwaps(arr));
-
-        //case 3
-        //List<int> q = new List<int> {1,2,3,5,4,6,7,8 };
-        //iList<int> q = new List<int> {4,1,2,3};
-        //List<int> q = new List<int> { 2,1,5,3,4};
-        //List<int> q = new List<int> { 5,1,2,3,7,8,6,4};
-        //List<int> q = new List<int>  { 1,2,5,3,7,8,6,4};
-        //List<int> q = new List<int> { 1, 2, 5,3,4,7,8,6 };
-        //Arrays.NYChaos(q);
-
-        //case4
-        //List<int> l = new List<int> { 1,2,3,4,5};
-        //Arrays.CounterClockwise(l, 4);
         //...............................................SORTING
 
         //    List<int> list = new List<int> { 7,5,3,1 };
@@ -60,19 +55,5 @@ internal class Program
         //queries.Add(new List<int> { 10, 8, -12 });
         //DataStructures.diagonalDifference(queries);
         //DataStructures.staircase(6);
-        //List<int> arr = new();
-        //arr.Add(156873294);
-        //arr.Add(719583602);
-        //arr.Add(581240736);
-        //arr.Add(1605827319);
-        //arr.Add(895647130);
-        //arr.Add(5);
-        //arr.Add(5);
-        //arr.Add(5);
-        //arr.Add(5);
-        //arr.Add(5);
-        //DataStructures.miniMaxSum(arr);
-        string s = "12:45:54PM";
-        DataStructures.timeConversion(s);
     }
 }
