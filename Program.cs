@@ -6,33 +6,20 @@ internal class Program
     private static void Main(string[] args)
     {
         //List<List<int>> queries = new();
-        //queries.Add(new List<int> { 1, 5, 3 });
-        //queries.Add(new List<int> { 4, 8, 7 });
-        //queries.Add(new List<int> { 6, 9, 1 });
-        //long result = Arrays.ArrayComplexManipulation1(10, queries);
+        //queries.Add(new List<int> { 1, 2, 100 });
+        //queries.Add(new List<int> { 2, 5, 100 });
+        //queries.Add(new List<int> { 3, 4, 100 });
+        //long result = Arrays.arrayManipulation(5, queries);
         //Console.WriteLine(result);
+        List<int> s = new() {1,2,1,2,1,3,2 };
+        ProblemSolving.sockMerchant(7,s);
         //Random rd = new Random(Guid.NewGuid().GetHashCode());
         //int det = rd.Next(1, 100);
         //int a = 1 * det; int b = 10 * det; int ThreeDdet = 3 * det;
         //int Randomer1 = rd.Next(a, b);
         //int Randomer2 = rd.Next(Randomer1, b);
         //int Randomer3 = rd.Next(a, b);
-        List<List<int>> queries = new();
-        queries.Add(new List<int> { -9 ,- 9 ,- 9 , 1, 1, 1 });
-        queries.Add(new List<int> { 0 ,- 9 , 0 , 4, 3, 2, });
-        queries.Add(new List<int> { -9 ,- 9 ,- 9 , 1, 2,3 });
-        queries.Add(new List<int> { 0  ,0 , 8 , 6, 6,0 });
-        queries.Add(new List<int> { 0 , 0, 0 ,- 2 ,0 ,0 });
-        queries.Add(new List<int> { 0,  0 , 1 , 2, 4,0 });
-        long result = Arrays.hourglassSum(queries);
-        Console.WriteLine(result);
-       
- 
-
-
- 
- 
-
+        //Console.WriteLine(result);
         //List<List<int>> queries = new();
         //for (int i = 0; i < ThreeDdet; ++i)
         //{

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -16,13 +17,13 @@ namespace HandyKits
         //hour Glass
         public static int hourglassSum(List<List<int>> arr)
         {
-            List<List<int>> GlassArr = new();int a = 0;
-           List<int> ResultArr = new(); 
+            List<List<int>> GlassArr = new(); int a = 0;
+            List<int> ResultArr = new();
             for (int i = 0; i < arr.Count - 2; i++)
             {
                 for (int j = 0; j < arr.LongCount() - 2; j++)
                 {
-                    GlassArr.Add(new List<int> { arr[i][j], arr[i][j + 1], arr[i][j + 2], arr[i + 1][j + 1], 
+                    GlassArr.Add(new List<int> { arr[i][j], arr[i][j + 1], arr[i][j + 2], arr[i + 1][j + 1],
                         arr[i + 2][j], arr[i + 2][j + 1], arr[i + 2][j + 2] });
                 }
             }
@@ -35,24 +36,69 @@ namespace HandyKits
             return ResultArr.Max();
         }
 
-        //Complex Manipulation
-        public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
+        //dynamic XOR Arrays Manipulation.
+        public static List<int> dynamicArray(int n, List<List<int>> queries)
         {
-            int[] IndexArr = new int[n]; int a = 0; long result = 0;
-            int count = queries.Count;
-            for (int j = 0; j < count; ++j)
+            int lastAnswer = 0; n = queries.Count;
+            int[,] arrPlus = new int[n, n];
+            List<int> answers = new List<int>();
+            return answers;
+        }
+        //Complex Manipulation
+        //big data array complex Manipulation Optimized.
+        public static long arrayManipulation(int n, List<List<int>> queries)
+        {
+            int[] arr = new int[n]; int a = 0, b = 0, k = 0;
+            long result = 0;
+            long temp = 0;
+            List<List<int>> arr1 = new();
+            arr1.Add(new List<int> { 0, 0, 0 });
+            foreach (List<int> query in queries)
             {
-                for (int i = 0; i < n; ++i)
-                {
-                    a = i + 1;
-                    if (queries[j][0] <= a && a <= queries[j][1])
-                    {
-                        IndexArr[i] += queries[j][2];
-                    }
-                    result = IndexArr.Max();
-                }
+                arr1[0] = query;
+                a = arr1[0][0]; b = arr1[0][1]; k = arr1[0][2];
+                arr[a - 1] += k;
+                arr[b] -= k;
+            }
+            foreach (int agg in arr)
+            {
+                temp += agg;
+                result = (temp > result) ? temp : result;
             }
             return result;
+        }
+        public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
+        {
+            long[] IndexArr = new long[n];
+            long a = 0; long b = 0; long c = 0;long d;
+            int count = queries.Count;
+            if (count <= 100)
+            {
+                for (int j = 0; j < count; ++j)
+                {
+                    for (int i = 0; i < n - 1; i += 2)
+                    {
+                        a = i + 1; b = i + 2;
+                        IndexArr[i] += (queries[j][0] <= a && a <= queries[j][1]) ? queries[j][2] : 0;
+                        IndexArr[a] += (queries[j][0] <= b && b <= queries[j][1]) ? queries[j][2] : 0;
+                    }
+                }
+            }
+            if (count > 100)
+            {
+                for (int j = 0; j < count; ++j)
+                {
+                    for (int i = 0; i < n - 3; i += 4)
+                    {
+                        a = i + 1; b = i + 2; c = i + 3; d = i + 4;
+                        IndexArr[i] += (queries[j][0] <= a && a <= queries[j][1]) ? queries[j][2] : 0;
+                        IndexArr[a] += (queries[j][0] <= b && b <= queries[j][1]) ? queries[j][2] : 0;
+                        IndexArr[b] += (queries[j][0] <= c && c <= queries[j][1]) ? queries[j][2] : 0;
+                        IndexArr[c] += (queries[j][0] <= d && d <= queries[j][1]) ? queries[j][2] : 0;
+                    }
+                }
+            }
+            return IndexArr.Max();
         }
         //var queriesLookup = queries.ToLookup(x => x[2]);
         //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
@@ -249,6 +295,38 @@ namespace HandyKits
             arr.AddRange(cut);
             return arr;
         }
+
+        //grades
+        public static List<int> gradingStudents(List<int> grades)
+        {
+            List<int> resultarr = new List<int>();
+            int result = 0;
+            for (int i = 0; i < grades.Count; i++)
+            {
+                if (grades[i] > 40 && (grades[i] % 5) >= 3)
+                {
+                    result = grades[i] + (5 - (grades[i] % 5));
+                    resultarr.Add(result);
+                }
+                if (grades[i] >= 40 && (grades[i] % 5) < 3)
+                {
+                    result = grades[i];
+                    resultarr.Add(result);
+                }
+                if (grades[i] < 40 && grades[i] > 37)
+                {
+                    result = grades[i] + (5 - (grades[i] % 5));
+                    resultarr.Add(result);
+                }
+                if (grades[i] < 40 && grades[i] <= 37)
+                {
+                    result = grades[i];
+                    resultarr.Add(result);
+                }
+            }
+            return resultarr;
+        }
+
 
         //to Refactor
         static void ToRefactor(String[] args)//Main
