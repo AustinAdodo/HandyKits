@@ -11,8 +11,10 @@ internal class Program
         //queries.Add(new List<int> { 3, 4, 100 });
         //long result = Arrays.arrayManipulation(5, queries);
         //Console.WriteLine(result);
-        List<int> s = new() {1,2,1,2,1,3,2 };
-        ProblemSolving.sockMerchant(7,s);
+        //List<int> s = new() {4,6,5,3,3,1 };
+        //ProblemSolving.pickingNumbers(s);
+        List<int> b = new() { 1,1,2,2,4 };
+        ProblemSolving.migratoryBirds(b);
         //Random rd = new Random(Guid.NewGuid().GetHashCode());
         //int det = rd.Next(1, 100);
         //int a = 1 * det; int b = 10 * det; int ThreeDdet = 3 * det;

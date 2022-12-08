@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,21 @@ namespace HandyKits
 {
     internal class ProblemSolving
     {
-        //birds
+        //is divisible
+        public static int divisibleSumPairs(int n, int k, List<int> ar)
+        {
+            int result = 0;
+            return result;
+        }
+
+        //birds migratory algorithm optimized.
         public static int migratoryBirds(List<int> arr)
         {
             List<int> distinctBirdType = arr.Distinct().ToList();
             int result = 0; int[,] birdArr = new int[distinctBirdType.Count, 2];
+            int t = 0;
             List<List<int>> birdArrFinal = new List<List<int>>();
+            List<int> trimmed = new();
             for (int i = 0; i < distinctBirdType.Count; i++)
             {
                 birdArr[i, 0] = distinctBirdType[i];
@@ -36,6 +46,40 @@ namespace HandyKits
                  .ToList();
             birdArrFinal.Sort((x, y) => x[1].CompareTo(y[1]));
             birdArrFinal.Reverse();
+            for (int i = 0; i <birdArrFinal.Count; i++)
+            {
+                trimmed.Add(birdArrFinal[i][1]);
+            }
+            t = birdArrFinal.Where(s => s[1] == trimmed.Max()).Min(p => p[0]);     
+            result = t;
+            return result;
+        }
+
+        //Largest SubArray with absolute difference == 1
+        public static int pickingNumbers(List<int> a)
+        {
+            int result = 0; List<int> b = new();
+            int l = 0; int finalLength = 0;
+            int count= 0;   
+            for (int i = 0; i < a.Count; i++)
+            {
+                b.Add(a[i]);
+                for (int j = i; j < a.Count; ++j)
+                {
+                    if (j < a.Count - 1 && Math.Abs(a[j+1] - b[b.Count - 1]) <= 1)
+                    {
+                        b.Add(a[j+1]);
+                    }
+                    if (b.Count > 1 && Math.Abs(b[0]- b[1]) <= 1)
+                    {
+                        l = b.Count;
+                        finalLength =  (l > finalLength) ? l:finalLength;
+                        count++;
+                    }
+                    result = finalLength;
+                }
+                //b.RemoveRange(0, b.Count);
+            }
             return result;
         }
 
@@ -69,7 +113,7 @@ namespace HandyKits
             return (v1 <= v2) ? "NO" : (((x2 - x1) % (v1 - v2) == 0) ? "YES" : "NO");
         }
 
-        //majic 3X3 matrix //exteend study
+        //majic 3X3 matrix //extend study
         public static int formingMagicSquare(List<List<int>> s)
         {
             // Write your code here
