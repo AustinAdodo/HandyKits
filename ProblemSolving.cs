@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,11 +13,302 @@ namespace HandyKits
 {
     internal class ProblemSolving
     {
+        //archade Game, Dense Ranking System
+        public static List<int> climbingLeaderboard1(List<int> ranked, List<int> player)
+        {
+            List<int> result = new(); int a = 0; int k = 0;
+            while (k < player.Count)
+            {
+                ranked.Add(player[k]);
+                IEnumerable<int> distinct = ranked.Distinct();
+                distinct = distinct.OrderByDescending(x => x >= player[k]);
+                a = distinct.ToList().IndexOf(player[k]);
+                result.Add(a + 1);
+                ranked.RemoveAt(ranked.IndexOf(player[k]));
+                ++k;
+            }
+            return result;
+        }
+        /// <summary>
+        /// Large Loop Optimization successful
+        /// </summary>
+        public static List<int> climbingLeaderboard(List<int> ranked, List<int> player)//newRank = a + 1 - count;
+        {
+            List<int> result = new(); int position, a;
+            List<int> distinct = new();
+            distinct = ranked.Distinct().ToList();
+            int max = distinct.Max();
+            int min = distinct.Min();
+            position = distinct.Count - 1; a = distinct.Count - 1;
+            switch (distinct.Count == 1)
+            {
+                case true:
+                    for (int i = 0; i < player.Count; ++i)
+                    {
+                        position = (player[i] == distinct[0]) ? 1 : 2;
+                        result.Add(position);
+                    }
+                    break;
+                case false:
+                    for (int i = 0; i < player.Count; ++i)
+                    {
+                        while (position >= 0 && player[i] >= distinct[position])
+                        {
+                            --position;
+                            if (player[i] == max) position = -1;
+                            if (position == -1) break; 
+                        }
+                        if (player[i] < min) position = a;
+                        if (position == -1) position = -1;
+                        result.Add(position + 2);
+                        //if (i <= player.Count - 2 && player[i] == player[i + 1])
+                        //{ position = result[result.Count - 1]; result.Add(position); ++i; }
+                    }
+                    break;
+            }
+            return result;
+        }
+
+        //julian and Gregorian Calender Comparism
+        //Time Machine.
+        public static string dayOfProgrammer(int year)
+        {
+            string result = String.Empty;
+            return result;
+        }
+
+        //equal Divisors
+        public static int findDigits(int n)
+        {
+            int result = 0;
+            string s = n.ToString();
+            for (int i = 0; i < s.Length; i++)
+            {
+                result += (s[i].ToString() != "0" && (n % int.Parse(s[i].ToString())) == 0) ? 1 : 0;
+            }
+            return result;
+        }
+
+        //square Integers
+        public static int squares(int a, int b)
+        {
+            int total = 0;
+            int i = (int)Math.Ceiling(Math.Sqrt((double)a));
+            while (i * i <= b)
+            {
+                total++;
+                i++;
+            }
+            return total;
+        }
+        //the QUEEN
+        public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
+        {
+            int result = 0;
+            return result;
+        }
+        //strange viral Advertising Strategy // an = arn - 1 (or) an = r an - 1
+        public static int viralAdvertising(int n)
+        {
+            int result = 0;
+            return result;
+        }
+        //minimum number of deletions
+        public static int equalizeArray(List<int> arr)
+        {
+            int[] distinctArr = arr.Distinct().ToArray();
+            int[] resultArr = new int[distinctArr.Length];
+            List<int> maxarr = new();
+            int[,] arr1 = new int[distinctArr.Length, 2];
+            int result = 0; int result1 = 0;
+            for (int i = 0; i < distinctArr.Length; i++)
+            {
+                arr1[i, 0] = distinctArr[i];
+            }
+            for (int i = 0; i < arr.Count; i++)
+            {
+                for (int j = 0; j < distinctArr.Count(); j++)
+                {
+                    arr1[j, 1] += (arr1[j, 0] == arr[i]) ? 1 : 0;
+                }
+            }
+            for (int i = 0; i < distinctArr.Length; i++)
+            {
+                resultArr[i] = arr1[i, 1];
+            }
+            bool check = resultArr.All(s => resultArr[0] == s);
+            switch (check)
+            {
+                case true:
+                    result = resultArr.Count() - 1;
+                    break;
+                case false:
+                    maxarr = resultArr.Where(s => s == resultArr.Max()).ToList();
+                    maxarr.RemoveAt(0);
+                    result1 = (maxarr.Count > 0) ? maxarr.Aggregate(func: (res, ele) => (res + ele)) : 0;
+                    if (resultArr.Count() == 1) result = 0;
+                    else { result = result1 + resultArr.Where(s => s != resultArr.Max()).Aggregate(func: (res, ele) => (res + ele)); }
+                    break;
+            }
+            return result;
+        }
+
+        //append and delete
+        public static string appendAndDelete(string s, string t, int k)
+        {
+            int deleteCounter = 0; string result = ""; int b = 0; string common = "";
+            int diffPoint = 0;
+            string test; int appendCounter = 0;
+            foreach (char item in t)
+            {
+                common += string.Join("", s.Where(s => s == item));
+            }
+            common = string.Join("", common.Trim().Distinct());
+            diffPoint = common.Trim().Length;
+            string sDiff = s.Substring(diffPoint);
+            string tDiff = t.Substring(diffPoint);
+            //count letters in s not contained in t.
+            deleteCounter = s.Substring(s.Length - sDiff.Length).Length;
+            //count letters in t not contained in s.
+            appendCounter = t.Substring(t.Length - tDiff.Length).Length;
+            b = appendCounter + deleteCounter;
+            test = common + tDiff;
+            switch (s.Length == t.Length)
+            {
+                case true:
+                    if (s == t && k >= s.Length * 2) result = "Yes";
+                    if (s != t && k >= (s.Length + t.Length)) result = "Yes";
+                    if (s != t && test == t && b == k) result = "Yes";
+                    if (s != t && test == t && b == k) result = "Yes";
+                    if (s != t && test == t && b != k) result = "No";
+                    if (s != t && test != t) result = "No";
+                    break;
+                case false:
+                    if (common.Length == 1 && b >= k) result = "Yes";
+                    if (k >= (s.Length + t.Length)) result = "Yes";
+                    if (test == t && b == k) result = "Yes";
+                    if (test == t && b != k) result = "No";
+                    if (test != t) result = "No";
+                    break;
+            }
+            return result;
+        }
+        static int reverseInt(int a)
+        {
+            string result = String.Empty;
+            string s = a.ToString();
+            for (int i = s.Length; i-- > 0;) result += s[i];
+            return int.Parse(result);
+        }
+        //beautiful Days
+        public static int beautifulDays(int i, int j, int k)
+        {
+            int count = 0;
+            List<int> NumberList = new();
+            for (int m = i; m <= j; ++m)
+            {
+                NumberList.Add(m);
+            }
+            for (int m = 0; m < NumberList.Count; ++m)
+            {
+                if ((NumberList[m] - reverseInt(NumberList[m])) % k == 0) count++;
+            }
+            return count;
+        }
+
+        //Angry Professor
+        public static string angryProfessor(int k, List<int> a)
+        {
+            string s = String.Empty; int result = 0;
+            //thresshold = k
+            result = a.Where(s => s <= 0).Count();
+            s = (result >= k) ? "NO" : "YES";
+            return s;
+        }
+
+        //hurdles
+        public static int hurdleRace(int k, List<int> height)
+        {
+            int result = 0;
+            result = height.Max() - k;
+            result = (result < 1) ? 0 : result;
+            return result;
+        }
+
         //is divisible
         public static int divisibleSumPairs(int n, int k, List<int> ar)
         {
             int result = 0;
+            for (int i = 0; i < ar.Count; i++)
+            {
+                for (int j = i; j < ar.Count; ++j)
+                {
+                    if (i < j && (ar[i] + ar[j]) % k == 0) result++;
+                }
+            }
             return result;
+        }
+
+        //PDF Viewer Design
+        public static int designerPdfViewer(List<int> h, string word)
+        {
+            int result = 0;
+            int[] arr = new int[word.Length];
+            string[] reference = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            for (int i = 0; i < word.Length; i++)
+            {
+                arr[i] = reference.ToList().IndexOf(word[i].ToString());
+                arr[i] = h[arr[i]];
+            }
+            result = arr.Max() * word.Length;
+            return result;
+        }
+
+        //budjeting
+        static int getMoneySpent(int[] keyboards, int[] drives, int b)
+        {
+            var max = -1;
+            if (keyboards.Min() + drives.Min() > b)
+                return max;
+            foreach (var k in keyboards)
+            {
+                var possibleDrives = drives.Where(x => (x <= b - k));
+                foreach (var d in possibleDrives)
+                {
+                    var total = k + d;
+                    if (total >= max && total <= b)
+                        max = total;
+                    if (max == b) break;
+                }
+                if (max == b) break;
+            }
+            return max;
+        }
+
+        //cats and mouse 
+        static string catAndMouse(int x, int y, int z)
+        {
+            string s = String.Empty;
+            s = (Math.Abs(x - z) < Math.Abs(y - z)) ? "Cat A" : (Math.Abs(x - z) > Math.Abs(y - z)) ? "Cat B" : "Mouse C";
+            return s;
+        }
+
+        //factoring determiner
+        public static int getTotalX(List<int> a, List<int> b)
+        {
+            List<int> resultArr = new();
+            int start = a.Min();
+            bool allClear = false; bool allClearstep1 = false;
+            for (int i = start; i <= b.Max(); ++i)
+            {
+                allClearstep1 = a.All(s => i % s == 0);
+                allClear = b.All(s => s % i == 0);
+                if (allClearstep1 == true && allClear == true)
+                {
+                    resultArr.Add(i);
+                }
+            }
+            return resultArr.Count;
         }
 
         //birds migratory algorithm optimized.
@@ -39,19 +334,44 @@ namespace HandyKits
                 }
             }
             //sorted arr
-            birdArrFinal= birdArr.Cast<int>()
+            birdArrFinal = birdArr.Cast<int>()
                  .Select((x, i) => new { x, index = i / birdArr.GetLength(1) })
                  .GroupBy(x => x.index)
                  .Select(x => x.Select(s => s.x).ToList())
                  .ToList();
             birdArrFinal.Sort((x, y) => x[1].CompareTo(y[1]));
             birdArrFinal.Reverse();
-            for (int i = 0; i <birdArrFinal.Count; i++)
+            for (int i = 0; i < birdArrFinal.Count; i++)
             {
                 trimmed.Add(birdArrFinal[i][1]);
             }
-            t = birdArrFinal.Where(s => s[1] == trimmed.Max()).Min(p => p[0]);     
+            t = birdArrFinal.Where(s => s[1] == trimmed.Max()).Min(p => p[0]);
             result = t;
+            return result;
+        }
+
+        //circular Rotation //c
+        public static List<int> circularArrayRotation(List<int> a, int k, List<int> queries)
+        {
+            List<int> resultArr = new List<int>();
+            List<int> Match = new List<int>();
+            int d = a.Count - k;
+            for (int i = 0; i < a.Count; i++) Match.Add(a[i]);
+            List<int> c = new();
+            a.RemoveRange(d, k);
+            c.AddRange(Match.Except(a));
+            c.AddRange(a);
+            for (int i = 0; i < queries.Count; i++) { resultArr.Add(c[queries[i]]); }
+            return resultArr;
+        }
+        public static List<int> circularArrayRotation1(List<int> a, int k, List<int> queries)
+        {
+            List<int> result = new List<int>();
+            k = k % a.Count;
+            for (int i = 0; i < queries.Count; i++)
+            {
+                result.Add(a[(a.Count - k + queries[i]) % a.Count]);
+            }
             return result;
         }
 
@@ -59,26 +379,48 @@ namespace HandyKits
         public static int pickingNumbers(List<int> a)
         {
             int result = 0; List<int> b = new();
+            int k = 0;//numbers cannot be re-arranged.
             int l = 0; int finalLength = 0;
-            int count= 0;   
             for (int i = 0; i < a.Count; i++)
             {
-                b.Add(a[i]);
+                b.Add(a[k]);
                 for (int j = i; j < a.Count; ++j)
                 {
-                    if (j < a.Count - 1 && Math.Abs(a[j+1] - b[b.Count - 1]) <= 1)
-                    {
-                        b.Add(a[j+1]);
-                    }
-                    if (b.Count > 1 && Math.Abs(b[0]- b[1]) <= 1)
-                    {
-                        l = b.Count;
-                        finalLength =  (l > finalLength) ? l:finalLength;
-                        count++;
-                    }
+                    if (j < a.Count && Math.Abs(a[j] - b[b.Count - 1]) <= 1) b.Add(a[j]);
+                    if (b.Count > 1 && Math.Abs(b[0] - b[1]) <= 1) l = b.Count;
+                    finalLength = (l > finalLength) ? l : finalLength;
                     result = finalLength;
                 }
-                //b.RemoveRange(0, b.Count);
+                b.RemoveRange(0, b.Count);
+                k += (i == a.Count - 1) ? 1 : 0;
+                if (a.Count - k <= result) break;
+                if (k < a.Count - 1 && i == a.Count - 1) i = 0;
+                if (k == a.Count - 1 && i == a.Count - 1) break;
+            }
+            return result;
+        }
+
+        //repeted string //c
+        public static long repeatedString(string s, long n)
+        {
+            if (s.Length > n)
+            {
+                return s.Substring(0, (int)n).Count(x => x == 'a');
+            }
+            var divisor = ((long)n / s.Length) + 1;
+            var count = s.Count(x => x == 'a') * (divisor - 1);
+            var remaining = s.Substring(0, (int)Math.Abs((s.Length * (divisor - 1)) - n)).Count(x => x == 'a');
+            return count + remaining;
+        }
+
+        //mountains and Valleys
+        public static int countingValleys(int steps, string path)
+        {
+            int result = 0; int altitude = 0;
+            for (int i = 0; i < steps; i++)
+            {
+                if (path[i].ToString() == "U") { altitude++; } else { altitude--; }
+                if (path[i].ToString() == "U" && altitude == 0) { result++; }
             }
             return result;
         }
@@ -184,21 +526,14 @@ namespace HandyKits
             Console.WriteLine(result);
         }
 
-        //julian and Gregorian Calender Comparism
-        public static string dayOfProgrammer(int year)
-        {
-            string result = String.Empty;
-            return result;
-        }
-
-        //pages and books
+        //pages and books //c
         public static int pageCount(int n, int p)
         {
             //page 0=>1
             return (int)Math.Min(p == 1 ? 0 : Math.Floor((decimal)p / 2), (Math.Floor((decimal)n / 2) - Math.Floor((decimal)p / 2)));
         }
 
-        //prisoner
+        //prisoner //c
         public static int saveThePrisoner(int n, int m, int s)
         {
             return _ = ((m + s - 1) % n == 0) ? n : (m + s - 1) % n;

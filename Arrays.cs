@@ -72,20 +72,6 @@ namespace HandyKits
             long[] IndexArr = new long[n];
             long a = 0; long b = 0; long c = 0;long d;
             int count = queries.Count;
-            if (count <= 100)
-            {
-                for (int j = 0; j < count; ++j)
-                {
-                    for (int i = 0; i < n - 1; i += 2)
-                    {
-                        a = i + 1; b = i + 2;
-                        IndexArr[i] += (queries[j][0] <= a && a <= queries[j][1]) ? queries[j][2] : 0;
-                        IndexArr[a] += (queries[j][0] <= b && b <= queries[j][1]) ? queries[j][2] : 0;
-                    }
-                }
-            }
-            if (count > 100)
-            {
                 for (int j = 0; j < count; ++j)
                 {
                     for (int i = 0; i < n - 3; i += 4)
@@ -97,27 +83,10 @@ namespace HandyKits
                         IndexArr[c] += (queries[j][0] <= d && d <= queries[j][1]) ? queries[j][2] : 0;
                     }
                 }
-            }
             return IndexArr.Max();
         }
         //var queriesLookup = queries.ToLookup(x => x[2]);
         //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
-        public static long ArrayComplexManipulation2(int n, List<List<int>> queries)
-        {
-            int[] IndexArr = new int[n]; int a = 0; long result = 0;
-            int count = queries.Count;
-            for (int j = 0; j < count; j++)//optimize loop
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    a = i + 1;
-                    bool condition = queries[j][0] <= a && a <= queries[j][1];
-                    IndexArr[i] += (condition) ? queries[j][2] : 0;
-                    result = IndexArr.ToList().Max();
-                }
-            }
-            return result;
-        }
         public static long ArrayComplexManipulation3(int n, List<List<int>> queries)
         {
             int[] IndexArr = new int[n]; int a = 0; long result = 0;
