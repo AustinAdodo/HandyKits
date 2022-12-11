@@ -69,14 +69,6 @@ namespace HandyKits
             return result;
         }
 
-        //julian and Gregorian Calender Comparism
-        //Time Machine.
-        public static string dayOfProgrammer(int year)
-        {
-            string result = String.Empty;
-            return result;
-        }
-
         //equal Divisors
         public static int findDigits(int n)
         {
@@ -101,18 +93,7 @@ namespace HandyKits
             }
             return total;
         }
-        //the QUEEN
-        public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
-        {
-            int result = 0;
-            return result;
-        }
-        //strange viral Advertising Strategy // an = arn - 1 (or) an = r an - 1
-        public static int viralAdvertising(int n)
-        {
-            int result = 0;
-            return result;
-        }
+
         //minimum number of deletions
         public static int equalizeArray(List<int> arr)
         {
