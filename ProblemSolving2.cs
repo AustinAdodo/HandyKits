@@ -14,6 +14,54 @@ namespace HandyKits
         {
 
         }
+        // flatlandSpaceStations.
+        static int flatlandSpaceStations(int n, int[] c)
+        {
+            int result = 0;
+            return result;
+        }
+
+        //GoToMars
+        public static int marsExploration(string s)
+        {
+            int count = 0;string FixedS = "";
+            for (int i = 0; i < s.Length; i+=3)
+            {
+                FixedS += "SOS";
+            }
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i].ToString() != FixedS[i].ToString()) { count++; }
+            }
+            return count;
+        }
+        //camelcase
+        public static int camelcase(string s)
+        {
+            int count = 1; string l = s.ToLower();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i].ToString() == l[i].ToString().ToUpper()) count++;
+            }
+            return count;
+        }
+        //sticks
+        public static List<int> cutTheSticks(List<int> arr)
+        {
+            List<int> result = new(); int a;
+            result.Add(arr.Count);
+            a = arr.Min();
+            arr.RemoveAll(s => s == a);
+            while (arr.Count > 0)
+            {
+                if (arr.Count == 2 && arr[0] == arr[1]) { result.Add(arr.Count); break; }
+                if (arr.Count == 1) { result.Add(arr.Count); break; }
+                for (int i = 0; i < arr.Count; i++) { arr[i] -= a; }
+                a = arr.Min(); result.Add(arr.Count);
+                arr.RemoveAll(s => s == a);
+            }
+            return result;
+        }
 
         //unique Permutation
         public static List<int> permutationEquation(List<int> p)
