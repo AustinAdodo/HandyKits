@@ -56,7 +56,7 @@ namespace HandyKits
                         {
                             --position;
                             if (player[i] == max) position = -1;
-                            if (position == -1) break; 
+                            if (position == -1) break;
                         }
                         if (player[i] < min) position = a;
                         if (position == -1) position = -1;
@@ -134,45 +134,38 @@ namespace HandyKits
             return result;
         }
 
-        //append and delete
-        public static string appendAndDelete(string s, string t, int k)
+        //append and delete //c
+        public static String appendAndDelete(string s, string t, int k)
         {
-            int deleteCounter = 0; string result = ""; int b = 0; string common = "";
-            int diffPoint = 0;
-            string test; int appendCounter = 0;
-            foreach (char item in t)
+            // Write your code here
+            int n = s.Length, m = t.Length;
+            if (n + m <= k) return "Yes";
+            int z = 0;
+            while (z < Math.Min(n, m) && s[z] == t[z])
             {
-                common += string.Join("", s.Where(s => s == item));
+                z++;
             }
-            common = string.Join("", common.Trim().Distinct());
-            diffPoint = common.Trim().Length;
-            string sDiff = s.Substring(diffPoint);
-            string tDiff = t.Substring(diffPoint);
-            //count letters in s not contained in t.
-            deleteCounter = s.Substring(s.Length - sDiff.Length).Length;
-            //count letters in t not contained in s.
-            appendCounter = t.Substring(t.Length - tDiff.Length).Length;
-            b = appendCounter + deleteCounter;
-            test = common + tDiff;
-            switch (s.Length == t.Length)
+            int res = (n - z) + (m - z);
+            if (res < k)
             {
-                case true:
-                    if (s == t && k >= s.Length * 2) result = "Yes";
-                    if (s != t && k >= (s.Length + t.Length)) result = "Yes";
-                    if (s != t && test == t && b == k) result = "Yes";
-                    if (s != t && test == t && b == k) result = "Yes";
-                    if (s != t && test == t && b != k) result = "No";
-                    if (s != t && test != t) result = "No";
-                    break;
-                case false:
-                    if (common.Length == 1 && b >= k) result = "Yes";
-                    if (k >= (s.Length + t.Length)) result = "Yes";
-                    if (test == t && b == k) result = "Yes";
-                    if (test == t && b != k) result = "No";
-                    if (test != t) result = "No";
-                    break;
+                while (res < k)
+                {
+                    res += 2;
+                }
+                if (res == k)
+                {
+                    return "Yes";
+                }
+                return "No";
             }
-            return result;
+            else if (res == k)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
         }
         static int reverseInt(int a)
         {
@@ -359,26 +352,21 @@ namespace HandyKits
         //Largest SubArray with absolute difference == 1
         public static int pickingNumbers(List<int> a)
         {
-            int result = 0; List<int> b = new();
-            int k = 0;//numbers cannot be re-arranged.
-            int l = 0; int finalLength = 0;
-            for (int i = 0; i < a.Count; i++)
+            int sizeMax = 0; int j = 0; int suite = 0;
+            int k = 0;
+            a.Sort((res, ele) => res - ele);
+            for (int i = 0; i < a.Count; i += k)
             {
-                b.Add(a[k]);
-                for (int j = i; j < a.Count; ++j)
+                j = i;
+                while (a[j] - a[i] <= 1)
                 {
-                    if (j < a.Count && Math.Abs(a[j] - b[b.Count - 1]) <= 1) b.Add(a[j]);
-                    if (b.Count > 1 && Math.Abs(b[0] - b[1]) <= 1) l = b.Count;
-                    finalLength = (l > finalLength) ? l : finalLength;
-                    result = finalLength;
+                    suite++;
+                    j++;
                 }
-                b.RemoveRange(0, b.Count);
-                k += (i == a.Count - 1) ? 1 : 0;
-                if (a.Count - k <= result) break;
-                if (k < a.Count - 1 && i == a.Count - 1) i = 0;
-                if (k == a.Count - 1 && i == a.Count - 1) break;
+                if (suite > sizeMax) sizeMax = suite;
+                k = (suite == 0) ? 1 : suite;
             }
-            return result;
+            return sizeMax;
         }
 
         //repeted string //c
@@ -522,6 +510,7 @@ namespace HandyKits
 
         //The length of the segment matches Ron's birth month
         //chocolate
+
         public static int birthday(List<int> s, int d, int m)
         {
             int result = 0; int n;

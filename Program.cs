@@ -11,9 +11,9 @@ internal class Program
         //queries.Add(new List<int> { 3, 4, 100 });
         //long result = Arrays.arrayManipulation(5, queries);
         //Console.WriteLine(result);
-        //List<int> a = new() { 4 ,6 ,5 ,3 ,3 ,1 };
-        int p = 100; int d = 19; int m = 1; int s = 180;
-        ProblemSolving2.howManyGames(p,d,m,s);
+        List<int> arr = new() { 3, 8, 15, 11, 14 ,1 ,9 ,2, 24 ,31 };
+        int k= 5; int n = 10; 
+        ProblemSolving2.workbook(n,k,arr);
         //ProblemSolving.pickingNumbers(a);
         //string s = "zzzzz";
         //string t = "zzzzzzz";

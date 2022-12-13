@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,61 @@ namespace HandyKits
 {
     internal class ProblemSolving2
     {
+        //rotating Array
+        public static void matrixRotation(List<List<int>> matrix, int r)
+        {
+
+        }
+
+        //unique Permutation
+        public static List<int> permutationEquation(List<int> p)
+        {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < p.Count; i++)
+            {
+                int index = p.IndexOf(i + 1) + 1;
+                index = p.IndexOf(index) + 1;
+                result.Add(index);
+            }
+            return result;
+        }
+
+        //Lisa's Notebook
+        public static int workbook(int n, int k, List<int> arr)
+        {
+            int[,] counter = new int[1, 2];
+            int result; int pageCount = 1;
+            int count = 0;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                counter[0, 0] = 1; counter[0, 1] = k;
+                if (arr[i] < k && arr.IndexOf(arr[i]) == 0) { count++; i++; }
+                result = arr[i];
+                while (result > k)
+                {
+                    pageCount++; counter[0, 0] += k; counter[0, 1] += k;
+                    result += -k;
+                    if (counter[0, 0] >= pageCount && pageCount <= counter[0, 1]) count++;
+                }
+                pageCount++; counter[0, 0] += k; counter[0, 1] += k;
+                if (result > 0 && result < k && pageCount >= counter[0, 0] && pageCount <= counter[0, 1]) count++;
+            }
+            return count;
+        }
+
+        //pangram
+        public static string pangrams(string s)
+        {
+            int count = 0; string result = "";
+            string[] arr = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (s.Trim().Contains(arr[i].ToString(), StringComparison.CurrentCultureIgnoreCase)) count++;
+            }
+            result = (count == 26) ? "pangram" : "not pangram";
+            return result;
+        }
         public static int utopianTree(int n)
         {
             int result = 0; int a;
@@ -24,6 +80,64 @@ namespace HandyKits
             return result;
         }
 
+        //beautiful triplets
+        public static int beautifulTriplets(int d, List<int> arr)
+        {
+            int count = 0;
+            for (int i = 0; i < arr.Count - 2; i++)
+            {
+                count += (arr[i + 2] - arr[i + 1] == arr[i + 1] - arr[i]) ? 1 : 0;
+            }
+            return count;
+        }
+
+        //detect Kaprekar
+        public static bool DetectKaprekar(int num)
+        {
+            long square = (long)num * (long)num;
+
+            int digits = num.ToString().Length;
+            long divisor = (long)Math.Pow((double)10, (double)digits);
+
+            int x = (int)(square % divisor);
+            square /= divisor;
+
+            int y = (int)square;
+
+            if ((x + y) == num) return true;
+
+            return false;
+        }
+
+        //Karprekar
+        public static void kaprekarNumbers(int p, int q)
+        {
+            int count = 0;
+            while (p <= q)
+            {
+                if (DetectKaprekar(p))
+                {
+                    Console.Write($"{p} ");
+                    count++;
+                }
+                p++;
+            }
+            if (count.Equals(0)) Console.Write("INVALID RANGE");
+        }
+
+        //module factorial
+        public static BigInteger Factorials(int n)
+        {
+            BigInteger result;
+            if (n == 0) result = 1;
+            else result = n * ProblemSolving2.Factorials(n - 1);
+            return result;
+        }
+        //xtra Long Factorials
+        public static void extraLongFactorials(int n)
+        {
+            Console.WriteLine(ProblemSolving2.Factorials(n));
+        }
         //strange viral Advertising Strategy // an = arn - 1 (or) an = r an - 1
         public static int viralAdvertising(int n)
         {
@@ -42,6 +156,28 @@ namespace HandyKits
         public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
         {
             int result = 0;
+            return result;
+        }
+        //jumping clouds
+        public static int jumpingOnClouds(List<int> c)
+        {
+            int result = 0; int count = 0;//cloud count before first thunder cloud.
+            for (int i = 0; i < c.Count; i++)
+            {
+                count += (c[i + 2] != 1 && i < c.Count - 2) ? 2 : 1;
+            }
+            result = count;
+            return result;
+        }
+        //Library fine
+        public static int libraryFine(int d1, int m1, int y1, int d2, int m2, int y2)
+        {
+            int result = 0;
+            int[] MonthsDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            if (d1 < d2 && m1 == m2 && y1 == y2) result = 0;
+            if (d1 > d2 && m1 == m2 && y1 == y2) result = 15 * (d1 - d2);
+            if (m1 > m2 && y1 == y2) result = 500 * (m1 - m2);
+            if (y1 > y2) result = 10000;
             return result;
         }
 
@@ -79,6 +215,19 @@ namespace HandyKits
                 }
                 return SeriesList.Count;
             }
+        }
+
+        //breaking records
+        public static List<int> breakingRecords(List<int> scores)
+        {
+            int[] result = new int[2]; int h; int l;
+            h = scores[0]; l = scores[0];
+            for (int i = 1; i < scores.Count; i++)
+            {
+                if (scores[i] < l) { result[1]++; l = scores[i]; }
+                if (scores[i] > h) { result[0]++; h = scores[i]; }
+            }
+            return result.ToList();
         }
     }
 }
