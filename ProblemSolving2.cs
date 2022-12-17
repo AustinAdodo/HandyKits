@@ -311,6 +311,19 @@ namespace HandyKits
             result = count;
             return result;
         }
+
+        // jumpingOnClouds Revisited. ((i + k) % c.Length == 0)
+        public static int jumpingOnClouds(int[] c, int k)
+        {
+            int e = 100;
+            for (int i = 0; i < c.Length; i += k)
+            {
+                if (c[i] == 0) e -= 1;
+                if (c[i] == 1) e -= 3; 
+                if ((i + k) % c.Length == 0) {break;}
+            }
+            return e;
+        }
         //Library fine
         public static int libraryFine(int d1, int m1, int y1, int d2, int m2, int y2)
         {
