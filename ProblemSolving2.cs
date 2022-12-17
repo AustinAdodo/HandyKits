@@ -306,7 +306,16 @@ namespace HandyKits
             int result = 0; int count = 0;//cloud count before first thunder cloud.
             for (int i = 0; i < c.Count; i++)
             {
-                count += (c[i + 2] != 1 && i < c.Count - 2) ? 2 : 1;
+                switch (i + 2 <= c.Count - 1 && c[i + 2] == 0)
+                {
+                    case true:
+                        count++; i += 1;
+                        break;
+                    case false:
+                        if (i + 2 <= c.Count - 1 && c[i + 2] == 1 && c[i + 1] == 0) { count++; }
+                        if (i + 1 == c.Count - 1 && c[i + 1] == 0) { count++; }
+                        break;
+                }
             }
             result = count;
             return result;
@@ -315,14 +324,17 @@ namespace HandyKits
         // jumpingOnClouds Revisited. ((i + k) % c.Length == 0)
         public static int jumpingOnClouds(int[] c, int k)
         {
-            int e = 100;
-            for (int i = 0; i < c.Length; i += k)
+            int Currentenergy = 100; int n = c.Length;
+            int tc = 3; int nc = 1; int loss = 0; int i = 0;
+            while (true)
             {
-                if (c[i] == 0) e -= 1;
-                if (c[i] == 1) e -= 3; 
-                if ((i + k) % c.Length == 0) {break;}
+                i += k;
+                if (i >= n) i = i % n;
+                loss = (c[i] == 1) ? tc : nc;
+                Currentenergy -= loss;
+                if (i == 0) break;
             }
-            return e;
+            return Currentenergy;
         }
         //Library fine
         public static int libraryFine(int d1, int m1, int y1, int d2, int m2, int y2)
@@ -384,5 +396,34 @@ namespace HandyKits
             }
             return result.ToList();
         }
+
+        public static string superReducedString(string s)
+        {
+            string superR = s; string a = String.Empty; int n = s.Length;
+            for (int i = 0; i < n; i++)
+            {
+                if (i + 1 <= superR.Length - 1 && superR[i] == superR[i + 1])
+                {
+                    a = superR[i].ToString();
+                    superR = superR.Remove(i, 2);
+                    i = -1; n = superR.Length;
+                }
+            }
+            superR = (superR == String.Empty) ? "Empty String" : superR;
+            return superR.Trim();
+        }
+
+        public static int minimumNumber(int n, string password)
+        {
+            int result=0;
+            string numbers = "0123456789";
+            string lower_case = "abcdefghijklmnopqrstuvwxyz";
+            string upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string special_characters = "!@#$%^&*()-+";
+                return result;
+
+        }
+
+
     }
 }
