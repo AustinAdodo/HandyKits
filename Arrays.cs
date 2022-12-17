@@ -46,9 +46,9 @@ namespace HandyKits
         }
         //Complex Manipulation
         //big data array complex Manipulation Optimized.
-        public static long arrayManipulation(int n, List<List<int>> queries)
+        public static long arrayManipulation1(int n, List<List<int>> queries)
         {
-            int[] arr = new int[n]; int a = 0, b = 0, k = 0;
+            int[] arr = new int[n]; int a, b, k;
             long result = 0;
             long temp = 0;
             List<List<int>> arr1 = new();
@@ -57,8 +57,8 @@ namespace HandyKits
             {
                 arr1[0] = query;
                 a = arr1[0][0]; b = arr1[0][1]; k = arr1[0][2];
-                arr[a - 1] += k;
-                arr[b] -= k;
+                arr[a] += k;
+                arr[b + 1] -= k;
             }
             foreach (int agg in arr)
             {
@@ -67,20 +67,17 @@ namespace HandyKits
             }
             return result;
         }
-        public static long ArrayComplexManipulation1(int n, List<List<int>> queries)
+        public static long arrayManipulation(int n, List<List<int>> queries)
         {
             long[] IndexArr = new long[n];
             long a = 0; long b = 0; long c = 0;long d;
             int count = queries.Count;
                 for (int j = 0; j < count; ++j)
                 {
-                    for (int i = 0; i < n - 3; i += 4)
+                    for (int i = 0; i < n; i ++)
                     {
                         a = i + 1; b = i + 2; c = i + 3; d = i + 4;
                         IndexArr[i] += (queries[j][0] <= a && a <= queries[j][1]) ? queries[j][2] : 0;
-                        IndexArr[a] += (queries[j][0] <= b && b <= queries[j][1]) ? queries[j][2] : 0;
-                        IndexArr[b] += (queries[j][0] <= c && c <= queries[j][1]) ? queries[j][2] : 0;
-                        IndexArr[c] += (queries[j][0] <= d && d <= queries[j][1]) ? queries[j][2] : 0;
                     }
                 }
             return IndexArr.Max();

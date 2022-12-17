@@ -1,4 +1,5 @@
 ﻿using HandyKits;
+using System.Collections.Generic;
 using System.Drawing;
 
 internal class Program
@@ -14,8 +15,9 @@ internal class Program
         //List<int> arr = new() { 3, 8, 15, 11, 14 ,1 ,9 ,2, 24 ,31 };
         //int k= 5; int n = 10; 
         //ProblemSolving2.workbook(n,k,arr);
-        List<int> arr = new() { 5, 4, 4, 2, 2, 8 };
-        ProblemSolving2.cutTheSticks(arr);
+        List < List<int> > obstacles = new();
+        int r_q = 4; int c_q = 4;
+        ProblemSolving2.queensAttack(4,0,4,4,obstacles);
         //        List<int> a = new() { 35,65,69,28,12,69,37,80,80,50,80,50,15,57,79,69,57,
         //65,15,69,57,50,65,2,14,64,15,65,65,5,15,64,57,37,50,12,64,37,28,20,80,80,50};
         //        ProblemSolving.equalizeArray(a);

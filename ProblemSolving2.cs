@@ -15,17 +15,47 @@ namespace HandyKits
 
         }
         // flatlandSpaceStations.
-        static int flatlandSpaceStations(int n, int[] c)
+        public static int flatlandSpaceStations(int n, int[] c)
         {
-            int result = 0;
-            return result;
+            int maxDistance = 0;
+            c = c.OrderBy(x => x).ToArray();
+            // two cases:       
+            if (c.Length == 1)
+            {
+                return Math.Max(c[0], n - c[0] - 1);
+            }
+            else
+            {
+                for (int i = 0; i < c.Length; i++)
+                {
+                    int nearestStation = 0;
+                    if (i.Equals(0))
+                    {
+                        int nextCity = (int)Math.Floor((decimal)((decimal)c[i + 1] - (decimal)c[i]) / (decimal)2);
+                        nearestStation = Math.Max(c[i], nextCity);
+                    }
+                    else if (i.Equals(c.Length - 1))
+                    {
+                        int previousCity = (int)Math.Floor((decimal)((decimal)c[i] - (decimal)c[i - 1]) / (decimal)2);
+                        nearestStation = Math.Max((n - 1 - c[i]), previousCity);
+                    }
+                    else
+                    {
+                        int nextCity = (int)Math.Floor((decimal)((decimal)c[i + 1] - (decimal)c[i]) / (decimal)2);
+                        int previousCity = (int)Math.Floor((decimal)((decimal)c[i] - (decimal)c[i - 1]) / (decimal)2);
+                        nearestStation = Math.Max(nextCity, previousCity);
+                    }
+                    if (nearestStation > maxDistance) maxDistance = nearestStation;
+                }
+            }
+            return maxDistance;
         }
 
         //GoToMars
         public static int marsExploration(string s)
         {
-            int count = 0;string FixedS = "";
-            for (int i = 0; i < s.Length; i+=3)
+            int count = 0; string FixedS = "";
+            for (int i = 0; i < s.Length; i += 3)
             {
                 FixedS += "SOS";
             }
@@ -35,6 +65,7 @@ namespace HandyKits
             }
             return count;
         }
+
         //camelcase
         public static int camelcase(string s)
         {
@@ -186,6 +217,7 @@ namespace HandyKits
         {
             Console.WriteLine(ProblemSolving2.Factorials(n));
         }
+
         //strange viral Advertising Strategy // an = arn - 1 (or) an = r an - 1
         public static int viralAdvertising(int n)
         {
@@ -200,10 +232,72 @@ namespace HandyKits
             string result = String.Empty;
             return result;
         }
-        //the QUEEN
+
+        //the QUEEN.(Chess game Algorithm optimized) HoZion..
         public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
         {
-            int result = 0;
+            int result = 0; int z = 0;
+            c_q = c_q - 1; r_q = r_q - 1;
+            string[,] ChessBoard = new string[n, n];
+            List<int> zeroIndexed = new();
+            List<int> oneIndexed = new();
+            if (obstacles.Count != 0)
+            {
+                for (int i = 0; i < obstacles.Count; i++)
+                {
+                    zeroIndexed[i] = obstacles[i][0] - 1;
+                    oneIndexed[i] = obstacles[i][1] - 1;
+                }
+            }
+
+            //provide identity to each square
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    ChessBoard[i, j] = i + "" + j;
+                }
+            }
+
+            //lower left to right diagonal count
+            z = (n - r_q - 1);
+            for (int i = Math.Abs(r_q - c_q + 1); i < r_q + (n - r_q - 1); ++i)
+            {
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i < r_q) result -= r_q;
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i > r_q) break;
+                if (ChessBoard[i, z] == r_q + "" + c_q) result += 0;
+                else { result++; }
+                z++;
+            }
+
+            //lower right to left diagonal count.
+            z = (r_q + c_q) - n - 1;                     //y component increases, x decease.
+            for (int i = c_q + (n - c_q - 1); i-- > (n - r_q - 1); ++i)
+            {
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i > r_q) result -= r_q;
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i < r_q) break;
+                if (ChessBoard[i, z] == (r_q) + "" + (c_q)) result += 0;
+                else { result++; }
+                z++;
+            }
+
+            //left to right
+            for (int i = 0; i < n; i++)
+            {
+                if (zeroIndexed.Contains(r_q) && oneIndexed.Contains(i) && zeroIndexed.IndexOf(r_q) == oneIndexed.IndexOf(i) && i < r_q) result -= r_q;
+                if (zeroIndexed.Contains(r_q) && oneIndexed.Contains(i) && zeroIndexed.IndexOf(r_q) == oneIndexed.IndexOf(i) && i > r_q) break;
+                if (ChessBoard[r_q, i] == r_q + "" + c_q) result += 0;
+                else { result++; }
+            }
+
+            //down to up
+            for (int i = 0; i < n; i++)
+            {
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(c_q) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(c_q) && i < r_q) result -= r_q;
+                if (zeroIndexed.Contains(i) && oneIndexed.Contains(c_q) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(c_q) && i > r_q) break;
+                if (ChessBoard[i, c_q] == r_q + "" + c_q) result += 0;
+                else { result++; }
+            }
             return result;
         }
         //jumping clouds
