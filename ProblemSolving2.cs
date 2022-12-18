@@ -232,11 +232,12 @@ namespace HandyKits
             string result = String.Empty;
             return result;
         }
+        //private static HashSet<string> hasher = new HashSet<string>();
 
-        //the QUEEN.(Chess game Algorithm optimized) HoZion..
+        //the QUEEN.(Chess game Algorithm optimized) AGzion.
         public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
         {
-            int result = 0; int z = 0;
+            int result = 0; int y = 0;
             c_q = c_q - 1; r_q = r_q - 1;
             string[,] ChessBoard = new string[n, n];
             List<int> zeroIndexed = new();
@@ -260,25 +261,25 @@ namespace HandyKits
             }
 
             //lower left to right diagonal count
-            z = (n - r_q - 1);
-            for (int i = Math.Abs(r_q - c_q + 1); i < r_q + (n - r_q - 1); ++i)
+            y = (r_q - c_q + 1);
+            for (int x = Math.Abs(r_q - c_q + 1); x < (n - 1) - (r_q - c_q + 1); ++x)
             {
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i < r_q) result -= r_q;
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i > r_q) break;
-                if (ChessBoard[i, z] == r_q + "" + c_q) result += 0;
+                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x < r_q) result -= r_q;
+                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) break;
+                if (ChessBoard[x, y] == r_q + "" + c_q) result += 0;
                 else { result++; }
-                z++;
+                y++;
             }
 
             //lower right to left diagonal count.
-            z = (r_q + c_q) - n - 1;                     //y component increases, x decease.
-            for (int i = c_q + (n - c_q - 1); i-- > (n - r_q - 1); ++i)
+            y = (r_q + c_q - 1);                     //y component increases, x decease.
+            for (int x = Math.Abs(r_q + c_q - 1); x-- > (n - r_q - 1);)
             {
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i > r_q) result -= r_q;
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(z) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(z) && i < r_q) break;
-                if (ChessBoard[i, z] == (r_q) + "" + (c_q)) result += 0;
+                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) result -= r_q;
+                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x < r_q) break;
+                if (ChessBoard[x, y] == (r_q) + "" + (c_q)) result += 0;
                 else { result++; }
-                z++;
+                y++;
             }
 
             //left to right
@@ -397,6 +398,7 @@ namespace HandyKits
             return result.ToList();
         }
 
+        //super reduced string
         public static string superReducedString(string s)
         {
             string superR = s; string a = String.Empty; int n = s.Length;
@@ -413,15 +415,17 @@ namespace HandyKits
             return superR.Trim();
         }
 
+        /// <summary>
+        /// Password Recommendation
+        /// </summary>
         public static int minimumNumber(int n, string password)
         {
-            int result=0;
+            int result = 0;
             string numbers = "0123456789";
             string lower_case = "abcdefghijklmnopqrstuvwxyz";
             string upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string special_characters = "!@#$%^&*()-+";
-                return result;
-
+            return result;
         }
 
 
