@@ -12,8 +12,8 @@ internal class Program
         //queries.Add(new List<int> { 3, 4, 100 });
         //long result = Arrays.arrayManipulation(5, queries);
         //Console.WriteLine(result);
-        string s = "acdqglrfkqyuqfjkxyqvnrtysfrzrmzlygfveulqfpdbhlqdqrrqdqlhbdpfqluevfgylzmrzrfsytrnvqyxkjfquyqkfrlacdqj";
-        ProblemSolving2.superReducedString(s);
+        string s = "abdc";
+        ProblemSolving2.biggerIsGreater(s);
         //List < List<int> > obstacles = new();
         //int r_q = 4; int c_q = 4;
         //ProblemSolving2.queensAttack(4,0,4,4,obstacles);

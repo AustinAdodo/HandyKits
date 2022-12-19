@@ -262,7 +262,7 @@ namespace HandyKits
 
             //lower left to right diagonal count
             y = (r_q - c_q + 1);
-            for (int x = Math.Abs(r_q - c_q + 1); x < (n - 1) - (r_q - c_q + 1); ++x)
+            for (int x = c_q - Math.Abs(r_q - c_q); x <= c_q + Math.Abs(c_q - r_q); ++x)
             {
                 if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x < r_q) result -= r_q;
                 if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) break;
@@ -272,7 +272,7 @@ namespace HandyKits
             }
 
             //lower right to left diagonal count.
-            y = (r_q + c_q - 1);                     //y component increases, x decease.
+            y = (c_q - r_q - 1);                     //y component increases, x decease.
             for (int x = Math.Abs(r_q + c_q - 1); x-- > (n - r_q - 1);)
             {
                 if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) result -= r_q;
@@ -427,7 +427,47 @@ namespace HandyKits
             string special_characters = "!@#$%^&*()-+";
             return result;
         }
+        //bigger is greater
+        public static string biggerIsGreater(string w)
+        {
+            string result = String.Empty;
+            string[] swap = new string[2]; string[] splitter = new string[2];
+            string lower_case = "abcdefghijklmnopqrstuvwxyz";
+            if (w.Length == 2 && w[0] != w[1])
+            {
+                swap[0] = w[0].ToString(); swap[1] = w[1].ToString();
+                swap.Reverse();
+            }
+            if (w.Length == 1 || w.Length == 2 && w[0] == w[1]) result = "no answer";
+            else
+            {
+                for (int i = w.Length; i-- > 0;)
+                {
+                    if (i - 1 >= 0 && lower_case.IndexOf(w[i].ToString()) > lower_case.IndexOf(w[i - 1].ToString()))
+                    {
+                        swap[0] = w[i].ToString(); swap[1] = w[i - 1].ToString();
+                        swap.Reverse();
+                        splitter[0] = w.Substring(0, i - 1);
+                        splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i + 1, (w.Length - 1) - i);
+                        break;
+                    }
+                }
+            }
+            result = (string.IsNullOrEmpty(swap[0])) ? "no answer" : (splitter[0] + swap[0] + swap[1] + splitter[1]).Trim();
+            return result;
+        }
 
-
+        ///Little Bobby
+        public static int chocolateFeast(int n, int c, int m)
+        {
+            decimal chocolates = Math.Floor((decimal)(n / c));
+            decimal wrappings = chocolates;
+            while (wrappings >= m)
+            {
+                chocolates += Math.Floor((decimal)wrappings / m);
+                wrappings = Math.Floor((decimal)wrappings / m) + (wrappings % m);
+            }
+            return (int)chocolates;
+        }
     }
 }
