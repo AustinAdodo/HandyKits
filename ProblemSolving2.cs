@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HandyKits
@@ -433,6 +434,7 @@ namespace HandyKits
             string result = String.Empty;
             string[] swap = new string[2]; string[] splitter = new string[2];
             string lower_case = "abcdefghijklmnopqrstuvwxyz";
+            string draft = "";
             if (w.Length == 2 && w[0] != w[1])
             {
                 swap[0] = w[0].ToString(); swap[1] = w[1].ToString();
@@ -443,17 +445,29 @@ namespace HandyKits
             {
                 for (int i = w.Length; i-- > 0;)
                 {
+                    draft = (i - 1 >= 0 && lower_case.IndexOf(w[i].ToString()) > lower_case.IndexOf(w[i - 1].ToString())) ? w[i - 1].ToString() : w[i].ToString();
                     if (i - 1 >= 0 && lower_case.IndexOf(w[i].ToString()) > lower_case.IndexOf(w[i - 1].ToString()))
                     {
-                        swap[0] = w[i].ToString(); swap[1] = w[i - 1].ToString();
-                        swap.Reverse();
-                        splitter[0] = w.Substring(0, i - 1);
-                        splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i + 1, (w.Length - 1) - i);
-                        break;
+                        if (lower_case.IndexOf(w[i - 1].ToString()) < lower_case.IndexOf(draft))
+                        {
+                            splitter[0] = w.Substring(0, i - 1);
+                            splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i, (w.Length - 1) - i);
+                            result = (splitter[0].Replace(w[i - 1].ToString(), draft) + splitter[1]).Replace(draft, "").Trim();
+                            break;
+                        }
+                        else
+                        {
+                            swap[0] = w[i].ToString(); swap[1] = w[i - 1].ToString();
+                            swap.Reverse();
+                            splitter[0] = w.Substring(0, i - 1);
+                            splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i + 1, (w.Length - 1) - i);
+                            result = (splitter[0] + swap[0] + swap[1] + splitter[1]).Trim();
+                            break;
+                        }
                     }
                 }
             }
-            result = (string.IsNullOrEmpty(swap[0])) ? "no answer" : (splitter[0] + swap[0] + swap[1] + splitter[1]).Trim();
+            result = (result)?? "no answer";
             return result;
         }
 
@@ -468,6 +482,26 @@ namespace HandyKits
                 wrappings = Math.Floor((decimal)wrappings / m) + (wrappings % m);
             }
             return (int)chocolates;
+        }
+
+        //Tell the time in words
+        public static string timeInWords(int h, int m)
+        {
+            string s = String.Empty;
+            int[] ones = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            string[] ones1 = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+            int[] tens = { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+            string[] tens1 = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixten", "seventeen", "eighteen", "nineteen", "twenty" };
+            //int[] twenties = { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
+            //string[] twenties1 = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixten", "seventeen", "eighteen", "nineteen", "twenty" };
+            //var parts = Regex.Split(T, "aa", RegexOptions.IgnoreCase);
+            return s;
+        }
+        //minium distance
+        public static int minimumDistances(List<int> a)
+        {
+            int result = 0;
+            return result;
         }
     }
 }
