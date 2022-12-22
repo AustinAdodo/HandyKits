@@ -45,7 +45,6 @@ namespace HandyKits
             return answers;
         }
         //Complex Manipulation
-        //big data array complex Manipulation Optimized.
         public static long arrayManipulation1(int n, List<List<int>> queries)
         {
             int[] arr = new int[n]; int a, b, k;
@@ -57,8 +56,8 @@ namespace HandyKits
             {
                 arr1[0] = query;
                 a = arr1[0][0]; b = arr1[0][1]; k = arr1[0][2];
-                arr[a] += k;
-                arr[b + 1] -= k;
+                if (a <= n - 1) arr[a] += k;
+                if (b < (n - 1)) arr[b + 1] -= k;
             }
             foreach (int agg in arr)
             {
@@ -67,39 +66,8 @@ namespace HandyKits
             }
             return result;
         }
-        public static long arrayManipulation(int n, List<List<int>> queries)
-        {
-            long[] IndexArr = new long[n];
-            long a = 0; long b = 0; long c = 0;long d;
-            int count = queries.Count;
-                for (int j = 0; j < count; ++j)
-                {
-                    for (int i = 0; i < n; i ++)
-                    {
-                        a = i + 1; b = i + 2; c = i + 3; d = i + 4;
-                        IndexArr[i] += (queries[j][0] <= a && a <= queries[j][1]) ? queries[j][2] : 0;
-                    }
-                }
-            return IndexArr.Max();
-        }
         //var queriesLookup = queries.ToLookup(x => x[2]);
         //queries.ForEach(num => order.OrderItems = orderItemLookup[order.OrderIncidentName]);
-        public static long ArrayComplexManipulation3(int n, List<List<int>> queries)
-        {
-            int[] IndexArr = new int[n]; int a = 0; long result = 0;
-            int count = queries.Count;
-            for (int j = 0; j < count; j++)//optimize loop
-            {
-                Parallel.For(0, count, i =>
-                {
-                    a = i + 1;
-                    bool condition = queries[j][0] <= a && a <= queries[j][1];
-                    IndexArr[i] += (condition) ? queries[j][2] : 0;
-                    result = (IndexArr[i] > result) ? IndexArr[i] : result;
-                });
-            }
-            return result;
-        }
 
         //inline swaps minimum req swaps.
         public static int ArraySwaps(int[] arr)

@@ -6,14 +6,15 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        //List<List<int>> queries = new();
-        //queries.Add(new List<int> { 1, 2, 100 });
-        //queries.Add(new List<int> { 2, 5, 100 });
-        //queries.Add(new List<int> { 3, 4, 100 });
-        //long result = Arrays.arrayManipulation(5, queries);
+        List<List<int>> queries = new();
+        queries.Add(new List<int> { 2, 3, 603 });
+        queries.Add(new List<int> { 1 ,1, 286 });
+        queries.Add(new List<int> { 4 ,4, 882 });
+        Arrays.arrayManipulation1(4,queries);
         //Console.WriteLine(result);
-        string s = "abdc";
-        ProblemSolving2.biggerIsGreater(s);
+        //string s = "dhck";
+        //ProblemSolving2.biggerIsGreater(s);
+
         //List < List<int> > obstacles = new();
         //int r_q = 4; int c_q = 4;
         //ProblemSolving2.queensAttack(4,0,4,4,obstacles);

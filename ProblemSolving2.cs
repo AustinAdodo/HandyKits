@@ -431,10 +431,14 @@ namespace HandyKits
         //bigger is greater
         public static string biggerIsGreater(string w)
         {
-            string result = String.Empty;
+            string result = String.Empty; string a = "";
             string[] swap = new string[2]; string[] splitter = new string[2];
-            string lower_case = "abcdefghijklmnopqrstuvwxyz";
-            string draft = "";
+            string[] draft = new string[w.Length];
+            for (int i = 0; i < w.Length; i++)
+            {
+                draft[i] = w[i].ToString();
+            }
+            draft = draft.OrderBy(k => k).Reverse().ToArray();
             if (w.Length == 2 && w[0] != w[1])
             {
                 swap[0] = w[0].ToString(); swap[1] = w[1].ToString();
@@ -445,14 +449,16 @@ namespace HandyKits
             {
                 for (int i = w.Length; i-- > 0;)
                 {
-                    draft = (i - 1 >= 0 && lower_case.IndexOf(w[i].ToString()) > lower_case.IndexOf(w[i - 1].ToString())) ? w[i - 1].ToString() : w[i].ToString();
-                    if (i - 1 >= 0 && lower_case.IndexOf(w[i].ToString()) > lower_case.IndexOf(w[i - 1].ToString()))
+                    if (i - 1 >= 0 && draft.ToList().IndexOf(w[i].ToString()) < draft.ToList().IndexOf(w[i - 1].ToString()))
                     {
-                        if (lower_case.IndexOf(w[i - 1].ToString()) < lower_case.IndexOf(draft))
+                        a = w[i - 1].ToString();
+                        string nextImmediate = draft[draft.ToList().IndexOf(a) - 1];
+                        if (draft.ToList().IndexOf(w[i].ToString()) < draft.ToList().IndexOf(nextImmediate))
                         {
-                            splitter[0] = w.Substring(0, i - 1);
-                            splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i, (w.Length - 1) - i);
-                            result = (splitter[0].Replace(w[i - 1].ToString(), draft) + splitter[1]).Replace(draft, "").Trim();
+                            splitter[0] = w.Substring(0, i).Replace(a, nextImmediate).Trim();
+                            splitter[1] = (i == w.Length - 1) ? "" : w.Substring(i - 1, (w.Length) - (i - 1))
+                                .Replace(nextImmediate, "").Trim();
+                            result = (splitter[0] + splitter[1]);
                             break;
                         }
                         else
@@ -467,7 +473,7 @@ namespace HandyKits
                     }
                 }
             }
-            result = (result)?? "no answer";
+            result = (string.IsNullOrEmpty(result)) ? "no answer" : result;
             return result;
         }
 
@@ -492,6 +498,7 @@ namespace HandyKits
             string[] ones1 = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
             int[] tens = { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
             string[] tens1 = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixten", "seventeen", "eighteen", "nineteen", "twenty" };
+            Dictionary<int, int> map = new Dictionary<int, int>();
             //int[] twenties = { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
             //string[] twenties1 = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixten", "seventeen", "eighteen", "nineteen", "twenty" };
             //var parts = Regex.Split(T, "aa", RegexOptions.IgnoreCase);
@@ -501,7 +508,28 @@ namespace HandyKits
         public static int minimumDistances(List<int> a)
         {
             int result = 0;
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            int minDistance = int.MaxValue;
+            for (int i = 0; i < a.Count; i++)
+            {
+                int n = a[i];
+                if (map.ContainsKey(n))
+                {
+                    int distance = i - map[n];
+                    minDistance = Math.Min(minDistance, distance);
+                }
+                map.Add(i, n);
+            }
+            if (minDistance == int.MaxValue) result = -1;
+            else result = minDistance;
             return result;
         }
+        //service Lane
+        public static List<int> serviceLane(int n, List<List<int>> cases)
+        {
+            List<int> result = new List<int>();
+            return result;
+        }
+
     }
 }
