@@ -10,6 +10,42 @@ namespace HandyKits
 {
     internal class ProblemSolving2
     {
+        //Miniature Encryption
+        public static string encryption(string s)
+        {
+            List<string> sArray = new List<string>();
+
+            Regex re = new Regex(@"\s+");
+            s = re.Replace(s, "");
+            int rows = (int)Math.Floor(Math.Sqrt((double)s.Length));
+            int columns = (int)Math.Ceiling(Math.Sqrt((double)s.Length));
+            if ((rows * columns) < s.Length) rows = columns;
+
+            // add substrings to array up to the second to last row
+            // remove substring after adding to array
+            for (int i = 0; i < rows - 1; i++)
+            {
+                sArray.Add(s.Substring(0, columns));
+                s = s.Remove(0, columns);
+            }
+            // add remaining string to array
+            sArray.Add(s);
+
+            List<string> result = new List<string>();
+
+            for (int i = 0; i < columns; i++)
+            {
+                string temp = string.Empty;
+                for (int j = 0; j < rows; j++)
+                {
+                    if (i >= sArray[j].Length) continue;
+                    temp += sArray[j][i];
+                }
+                result.Add(temp);
+            }
+            return string.Join(' ', result);
+        }
+
         //rotating Array
         public static void matrixRotation(List<List<int>> matrix, int r)
         {
@@ -525,9 +561,13 @@ namespace HandyKits
             return result;
         }
         //service Lane
-        public static List<int> serviceLane(int n, List<List<int>> cases)
+        public static List<int> serviceLane(List<int> width, List<List<int>> cases)
         {
             List<int> result = new List<int>();
+            foreach (List<int> c in cases)
+            {
+                result.Add(width.GetRange(c[0], (c[1] - c[0] + 1)).Min());
+            }
             return result;
         }
 
