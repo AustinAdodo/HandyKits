@@ -398,6 +398,13 @@ namespace HandyKits
 
             return s_n;
         }
+
+        //fair Rations Problem
+        public static string fairRations(List<int> B)
+        {
+            string result = "";
+            return result;  
+        }
     }
 }
 
