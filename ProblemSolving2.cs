@@ -10,6 +10,12 @@ namespace HandyKits
 {
     internal class ProblemSolving2
     {
+        //Love letter
+        public static int theLoveLetterMystery(string s)
+        {
+            int result = 0; 
+            return result;
+        }
         //Miniature Encryption
         public static string encryption(string s)
         {
