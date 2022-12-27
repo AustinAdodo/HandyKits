@@ -11,6 +11,9 @@ internal class Program
         queries.Add(new List<int> { 1 ,1, 286 });
         queries.Add(new List<int> { 4 ,4, 882 });
         Arrays.arrayManipulation1(4,queries);
+        string[] labels = { "legal","legal","illegal","legal","legal"};
+        int[] costs = { 5, 0, 3, 2, 3, 4, 5 };
+        ProblemSolving3.maxCost(costs.ToList(),labels.ToList(),1);
         //Console.WriteLine(result);
         //string s = "dhck";
         //ProblemSolving2.biggerIsGreater(s);
