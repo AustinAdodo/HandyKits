@@ -4,11 +4,56 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
 
 namespace HandyKits
 {
     internal class ProblemSolving3
     {
+        //download speed calculation
+        public static void CalculateSpeedDownload(Stream b)
+        {
+            // Set the URL of the file you want to download
+            string url = "http://example.com/somefile.zip";
+
+            // Set the size of the buffer (in bytes)
+            int bufferSize = 1024;
+
+            // Create a Stopwatch to measure the download time
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            // Open a Stream to the file
+            using (Stream stream = File.OpenRead(url))
+            {
+                // Create a buffer to hold the data
+                byte[] buffer = new byte[bufferSize];
+
+                // Read the data from the stream and store it in the buffer
+                int bytesRead = stream.Read(buffer, 0, bufferSize);
+
+                // Keep track of the total number of bytes read
+                long totalBytesRead = bytesRead;
+
+                // Continue reading until the end of the stream is reached
+                while (bytesRead > 0)
+                {
+                    bytesRead = stream.Read(buffer, 0, bufferSize);
+                    totalBytesRead += bytesRead;
+                }
+
+                // Stop the Stopwatch
+                stopwatch.Stop();
+
+                // Calculate the download speed (in bytes per second)
+                double downloadSpeed = totalBytesRead / stopwatch.Elapsed.TotalSeconds;
+
+                // Print the download speed
+                Console.WriteLine("Download speed: {0} bytes/second", downloadSpeed);
+            }
+        }
+
         static List<String> romanizer(List<int> numbers)
         {
             List<String> ans = new List<String>();
@@ -81,7 +126,7 @@ namespace HandyKits
         /// </summary>
         /// <param name="N"></param>
         /// <returns></returns>
-        public int SparseBinarysolution(int N)
+        public static int SparseBinarysolution(int N)
         {
             int result = 0;
             return result;
