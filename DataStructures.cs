@@ -109,7 +109,7 @@ namespace HandyKits
         //min and Maximum sum in 4 out of 5
         public static void miniMaxSum(List<int> arr)
         {
-            long[] cur = new long[arr.Count]; int a = 0;
+            long[] cur = new long[arr.Count];
             List<long> arr1 = arr.Select(s => (long)s).ToList();
             if (arr1[1] == arr1[0])
             {

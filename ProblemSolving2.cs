@@ -10,10 +10,31 @@ namespace HandyKits
 {
     internal class ProblemSolving2
     {
+        public static string Reverse(string s)
+        {
+            string result = "";
+            for (int i = s.Length; i-- > 0;)
+            {
+                result += s[i];
+            }
+            return result.Trim();
+        }
         //Love letter
         public static int theLoveLetterMystery(string s)
         {
-            int result = 0; 
+            int result = 0; int l = s.Length; int a = 0; int b = 0;
+            string sReverse = Reverse(s);b = (l + 1) / 2;
+            string sSplit = (l % 2 == 0) ? s.Substring((l / 2), (l / 2)) : s.Substring(b, l - b);
+            string sSplitReverse = (l % 2 == 0) ? Reverse(s.Substring(0, l / 2)) : Reverse(s.Substring(0, (l - 1) / 2));
+            string lowerCase = "abcdefghijklmnopqrstuvwxyz";
+            string[] sSplitArr = Array.ConvertAll(sSplit.ToCharArray(), item => item.ToString());
+            string[] sSplitReverseArr = Array.ConvertAll(sSplitReverse.ToCharArray(), item => item.ToString());
+            string[] lowerCaseArr = Array.ConvertAll(lowerCase.ToCharArray(), item => item.ToString());
+            for (int i = 0; i < sSplitReverseArr.Length; i++)
+            {
+                a += Math.Abs(lowerCaseArr.ToList().IndexOf(sSplitReverseArr[i]) - lowerCaseArr.ToList().IndexOf(sSplitArr[i]));
+            }
+            result = (s == sReverse) ? 0 : a;
             return result;
         }
         //Miniature Encryption
@@ -188,7 +209,7 @@ namespace HandyKits
         }
         public static int utopianTree(int n)
         {
-            int result = 0; int a;
+            int result = 0;
             List<int> cyclesList = new();
             List<int> ValuesList = new();
             cyclesList.Add(0);
@@ -464,10 +485,10 @@ namespace HandyKits
         public static int minimumNumber(int n, string password)
         {
             int result = 0;
-            string numbers = "0123456789";
-            string lower_case = "abcdefghijklmnopqrstuvwxyz";
-            string upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string special_characters = "!@#$%^&*()-+";
+            //string numbers = "0123456789";
+            //string lower_case = "abcdefghijklmnopqrstuvwxyz";
+            //string upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            //string special_characters = "!@#$%^&*()-+";
             return result;
         }
         //bigger is greater

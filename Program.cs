@@ -14,7 +14,7 @@ internal class Program
         //string[] labels = { "legal","legal","illegal","legal","legal"};
         //int[] costs = { 5, 0, 3, 2, 3, 4, 5 };
         //ProblemSolving3.maxCost(costs.ToList(),labels.ToList(),1);
-        ProblemSolving3.timeInWords(5,45);
+        ProblemSolving2.theLoveLetterMystery("adslkfjas");
         //Console.WriteLine(result);
         //string s = "dhck";
         //ProblemSolving2.biggerIsGreater(s);

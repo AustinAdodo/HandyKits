@@ -75,5 +75,16 @@ namespace HandyKits
                 : wordArray[h - 1] + " o' clock";
             return s;
         }
+
+        /// <summary>
+        /// BitWise SparseBinary Decomposition.
+        /// </summary>
+        /// <param name="N"></param>
+        /// <returns></returns>
+        public int solution(int N) 
+        {
+            int result = 0;
+            return result;
+        } 
     }
 }
