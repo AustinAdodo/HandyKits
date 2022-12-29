@@ -81,10 +81,25 @@ namespace HandyKits
         /// </summary>
         /// <param name="N"></param>
         /// <returns></returns>
-        public int solution(int N) 
+        public int SparseBinarysolution(int N)
         {
             int result = 0;
             return result;
-        } 
+        }
+        //Fair Rations
+        public static string fairRations(List<int> B)
+        {
+            int answer = 0; int a = B.Count;
+            for (int i = 0; i < B.Count - 1; i++)
+            {
+                if (B[i] % 2 == 1)
+                {
+                    B[i]++;
+                    B[i + 1]++;
+                    answer += 2;
+                }
+            }
+            return (B[a - 1] % 2 == 1) ? "NO" : answer.ToString();
+        }
     }
 }
