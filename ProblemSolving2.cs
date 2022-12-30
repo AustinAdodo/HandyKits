@@ -10,6 +10,17 @@ namespace HandyKits
 {
     internal class ProblemSolving2
     {
+        //Service Lane
+        public static List<int> serviceLane(int n, List<List<int>> cases, List<int> width)
+        {
+            List<int> result = new List<int>();
+            for (int i = 0; i < cases.Count; i++)
+            {
+                List<int> sub = width.GetRange(cases[i][0], cases[i][1] - cases[i][0] + 1);
+                result.Add(sub.Min());
+            }
+            return result;
+        }
         public static string Reverse(string s)
         {
             string result = "";
@@ -585,16 +596,6 @@ namespace HandyKits
             }
             if (minDistance == int.MaxValue) result = -1;
             else result = minDistance;
-            return result;
-        }
-        //service Lane
-        public static List<int> serviceLane(List<int> width, List<List<int>> cases)
-        {
-            List<int> result = new List<int>();
-            foreach (List<int> c in cases)
-            {
-                result.Add(width.GetRange(c[0], (c[1] - c[0] + 1)).Min());
-            }
             return result;
         }
 
