@@ -11,6 +11,40 @@ namespace HandyKits
 {
     internal class ProblemSolving3
     {
+        //miniOperations
+        public static int minOperations(List<int> arr, int threshold, int d) //12345 = 2
+        {
+            //64 30 25 33 2 2 = 3 // 1 2 3 4 t=4 d=3 =6
+            int count = 0; int min = arr.Min();
+            count++;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                if (arr.Contains(d) && Math.Floor((double)arr[i] / d) == d) count++;
+                if (!arr.Contains(d) && Math.Floor((double)arr[i] / d) == min) count++;
+                if (count == threshold) break;
+            }
+            return count;
+        }
+
+        //bitiwse AND count operation
+        //10,7,2,8,3
+        public static long countPairs(List<int> arr)//6
+        {
+            int result = 0;
+            var a = 10;
+            var b = 0;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                for (int j = i; j < arr.Count; j++)
+                {
+                    a = arr[i] & arr[j];
+                    b = a & (a - 1);
+                    if (b == 0) result++;
+                }
+            }
+            return result;
+        }
+
         //download speed calculation
         public static void CalculateSpeedDownload(Stream b)
         {
