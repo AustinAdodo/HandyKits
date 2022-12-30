@@ -11,10 +11,33 @@ namespace HandyKits
 {
     internal class ProblemSolving3
     {
-        //miniOperations
-        public static int minOperations(List<int> arr, int threshold, int d) //12345 = 2
+
+        //binary gap 
+        public static int BinaryGap(int N)
         {
-            //64 30 25 33 2 2 = 3 // 1 2 3 4 t=4 d=3 =6
+            string binaryString = Convert.ToString(N, 2);
+            int result = 0;
+            int count = 0;
+            List<int> resultArr = new();
+            if (binaryString.Split('0').Length - 1 > 0)
+            {
+                for (int i = 0; i < binaryString.Length; i++)
+                {
+                    if (binaryString[i] == '0') count++;
+                    if (binaryString[i] != '0')
+                    {
+                        resultArr.Add(count);
+                        count = 0;
+                    }
+                }
+            }
+            result = (binaryString.Split('0').Length - 1 == 0) ? 0 : resultArr.Max();
+            return result;
+        }
+        //miniOperations
+        public static int minOperations(List<int> arr, int threshold, int d) //12345 = 2 t=3 d=2
+        {
+            //64 30 25 33 2 2 = 3 // 1 2 3 4 t=4 d=3 = 6
             int count = 0; int min = arr.Min();
             count++;
             for (int i = 0; i < arr.Count; i++)
@@ -28,18 +51,19 @@ namespace HandyKits
 
         //bitiwse AND count operation
         //10,7,2,8,3
+        //a & (a - 1); for Ulong
         public static long countPairs(List<int> arr)//6
         {
             int result = 0;
             var a = 10;
-            var b = 0;
+            bool b = false;
             for (int i = 0; i < arr.Count; i++)
             {
                 for (int j = i; j < arr.Count; j++)
                 {
                     a = arr[i] & arr[j];
-                    b = a & (a - 1);
-                    if (b == 0) result++;
+                    b = Math.Ceiling(Math.Log(a) / Math.Log(2)) == Math.Floor(Math.Log(a) / Math.Log(2));
+                    if (b) result++;
                 }
             }
             return result;
