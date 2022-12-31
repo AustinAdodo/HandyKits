@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -7,11 +8,92 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace HandyKits
 {
     internal class ProblemSolving3
     {
+       
+        public static int Bookings(int N, string S)
+        {
+            decimal result = 0;
+            string d = String.Empty;
+            int b; string a;
+            string[] strArr = S.Split(" ").ToArray();
+            string[] code = { "A", "B", "C", "D", "E", "F", "G", "H", "J", "K" };
+            List<int> codeEq = new List<int>();
+            if (string.IsNullOrEmpty(S) || S.Length < 1)
+            {
+                result = (Math.Floor((decimal)code.Length / 4)) * N;
+            }
+            else
+            {
+                for (int i = 0; i < N; i++)
+                {
+                    for (int j = 0; j < code.Length; j++)
+                    {
+                        a = ((i + 1) + code[j]).Trim();
+                        if (strArr.Contains(a)) codeEq.Add(j);
+                        if ((N - 1) - codeEq.Last() >= 4)
+                        {
+                            result += Math.Floor((decimal)(code.Length - 1 - codeEq.Last()) / 4);
+                        }
+                    }
+                }
+                for (int i = 0; i < codeEq.Count; i++)
+                {
+                    //b = ;
+                    if (i > 0 && codeEq[i] - codeEq[i - 1] >= 4) result += Math.Floor((decimal)(codeEq[i] - codeEq[i - 1]) / 4);
+                }
+            }
+            return (int)result;
+        }//(22, '1A 3C 2B 20G 5A')
+
+        //bannana Problem
+        public int solution(string S)
+        {
+            decimal result = 0;
+            int[] arrCounter = new int[3];
+            int Acount = S.Split('A').Length - 1;
+            int Bcount = S.Split('B').Length - 1;
+            int Ncount = S.Split('N').Length - 1;
+            if (Acount < 3 || Bcount < 1 || Ncount < 2) result = 0;
+            else
+            {
+                for (int i = 0; i < S.Length; i++)
+                {
+                    result = Math.Floor((decimal)((Acount + Bcount + Ncount) / 6.0));
+                }
+            }
+            return (int)result;
+        }
+
+        //countries Problem
+        public static int Countries(int[][] A)
+        {
+            int CountriesCount = 0; List<int> colorCheck = new List<int>();
+            for (int i = 0; i < A[i].Length; i++)
+            {
+                for (int j = 0; j < A[j].Length; j++)
+                {
+                    if (!colorCheck.Contains(A[i][j])) colorCheck.Add(A[i][j]);
+                    if (j > 0 && A[i][j] == A[i][j - 1]) CountriesCount += 0; //left
+                    if (i > 0 && i <= A[i].Length && A[i][j] == A[i + 1][j]) CountriesCount += 0; //down
+                    if (i > 0 && A[i][j] == A[i - 1][j]) CountriesCount += 0; //up
+                    if (j + 1 <= A[j].Length - 1 && A[i][j] == A[i + 1][j + 1]) CountriesCount += 0; //right
+                    else CountriesCount++;
+                }
+            }
+            CountriesCount += colorCheck.Count;
+            return CountriesCount;
+        }
+
+        //TreeLongestZigZag
+        static void TreeLongestZigZag(string[] args)
+        {
+            //NB Post order Treversal
+        }
         static bool PrimeNumbers(int n)
         {
             //We know 1 is not a prime number
