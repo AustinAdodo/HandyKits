@@ -43,7 +43,6 @@ namespace HandyKits
                 }
                 for (int i = 0; i < codeEq.Count; i++)
                 {
-                    //b = ;
                     if (i > 0 && codeEq[i] - codeEq[i - 1] >= 4) result += Math.Floor((decimal)(codeEq[i] - codeEq[i - 1]) / 4);
                 }
             }
