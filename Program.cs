@@ -11,8 +11,8 @@ internal class Program
         //queries.Add(new List<int> { 1 ,1, 286 });
         //queries.Add(new List<int> { 4 ,4, 882 });
         //Arrays.arrayManipulation1(4,queries);
-        //string[] labels = { "legal","legal","illegal","legal","legal"};
-        string s = "1A 3C 2B 20G 5A";
-        ProblemSolving3.Bookings(22, s);
+        string s = "1B 1E 2E";
+        ProblemSolving3.Bookings(2, s);
+        //ProblemSolving3.SparseBinaryDecomposition(26);
     }
 }

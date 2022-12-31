@@ -14,10 +14,12 @@ namespace HandyKits
 {
     internal class ProblemSolving3
     {
-       //Bookings
+        //Bookings
         public static int Bookings(int N, string S)
         {
             decimal result = 0;
+            decimal temp = 0;
+            int overflow = 0;
             string d = String.Empty;
             int b; string a;
             string[] strArr = S.Split(" ").ToArray();
@@ -31,19 +33,33 @@ namespace HandyKits
             {
                 for (int i = 0; i < N; i++)
                 {
+                    codeEq.Clear();
                     for (int j = 0; j < code.Length; j++)
                     {
                         a = ((i + 1) + code[j]).Trim();
                         if (strArr.Contains(a)) codeEq.Add(j);
-                        if ((N - 1) - codeEq.Last() >= 4)
+
+                        //overflow plus empty sits before first booked space on a new row
+                        temp = (codeEq.Count > 0) ? Math.Floor((decimal)(codeEq.First() + 1 + overflow) / 4) : overflow;
+                        if (codeEq.Count == 1 && j == codeEq.First() && codeEq.First() + 1 + overflow >= 4) result += temp;
+
+                        //space between booked sits
+                        if (codeEq.Count > 1 && (codeEq[codeEq.Count - 1] - codeEq[codeEq.Count - 2]) >= 4) result += Math.Floor((decimal)(codeEq[i] - codeEq[i - 1]) / 4);
+
+                        //last booked space to the end.
+                        if (codeEq.Count > 0 && j == code.Length - 1 && (code.Length - 1) - codeEq.Last() >= 4)
                         {
                             result += Math.Floor((decimal)(code.Length - 1 - codeEq.Last()) / 4);
+                            overflow = (code.Length - 1 - codeEq.Last()) % 4;
+                        }
+
+                        //completely Empty row
+                        if (j == code.Length - 1 && codeEq.Count == 0)
+                        {
+                            result += Math.Floor((decimal)(codeEq.Count) / 4);
+                            overflow = (codeEq.Count) % 4;
                         }
                     }
-                }
-                for (int i = 0; i < codeEq.Count; i++)
-                {
-                    if (i > 0 && codeEq[i] - codeEq[i - 1] >= 4) result += Math.Floor((decimal)(codeEq[i] - codeEq[i - 1]) / 4);
                 }
             }
             return (int)result;
@@ -281,16 +297,6 @@ namespace HandyKits
             return s;
         }
 
-        /// <summary>
-        /// BitWise SparseBinary Decomposition.
-        /// </summary>
-        /// <param name="N"></param>
-        /// <returns></returns>
-        public static int SparseBinarysolution(int N)
-        {
-            int result = 0;
-            return result;
-        }
         //Fair Rations
         public static string fairRations(List<int> B)
         {
@@ -305,6 +311,23 @@ namespace HandyKits
                 }
             }
             return (B[a - 1] % 2 == 1) ? "NO" : answer.ToString();
+        }
+
+        /// <summary>
+        /// BitWise Sparse Binary Decomposition.
+        /// </summary>
+        /// <param name="N"></param>
+        /// <returns></returns>
+        public static int SparseBinaryDecomposition(int N)
+        {
+            int result = 0;
+            //int j = 1; int Sparsej = Convert.ToString(j, 2).Split("00").Length - 1;
+            for (int k = 1; k <= N; k++)
+            {
+                if (Convert.ToString(k, 2).Split("00").Length - 1 > 0 && Convert.ToString(N - k, 2).Split("00").Length - 1 > 0) result = k;
+            }
+            result = (result > 0) ? result : -1;
+            return result;
         }
     }
 }

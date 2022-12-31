@@ -594,7 +594,6 @@ namespace HandyKits
 
             // no repeating values found
             if (min == a.Count) return -1;
-
             return min;
         }
 
