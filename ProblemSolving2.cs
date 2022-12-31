@@ -581,22 +581,21 @@ namespace HandyKits
         //minium distance
         public static int minimumDistances(List<int> a)
         {
-            int result = 0;
-            Dictionary<int, int> map = new Dictionary<int, int>();
-            int minDistance = int.MaxValue;
-            for (int i = 0; i < a.Count; i++)
+            int min = a.Count;
+            for (int i = 0; i < (a.Count - 1); i++)
             {
-                int n = a[i];
-                if (map.ContainsKey(n))
+                int nextIndex = a.IndexOf(a[i], (i + 1));
+                if (nextIndex.Equals(-1))
                 {
-                    int distance = i - map[n];
-                    minDistance = Math.Min(minDistance, distance);
+                    continue;
                 }
-                map.Add(i, n);
+                else if ((nextIndex - i) < min) min = (nextIndex - i);
             }
-            if (minDistance == int.MaxValue) result = -1;
-            else result = minDistance;
-            return result;
+
+            // no repeating values found
+            if (min == a.Count) return -1;
+
+            return min;
         }
 
     }

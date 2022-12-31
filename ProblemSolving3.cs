@@ -14,7 +14,7 @@ namespace HandyKits
 {
     internal class ProblemSolving3
     {
-       
+       //Bookings
         public static int Bookings(int N, string S)
         {
             decimal result = 0;
@@ -135,6 +135,7 @@ namespace HandyKits
             result = (binaryString.Split('0').Length - 1 == 0) ? 0 : resultArr.Max();
             return result;
         }
+
         //miniOperations
         public static int minOperations(List<int> arr, int threshold, int d) //12345 = 2 t=3 d=2
         {
