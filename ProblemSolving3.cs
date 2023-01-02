@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace HandyKits
             string[] strArr = S.Split(" ").ToArray();
             string[] code = { "A", "B", "C", "D", "E", "F", "G", "H", "J", "K" };
             List<int> codeEq = new List<int>();
-            if (string.IsNullOrEmpty(S) || S.Length < 1)
+            if (string.IsNullOrEmpty(S) || S.Length < 1)//S is non-existent
             {
                 result = (Math.Floor((decimal)code.Length / 4)) * N;
             }
@@ -33,7 +34,7 @@ namespace HandyKits
             {
                 for (int i = 0; i < N; i++)
                 {
-                    codeEq.Clear();
+                    codeEq.Clear();//clear temporary array that hold eq. numerical value for booked sits.
                     for (int j = 0; j < code.Length; j++)
                     {
                         a = ((i + 1) + code[j]).Trim();
@@ -53,7 +54,7 @@ namespace HandyKits
                             overflow = (code.Length - 1 - codeEq.Last()) % 4;
                         }
 
-                        //completely Empty row
+                        //completely Empty row, no booked sits
                         if (j == code.Length - 1 && codeEq.Count == 0)
                         {
                             result += Math.Floor((decimal)(codeEq.Count) / 4);
@@ -321,13 +322,20 @@ namespace HandyKits
         public static int SparseBinaryDecomposition(int N)
         {
             int result = 0;
-            //int j = 1; int Sparsej = Convert.ToString(j, 2).Split("00").Length - 1;
-            for (int k = 1; k <= N; k++)
+            int l; int l2;
+            bool Kisparse; bool NKisparse;
+            //N is Small
+            for (int k = 0; k <= N; k++)
             {
-                if (Convert.ToString(k, 2).Split("00").Length - 1 > 0 && Convert.ToString(N - k, 2).Split("00").Length - 1 > 0) result = k;
+                l = Convert.ToString(k, 2).Length;
+                l2 = Convert.ToString(N - k, 2).Length;
+                Kisparse = l > 2 && Convert.ToString(k, 2).Split("11").Length - 1 > 0;
+                NKisparse = l2 > 2 && Convert.ToString(N - k, 2).Split("11").Length - 1 > 0;
+                if (!Kisparse && !NKisparse) { result = N - k; break; }
             }
-            result = (result > 0) ? result : -1;
+            result = (result >= 0) ? result : -1;
             return result;
+            //Kisparse = l > 3 && Convert.ToString(k, 2).Remove(0, 1).Remove(l - 2, 1).Split("00").Length - 1 > 0;
         }
     }
 }

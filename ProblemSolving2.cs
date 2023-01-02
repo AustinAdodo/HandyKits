@@ -34,7 +34,7 @@ namespace HandyKits
         public static int theLoveLetterMystery(string s)
         {
             int result = 0; int l = s.Length; int a = 0; int b = 0;
-            string sReverse = Reverse(s);b = (l + 1) / 2;
+            string sReverse = Reverse(s); b = (l + 1) / 2;
             string sSplit = (l % 2 == 0) ? s.Substring((l / 2), (l / 2)) : s.Substring(b, l - b);
             string sSplitReverse = (l % 2 == 0) ? Reverse(s.Substring(0, l / 2)) : Reverse(s.Substring(0, (l - 1) / 2));
             string lowerCase = "abcdefghijklmnopqrstuvwxyz";
