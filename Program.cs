@@ -11,7 +11,8 @@ internal class Program
         //queries.Add(new List<int> { 1 ,1, 286 });
         //queries.Add(new List<int> { 4 ,4, 882 });
         //Arrays.arrayManipulation1(4,queries);
-        ProblemSolving3.SparseBinaryDecomposition(4);
-        //ProblemSolving3.SparseBinaryDecomposition(26);
+        //ProblemSolving3.SparseBinaryDecomposition(4);
+        //ProblemSolving4.CountConformingBitmasks(1073741727, 1073741631, 1073741679);
+        ProblemSolving4.tester(819399173, 9843471);
     }
 }
