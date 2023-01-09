@@ -1,6 +1,7 @@
 ﻿using HandyKits;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,14 +61,16 @@ namespace HandyKits
     {
         private string name { get; set; }
         public Song NextSong { get; set; }
-        public List<Song> GetAllSongs { get; set; } = new List<Song>();
+
+        private static Song instance = null;
         public Song(string name)
         {
             this.name = name;
         }
+
         public bool IsInRepeatingPlaylist()
         {
-            if (this.GetAllSongs.Last() != null && this.GetAllSongs.Last().NextSong != null) return true;
+            //if (this.NextSong != null && this. ) return true;
             return false;
         }
     }
@@ -78,8 +81,6 @@ namespace HandyKits
             List<Song> songs = new List<Song>();
             Song first = new Song("Hello");
             Song second = new Song("Eye of the tiger");
-            first.GetAllSongs.Add(first);
-            first.GetAllSongs.Add(second);
             first.NextSong = second;
             second.NextSong = first;
             Console.WriteLine(first.IsInRepeatingPlaylist());

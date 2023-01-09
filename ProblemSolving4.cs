@@ -3,11 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace HandyKits
 {
     internal class ProblemSolving4
     {
+        //class Program
+        //{
+        //    static void Main(string[] args)
+        //    {
+        //        BinarySearchTree tree = new BinarySearchTree();
+        //        tree.root = new Node(10);
+        //        tree.root.left = new Node(5);
+        //        tree.root.right = new Node(15);
+
+        //        int value = 5;
+        //        if (tree.Contains(value))
+        //        {
+        //            Console.WriteLine("The tree contains the value " + value);
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("The tree does not contain the value " + value);
+        //        }
+
+        //        value = 20;
+        //        if (tree.Contains(value))
+        //        {
+        //            Console.WriteLine("The tree contains the value " + value);
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("The tree does not contain the value " + value);
+        //        }
+        //    }
+        //}
+
         public static string[] UniqueNames(string[] names1, string[] names2)
         {
             string[] newArray = new string[names1.Length + names2.Length];
@@ -93,7 +125,7 @@ namespace HandyKits
                 subArrays.Add(arr);
             }
             int max = subArrays[0].Count;
-            foreach(List<int> ar in subArrays)
+            foreach (List<int> ar in subArrays)
             {
                 if (ar.Count > max)
                 {
@@ -103,4 +135,36 @@ namespace HandyKits
             return max;
         }
     }
+
+    //public Node(int value)
+    //{
+    //    this.value = value;
+    //}
+
+
+    //class BinarySearchTree
+    //{
+    //    public Node root;
+
+    //    public bool Contains(int value)
+    //    {
+    //        Node current = root;
+    //        while (current != null)
+    //        {
+    //            if (value < current.value)
+    //            {
+    //                current = current.left;
+    //            }
+    //            else if (value > current.value)
+    //            {
+    //                current = current.right;
+    //            }
+    //            else
+    //            {
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
+    //}
 }
