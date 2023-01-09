@@ -55,5 +55,35 @@ namespace HandyKits
             return this.alerts[id];
         }
     }
+
+    public class Song
+    {
+        private string name { get; set; }
+        public Song NextSong { get; set; }
+        public List<Song> GetAllSongs { get; set; } = new List<Song>(); 
+        public song(string name)
+        {
+            this.name = name;
+        }
+        public bool IsInRepeatingPlaylist()
+        {
+            if (this.GetAllSongs().Last() != null) return true;
+            return false;
+        }
+    }
+    //public static void Main(string[] args)
+    //{
+    //    List<Song> songs = new List<Song>();
+    //    Song first = new Song("Hello");
+    //    Song second = new Song("Eye of the tiger");
+    //    songs.Add(first);
+    //    songs.Add(second);
+
+    //    first.NextSong = second;
+    //    second.NextSong = first;
+
+    //    Console.WriteLine(first.IsInRepeatingPlaylist());
+    //}
 }
+
 
