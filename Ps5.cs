@@ -60,30 +60,52 @@ namespace HandyKits
     {
         private string name { get; set; }
         public Song NextSong { get; set; }
-        public List<Song> GetAllSongs { get; set; } = new List<Song>(); 
-        public song(string name)
+        public List<Song> GetAllSongs { get; set; } = new List<Song>();
+        public Song(string name)
         {
             this.name = name;
         }
         public bool IsInRepeatingPlaylist()
         {
-            if (this.GetAllSongs().Last() != null) return true;
+            if (this.GetAllSongs.Last() != null && this.GetAllSongs.Last().NextSong != null) return true;
             return false;
         }
     }
-    //public static void Main(string[] args)
-    //{
-    //    List<Song> songs = new List<Song>();
-    //    Song first = new Song("Hello");
-    //    Song second = new Song("Eye of the tiger");
-    //    songs.Add(first);
-    //    songs.Add(second);
+    public static class solution
+    {
+        public static void x()
+        {
+            List<Song> songs = new List<Song>();
+            Song first = new Song("Hello");
+            Song second = new Song("Eye of the tiger");
+            first.GetAllSongs.Add(first);
+            first.GetAllSongs.Add(second);
+            first.NextSong = second;
+            second.NextSong = first;
+            Console.WriteLine(first.IsInRepeatingPlaylist());
+        }
+    }
 
-    //    first.NextSong = second;
-    //    second.NextSong = first;
+    public class TextInput
+    {
+        public string val { get; set; }
+        public virtual void Add(char value) { this.val += value.ToString(); }
+        public string GetValue() { return this.val.ToString(); }
+    }
 
-    //    Console.WriteLine(first.IsInRepeatingPlaylist());
-    //}
+    public class NumericInput : TextInput
+    {
+        int a = 0;
+        public string tin { get; set; }
+        public override void Add(char value)
+        {
+            if (int.TryParse(value.ToString(), out a))
+            {
+                this.tin += a;
+            }
+            this.val = this.tin;
+        }
+    }
 }
 
 

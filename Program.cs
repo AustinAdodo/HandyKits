@@ -13,6 +13,11 @@ internal class Program
         //Arrays.arrayManipulation1(4,queries);
         //ProblemSolving3.SparseBinaryDecomposition(4);
         //ProblemSolving4.CountConformingBitmasks(1073741727, 1073741631, 1073741679);
-        ProblemSolving4.tester(819399173, 9843471);
+        //ProblemSolving4.tester(819399173, 9843471);
+        TextInput input = new NumericInput();
+        input.Add('1');
+        input.Add('a');
+        input.Add('0');
+        Console.WriteLine(input.GetValue());
     }
 }
