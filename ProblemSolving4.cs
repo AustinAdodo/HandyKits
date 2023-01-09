@@ -10,7 +10,6 @@ namespace HandyKits
     {
         public static string[] UniqueNames(string[] names1, string[] names2)
         {
-            names1.ToList().AddRange(names2.ToList());
             string[] newArray = new string[names1.Length + names2.Length];
             Array.Copy(names1, newArray, names1.Length);
             Array.Copy(names2, 0, newArray, names1.Length, names2.Length);
@@ -71,6 +70,37 @@ namespace HandyKits
                 result += (CheckPracticalConformance(A, nums2[i]) || CheckPracticalConformance(B, nums2[i]) || CheckPracticalConformance(C, nums2[i])) ? 1 : 0;
             }
             return result;
+        }
+
+        //Picking Numbers
+        public static int pickingNumbers(List<int> a)
+        {
+            a.OrderBy(a => a);
+            List<List<int>> subArrays = new();
+            for (int i = 0; i < a.Count; i++)
+            {
+                int r = a[i];
+                int rplus = r + 1;
+                List<int> arr = new();
+                arr.Add(r);
+                for (int j = i + 1; j < a.Count; ++j)
+                {
+                    if (a[j] == r || a[j] == rplus)
+                    {
+                        arr.Add(a[j]);
+                    }
+                }
+                subArrays.Add(arr);
+            }
+            int max = subArrays[0].Count;
+            foreach(List<int> ar in subArrays)
+            {
+                if (ar.Count > max)
+                {
+                    max = ar.Count;
+                }
+            }
+            return max;
         }
     }
 }
