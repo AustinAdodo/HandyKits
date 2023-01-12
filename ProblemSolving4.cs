@@ -47,6 +47,24 @@ namespace HandyKits
             Array.Copy(names2, 0, newArray, names1.Length, names2.Length);
             return newArray.ToList().Distinct().ToArray();
         }
+        //full counting sort
+        public static void countSort(List<List<string>> arr)
+        {
+            int mid = (int)Math.Ceiling((decimal)arr.Count / 2m);
+            List<List<string>> sorted = new List<List<string>>();
+
+            for (int i = 0; i < arr.Count; i++)
+            {
+                int val = int.Parse(arr[i][0]);
+                while ((sorted.Count - 1) < val) sorted.Add(new List<string>());
+                if (i < mid) sorted[val].Add("-");
+                else sorted[val].Add(arr[i][1]);
+            }
+
+            string result = string.Empty;
+            for (int n = 0; n < sorted.Count; n++) result += string.Join(" ", sorted[n]) + " ";
+            Console.Write(result.Trim());
+        }
 
         //bomberman
         public static List<string> bomberMan(int n, List<string> grid)
