@@ -9,36 +9,33 @@ namespace HandyKits
 {
     internal class ProblemSolving4
     {
-        //class Program
-        //{
-        //    static void Main(string[] args)
-        //    {
-        //        BinarySearchTree tree = new BinarySearchTree();
-        //        tree.root = new Node(10);
-        //        tree.root.left = new Node(5);
-        //        tree.root.right = new Node(15);
+        //Can you detec a pallindrome..
 
-        //        int value = 5;
-        //        if (tree.Contains(value))
-        //        {
-        //            Console.WriteLine("The tree contains the value " + value);
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("The tree does not contain the value " + value);
-        //        }
-
-        //        value = 20;
-        //        if (tree.Contains(value))
-        //        {
-        //            Console.WriteLine("The tree contains the value " + value);
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("The tree does not contain the value " + value);
-        //        }
-        //    }
-        //}
+        //create Pallindrome
+        //reversed is O(1) only when the collection conforms to RandomAccessCollection (which String does not!)
+        public static int palindromeIndex(string s)  //s[s.Length - 1 - i].charCodeAt(0)
+        {
+            char [] charArray = s.ToCharArray(); 
+            for (int i = 0; i < Math.Floor((double)s.Length / 2); ++i)
+            {
+                if (char.ConvertToUtf32(charArray[i].ToString(),0) != char.ConvertToUtf32(charArray[s.Length - 1 - i].ToString(),0))
+                {
+                    var arr1 = s.Split("");
+                    var arr2 = s.Split("");
+                    arr1[i] = "";
+                    arr2[s.Length - 1 - i] = "";
+                    if (String.Join("", arr1) == String.Join("", arr1.Reverse()))
+                    {
+                        return i;
+                    }
+                    else if (String.Join("", arr2) == String.Join("", arr2.Reverse()))
+                    {
+                        return (s.Length - 1) - i;
+                    }
+                }
+            }
+            return -1;
+        }
 
         public static string[] UniqueNames(string[] names1, string[] names2)
         {
