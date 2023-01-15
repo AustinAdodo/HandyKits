@@ -10,6 +10,61 @@ namespace HandyKits
 {
     internal class Ps5
     {
+        /// <summary>
+        /// Advanced Insertion Sort Ananlysis
+        /// </summary>
+        public static long Merge(List<int> arr, int l, int m, int r)
+        {
+            int lLength = m - l + 1;
+            int rLength = r - m;
+
+            int[] tempLeft = new int[lLength];
+            int[] tempRight = new int[rLength];
+
+            long shifts = 0;
+
+            int i = 0, j = 0;
+            for (i = 0; i < lLength; i++) tempLeft[i] = arr[l + i];
+            for (j = 0; j < rLength; j++) tempRight[j] = arr[m + j + 1];
+
+            i = 0;
+            j = 0;
+            int k = l;
+
+            while (i < lLength && j < rLength)
+            {
+                if (tempLeft[i] <= tempRight[j]) arr[k++] = tempLeft[i++];
+                else
+                {
+                    arr[k++] = tempRight[j++];
+                    shifts += (long)(lLength - i);
+                }
+            }
+
+            while (i < lLength) arr[k++] = tempLeft[i++];
+            while (j < rLength) arr[k++] = tempRight[j++];
+
+            return shifts;
+        }
+        public static long Sort(List<int> arr, int l, int r)
+        {
+            if (l >= r) return 0;
+            int mid = l + (r - l) / 2;
+            long shifts = 0;
+
+            shifts += Sort(arr, l, mid);
+            shifts += Sort(arr, (mid + 1), r);
+            shifts += Merge(arr, l, mid, r);
+
+            return shifts;
+        }
+        public static long insertionSort(List<int> arr)
+        {
+            long result = 0;
+            //Result.Sort(arr, 0, (arr.Count - 1))
+            return result;
+        }
+
         //Matrix layer rotation..
         public static void matrixRotation(List<List<int>> matrix, int r)
         {
@@ -56,7 +111,6 @@ namespace HandyKits
             foreach (List<int> row in matrix) Console.WriteLine(string.Join(" ", row));
         }
     }
-
     public interface IAlertDAO
     {
         public Guid AddAlert(DateTime time);

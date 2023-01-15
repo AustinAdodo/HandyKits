@@ -15,10 +15,10 @@ namespace HandyKits
         //reversed is O(1) only when the collection conforms to RandomAccessCollection (which String does not!)
         public static int palindromeIndex(string s)  //s[s.Length - 1 - i].charCodeAt(0)
         {
-            char [] charArray = s.ToCharArray(); 
+            char[] charArray = s.ToCharArray();
             for (int i = 0; i < Math.Floor((double)s.Length / 2); ++i)
             {
-                if (char.ConvertToUtf32(charArray[i].ToString(),0) != char.ConvertToUtf32(charArray[s.Length - 1 - i].ToString(),0))
+                if (char.ConvertToUtf32(s[i].ToString(), 0) != char.ConvertToUtf32(s[s.Length - 1 - i].ToString(), s.Length - 1))
                 {
                     var arr1 = s.Split("");
                     var arr2 = s.Split("");
@@ -30,7 +30,7 @@ namespace HandyKits
                     }
                     else if (String.Join("", arr2) == String.Join("", arr2.Reverse()))
                     {
-                        return (s.Length - 1) - i;
+                        return s.Length - 1 - i;
                     }
                 }
             }
@@ -44,6 +44,7 @@ namespace HandyKits
             Array.Copy(names2, 0, newArray, names1.Length, names2.Length);
             return newArray.ToList().Distinct().ToArray();
         }
+
         //full counting sort
         public static void countSort(List<List<string>> arr)
         {
