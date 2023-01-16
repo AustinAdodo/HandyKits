@@ -60,9 +60,7 @@ namespace HandyKits
         }
         public static long insertionSort(List<int> arr)
         {
-            long result = 0;
-            //Result.Sort(arr, 0, (arr.Count - 1))
-            return result;
+            return Ps5.Sort(arr, 0, (arr.Count - 1));
         }
 
         //Matrix layer rotation..

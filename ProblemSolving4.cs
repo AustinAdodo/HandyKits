@@ -13,28 +13,41 @@ namespace HandyKits
 
         //create Pallindrome
         //reversed is O(1) only when the collection conforms to RandomAccessCollection (which String does not!)
-        public static int palindromeIndex(string s)  //s[s.Length - 1 - i].charCodeAt(0)
+        public static int palindromeIndex(string s)
         {
-            char[] charArray = s.ToCharArray();
-            for (int i = 0; i < Math.Floor((double)s.Length / 2); ++i)
+            if (isPalindrome(s))
+                return -1;
+            else
             {
-                if (char.ConvertToUtf32(s[i].ToString(), 0) != char.ConvertToUtf32(s[s.Length - 1 - i].ToString(), s.Length - 1))
+                var len = s.Length;
+                for (int i = 0; i < len / 2; ++i)
                 {
-                    var arr1 = s.Split("");
-                    var arr2 = s.Split("");
-                    arr1[i] = "";
-                    arr2[s.Length - 1 - i] = "";
-                    if (String.Join("", arr1) == String.Join("", arr1.Reverse()))
+                    var left = s[i];
+                    var right = s[len - 1 - i];
+
+                    if (left != right)
                     {
-                        return i;
-                    }
-                    else if (String.Join("", arr2) == String.Join("", arr2.Reverse()))
-                    {
-                        return s.Length - 1 - i;
+                        var sub = s.Substring(i, len - i * 2);
+                        var sublen = sub.Length;
+                        if (isPalindrome(sub.Substring(0, sublen - 1)))
+                        {
+                            return i + sublen - 1;
+                        }
+                        else if (isPalindrome(sub.Substring(1, sublen - 1)))
+                        {
+                            return i;
+                        }
                     }
                 }
             }
+
             return -1;
+        }
+        public static bool isPalindrome(string s)
+        {
+            var ch = s.ToCharArray();
+            Array.Reverse(ch);
+            return s.Equals(new string(ch));
         }
 
         public static string[] UniqueNames(string[] names1, string[] names2)
