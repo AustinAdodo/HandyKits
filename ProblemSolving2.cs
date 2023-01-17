@@ -307,75 +307,8 @@ namespace HandyKits
             string result = String.Empty;
             return result;
         }
-        //private static HashSet<string> hasher = new HashSet<string>();
-
-        //the QUEEN.(Chess game Algorithm optimized) AGzion.
-        public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
-        {
-            int result = 0; int y = 0;
-            c_q = c_q - 1; r_q = r_q - 1;
-            string[,] ChessBoard = new string[n, n];
-            List<int> zeroIndexed = new();
-            List<int> oneIndexed = new();
-            if (obstacles.Count != 0)
-            {
-                for (int i = 0; i < obstacles.Count; i++)
-                {
-                    zeroIndexed[i] = obstacles[i][0] - 1;
-                    oneIndexed[i] = obstacles[i][1] - 1;
-                }
-            }
-
-            //provide identity to each square
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    ChessBoard[i, j] = i + "" + j;
-                }
-            }
-
-            //lower left to right diagonal count
-            y = (r_q - c_q + 1);
-            for (int x = c_q - Math.Abs(r_q - c_q); x <= c_q + Math.Abs(c_q - r_q); ++x)
-            {
-                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x < r_q) result -= r_q;
-                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) break;
-                if (ChessBoard[x, y] == r_q + "" + c_q) result += 0;
-                else { result++; }
-                y++;
-            }
-
-            //lower right to left diagonal count.
-            y = (c_q - r_q - 1);                     //y component increases, x decease.
-            for (int x = Math.Abs(r_q + c_q - 1); x-- > (n - r_q - 1);)
-            {
-                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x > r_q) result -= r_q;
-                if (zeroIndexed.Contains(x) && oneIndexed.Contains(y) && zeroIndexed.IndexOf(x) == oneIndexed.IndexOf(y) && x < r_q) break;
-                if (ChessBoard[x, y] == (r_q) + "" + (c_q)) result += 0;
-                else { result++; }
-                y++;
-            }
-
-            //left to right
-            for (int i = 0; i < n; i++)
-            {
-                if (zeroIndexed.Contains(r_q) && oneIndexed.Contains(i) && zeroIndexed.IndexOf(r_q) == oneIndexed.IndexOf(i) && i < r_q) result -= r_q;
-                if (zeroIndexed.Contains(r_q) && oneIndexed.Contains(i) && zeroIndexed.IndexOf(r_q) == oneIndexed.IndexOf(i) && i > r_q) break;
-                if (ChessBoard[r_q, i] == r_q + "" + c_q) result += 0;
-                else { result++; }
-            }
-
-            //down to up
-            for (int i = 0; i < n; i++)
-            {
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(c_q) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(c_q) && i < r_q) result -= r_q;
-                if (zeroIndexed.Contains(i) && oneIndexed.Contains(c_q) && zeroIndexed.IndexOf(i) == oneIndexed.IndexOf(c_q) && i > r_q) break;
-                if (ChessBoard[i, c_q] == r_q + "" + c_q) result += 0;
-                else { result++; }
-            }
-            return result;
-        }
+       
+        
         //jumping clouds
         public static int jumpingOnClouds(List<int> c)
         {

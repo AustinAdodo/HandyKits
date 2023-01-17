@@ -108,7 +108,81 @@ namespace HandyKits
             }
             foreach (List<int> row in matrix) Console.WriteLine(string.Join(" ", row));
         }
+
+        //private static HashSet<string> hasher = new HashSet<string>();
+        //the QUEEN.(Chess game Algorithm optimized) AGzion.
+        private static HashSet<string> obstacleHash = new HashSet<string>(); //string interpolation
+        public static int MoveLeft(int qRow, int qCol, int count)
+        {
+            if (qCol < 1 || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveLeft(qRow, (qCol - 1), (count + 1));
+        }
+
+        public static int MoveLeftDown(int qRow, int qCol, int count)
+        {
+            if (qCol < 1 || qRow < 1 || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveLeftDown((qRow - 1), (qCol - 1), (count + 1));
+        }
+
+        public static int MoveDown(int qRow, int qCol, int count)
+        {
+            if (qRow < 1 || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveDown((qRow - 1), qCol, (count + 1));
+        }
+                         
+        public static int MoveRightDown(int qRow, int qCol, int length, int count)
+        {
+            if (qRow < 1 || qCol > length || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveRightDown((qRow - 1), (qCol + 1), length, (count + 1));
+        }
+
+        public static int MoveRight(int qRow, int qCol, int length, int count)
+        {
+            if (qCol > length || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveRight(qRow, (qCol + 1), length, (count + 1));
+        }
+
+        public static int MoveRightUp(int qRow, int qCol, int length, int count)
+        {
+            if (qRow > length || qCol > length || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveRightUp((qRow + 1), (qCol + 1), length, (count + 1));
+        }
+
+        public static int MoveUp(int qRow, int qCol, int length, int count)
+        {
+            if (qRow > length || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveUp((qRow + 1), qCol, length, (count + 1));
+        }
+
+        public static int MoveLeftUp(int qRow, int qCol, int length, int count)
+        {
+            if (qRow > length || qCol < 1 || obstacleHash.Contains($"{qRow}_{qCol}")) return count - 1;
+            return MoveLeftUp((qRow + 1), (qCol - 1), length, (count + 1));
+        }
+
+        public static int queensAttack(int n, int k, int r_q, int c_q, List<List<int>> obstacles)
+        {
+            foreach (List<int> ob in obstacles)
+            {
+                obstacleHash.Add($"{ob[0]}_{ob[1]}");
+            }
+            int count = 0;
+            count += MoveLeft(r_q, c_q, 0);
+            count += MoveLeftDown(r_q, c_q, 0);
+            count += MoveDown(r_q, c_q, 0);
+            count += MoveRightDown(r_q, c_q, n, 0);
+            count += MoveRight(r_q, c_q, n, 0);
+            count += MoveRightUp(r_q, c_q, n, 0);
+            count += MoveUp(r_q, c_q, n, 0);
+            count += MoveLeftUp(r_q, c_q, n, 0);
+
+            return count;
+        }
     }
+
+    /// <summary>
+    /// Sample
+    /// </summary>
     public interface IAlertDAO
     {
         public Guid AddAlert(DateTime time);
