@@ -10,6 +10,20 @@ namespace HandyKits
 {
     internal class Ps5
     {
+        //minimum absolute difference
+        public static void closestNumbers(List<int> numbers)
+        {
+            List<string>row = new List<string>(); 
+            List<int>results = new List<int>();
+            int temp = 0;
+            
+            numbers = numbers.OrderByDescending(a=>a).ToList();
+            temp = numbers[0] - numbers[1];
+            for (int i = 1; i < numbers.Count; i++)
+            {
+                if (temp < (numbers[i] - numbers[i - 1])) { temp = (numbers[i] - numbers[i - 1]); }
+            }
+    }
         /// <summary>
         /// Advanced Insertion Sort Ananlysis
         /// </summary>

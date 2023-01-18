@@ -512,7 +512,7 @@ namespace HandyKits
             return s;
         }
         //minium distance
-        public static int minimumDistances(List<int> a)
+        public static int minimumDistances(List<int> a)//Reference
         {
             int min = a.Count;
             for (int i = 0; i < (a.Count - 1); i++)

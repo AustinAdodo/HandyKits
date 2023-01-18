@@ -164,7 +164,7 @@ namespace HandyKits
             return max;
         }
     }
-
+   //Inorder Node is one which contains the smallest value but > value of the current Node after traversing the whole node 
     class Node
     {
         public int value { get; set; }
