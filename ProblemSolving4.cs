@@ -165,35 +165,41 @@ namespace HandyKits
         }
     }
 
-    //public Node(int value)
-    //{
-    //    this.value = value;
-    //}
+    class Node
+    {
+        public int value { get; set; }
+        public Node left { get; set; }
+        public Node right { get; set; }
+        public Node(int value,Node left ,Node right)
+        {
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+    }
 
-
-    //class BinarySearchTree
-    //{
-    //    public Node root;
-
-    //    public bool Contains(int value)
-    //    {
-    //        Node current = root;
-    //        while (current != null)
-    //        {
-    //            if (value < current.value)
-    //            {
-    //                current = current.left;
-    //            }
-    //            else if (value > current.value)
-    //            {
-    //                current = current.right;
-    //            }
-    //            else
-    //            {
-    //                return true;
-    //            }
-    //        }
-    //        return false;
-    //    }
-    //}
+    class BinarySearchTree
+    {
+        public Node root;
+        public bool Contains(int value)
+        {
+            Node current = root;
+            while (current != null)
+            {
+                if (value < current.value)
+                {
+                    current = current.left;
+                }
+                else if (value > current.value)
+                {
+                    current = current.right;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }
