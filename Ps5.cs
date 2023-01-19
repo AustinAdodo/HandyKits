@@ -10,20 +10,90 @@ namespace HandyKits
 {
     internal class Ps5
     {
-        //minimum absolute difference
-        public static void closestNumbers(List<int> numbers)
+        //Beautiful Triplets
+        public static int beautifulTriplets(int d, List<int> arr)
         {
-            List<string>row = new List<string>(); 
-            List<int>results = new List<int>();
-            int temp = 0;
-            
-            numbers = numbers.OrderByDescending(a=>a).ToList();
-            temp = numbers[0] - numbers[1];
-            for (int i = 1; i < numbers.Count; i++)
+            int count = 0;
+            for (int i = 0; i < (arr.Count - 2); i++)
             {
-                if (temp < (numbers[i] - numbers[i - 1])) { temp = (numbers[i] - numbers[i - 1]); }
+                for (int j = i; j < (arr.Count - 1); j++)
+                {
+                    if ((arr[j] - arr[i]) != d) continue;
+                    for (int k = j; k < arr.Count; k++)
+                    {
+                        if ((arr[k] - arr[j]) == d) count++;
+                    }
+                }
             }
-    }
+
+            return count;
+        }
+
+        //ALmost Sorted
+        public static void AlmostSorted(List<int> arr)
+        {
+            List<int> swapArr = arr.Select(x => x).ToList();
+            List<int> reverseArr = arr.Select(x => x).ToList();
+            int l = 0, r = 0;
+            // iterate through array
+            for (int i = 0; i < (arr.Count - 1); i++)
+            {
+
+                // compare values
+                if (arr[i] < arr[i + 1]) continue;
+                l = i;
+
+                int index = (i + 1);
+                while (index < (arr.Count - 1) && arr[i] > arr[index + 1]) index++;
+                r = index;
+
+                // try swapping
+                int temp = swapArr[index];
+                swapArr[index] = swapArr[i];
+                swapArr[i] = temp;
+
+                // try reversing
+                for (int j = 0; j <= ((index - i) / 2); j++)
+                {
+                    temp = reverseArr[i + j];
+                    reverseArr[i + j] = reverseArr[index - j];
+                    reverseArr[index - j] = temp;
+                }
+
+                // only one operation allowed so break out of loop
+                break;
+            }
+            // test if either is sorted
+            int x = 1;
+            int y = 1;
+            while (x < swapArr.Count && swapArr[x] > swapArr[x - 1]) x++;
+            while (y < reverseArr.Count && reverseArr[y] > reverseArr[y - 1]) y++;
+
+            if (x == swapArr.Count)
+            {
+                Console.WriteLine("yes");
+                Console.WriteLine($"swap {l + 1} {r + 1}");
+            }
+            else if (y == reverseArr.Count)
+            {
+                Console.WriteLine("yes");
+                Console.WriteLine($"reverse {l + 1} {r + 1}");
+            }
+            else Console.WriteLine("no");
+        }
+
+        //Funny String
+        public static string funnyString(string s)
+        {
+            for (int i = 0; i < (s.Length - 1); i++)
+            {
+                int absDiffForward = (int)Math.Abs((decimal)((int)s[i] - (int)s[i + 1]));
+                int absDiffReverse = (int)Math.Abs((decimal)((int)s[s.Length - i - 1] - (int)s[s.Length - i - 2]));
+                if (absDiffForward != absDiffReverse) return "Not Funny";
+            }
+            return "Funny";
+        }
+
         /// <summary>
         /// Advanced Insertion Sort Ananlysis
         /// </summary>
