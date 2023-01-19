@@ -109,12 +109,12 @@ namespace HandyKits
         public static bool IsValidSubstitutions(string s, int subs)
         {
             int count = subs; int i = 0; int j = s.Length - 1;
-            bool result = false;
+            bool result = false; string res = String.Empty;
             if (subs == 0 && isPalindrome(s)) result = true;
             while (count > 0)
             {
-                s.Replace(s[i], s[j]);
-                if (isPalindrome(s)) { return true; }
+                res = s.Replace(s[i], s[j]);
+                if (isPalindrome(res)) { return true; }
                 count--; i++; j--;
             }
             return result;
@@ -127,7 +127,7 @@ namespace HandyKits
             for (int i = 0; i < startIndex.Count; i++)
             {
                 string test = s.Substring(startIndex[i], endIndex[i] + 1);
-                if (ProblemSolving4.IsValidSubstitutions(s, Subs[i]) && isPalindrome(test)) result += "1";
+                if (IsValidSubstitutions(s, Subs[i]) && isPalindrome(test)) result += "1";
                 else { result += "0"; }   
             }
             return result;
@@ -138,7 +138,6 @@ namespace HandyKits
         {
             List<string> row = new List<string>();
             List<List<int>> results = new List<List<int>>();
-            int temp = 0;
             //save the first indexes of operands with each difference 
             numbers = numbers.OrderBy(a => a).ToList();
             for (int i = 0; i < numbers.Count; i++)
@@ -146,11 +145,11 @@ namespace HandyKits
                 if (i > 0) results.Add(new List<int> { (numbers[i] - numbers[i - 1]), numbers[i - 1], numbers[i] });
             }
             //sort
-            results.Sort((x, y) => x[1].CompareTo(y[1]));
-            results.Reverse();
+            results.Sort((x, y) => x[0].CompareTo(y[0]));
+            //results.Reverse();
             for (int i = 0; i < results.Count; i++)
             {
-                Console.WriteLine("{0} {1}", results[i][1].ToString(), results[i][2].ToString());
+                Console.WriteLine("{0} {1} {2}",results[i][0], results[i][1].ToString(), results[i][2].ToString());
             }
         }
 
@@ -187,6 +186,91 @@ namespace HandyKits
             return -1;
         }
 
+        //Two Pluses Two Crosses
+        private static int[,] mtx;
+        private static void initMtx(List<string> grid)
+        {
+            int rowIdx = 0;
+            mtx = grid.Aggregate(new int[grid[0].Length, grid.Count], (m, s) =>
+            {
+                s.Aggregate(0, (idx, c) =>
+                {
+                    m[idx, rowIdx] = c.ToString().ToUpper() == "G" ? 1 : 0;
+                    return ++idx;
+                });
+                rowIdx++;
+                return m;
+            });
+
+        }
+        private static int getSingleProd(int k1, int[] coord1, int k2, int[] coord2)
+        {
+            if (k1 == 3 && coord1[0] == 9 && coord1[1] == 4 && k2 == 6 && coord2[0] == 5 && coord2[1] == 7)
+            { }
+            int dx = Math.Abs(coord1[0] - coord2[0]), dy = Math.Abs(coord1[1] - coord2[1]);
+            if (dx > dy) { dx ^= dy; dy ^= dx; dx ^= dy; } // i.e. make dx <= dy
+            if (k1 > k2) { k1 ^= k2; k2 ^= k1; k1 ^= k2; } // i.e. make k1 <= k2
+
+
+            while (dx == 0 && k2 + k1 > dy + 1)
+            {
+                if (k2 > k1) k2--; else k1--;
+            }
+            if (dx > 0 && dy < k1) // i.e. dx < k1 && dx < k2 - 2 intersections
+            {
+                if ((1 + 4 * (dy - 1)) * (1 + 4 * (dy - 1)) > (1 + 4 * (dx - 1)) * (1 + 4 * (k2 - 1))) { k1 = dy; k2 = dy; } else { k1 = dx; }
+            }
+            else if (dx > 0 && dx < k1 && dy < k2) // 1 intersection
+            {
+                if ((1 + 4 * (dx - 1)) * (1 + 4 * (k2 - 1)) > (1 + 4 * (k1 - 1)) * (1 + 4 * (dy - 1))) k1 = dx; else k2 = dy;
+            }
+            return (1 + 4 * (k1 - 1)) * (1 + 4 * (k2 - 1));
+        }
+        private static int getMaxProdSameKey(int k, IEnumerable<int[]> lstCoords) // , ref int max, ref int min
+        {
+            int[] coords1 = lstCoords.ElementAt(0);
+
+            return Math.Max(lstCoords.Skip(1).Aggregate(0, (prod, cur) => Math.Max(prod, getSingleProd(k, cur, k, coords1))),
+                lstCoords.Count() > 1 ? getMaxProdSameKey(k, lstCoords.Skip(1)) : 0);
+        }
+        private static int getMaxProd2Lists(int k1, IEnumerable<int[]> lstCoordsLo, int k2, IEnumerable<int[]> lstCoordsHi) // , ref int max, ref int min
+        {
+            return lstCoordsHi.Aggregate(0, (prod, curHi) => Math.Max(prod, lstCoordsLo.Aggregate(prod, (prd, curLo) => Math.Max(prd, getSingleProd(k1, curLo, k2, curHi)))));
+        }
+        public static int twoPluses(List<string> grid)
+        {
+            initMtx(grid);
+            int max = 0, totCnt = 0;
+            var dict = new Dictionary<int, List<int[]>>();
+            for (int j = 0; j < mtx.GetLength(1); j++) // cols-loop
+                for (int i = 0; i < mtx.GetLength(0); i++) // rows-loop
+                {
+                    if (mtx[i, j] == 0) continue;
+                    int k = 1;
+                    while (i - k >= 0 && i + k < mtx.GetLength(0) && j - k >= 0 && j + k < mtx.GetLength(1)
+                    && mtx[i - k, j] * mtx[i + k, j] * mtx[i, j - k] * mtx[i, j + k] == 1) k++;
+                    max = Math.Max(max, k);
+                    totCnt++;
+                    if (dict.ContainsKey(k)) dict[k].Add(new int[] { i, j });
+                    else dict[k] = new List<int[]> { new int[] { i, j } };
+                }
+            if (totCnt < 2) return 0;
+            if (max == 1) return 1;
+            int idx = 0;
+            var ordKeys = dict.Keys.OrderByDescending(k => k);
+            return ordKeys.Aggregate(0, (prod, k) =>
+            {
+                if (prod < (1 + 4 * (k - 1)) * (1 + 4 * (k - 1)))
+                {
+                    prod = Math.Max(prod, getMaxProdSameKey(k, dict[k]));
+                    if (idx++ < dict.Keys.Count)
+                        prod = Math.Max(prod, ordKeys.Skip(idx).Aggregate(prod, (p, kk) => p < (1 + 4 * (k - 1)) * (1 + 4 * (kk - 1)) ? Math.Max(p, getMaxProd2Lists(kk, dict[kk], k, dict[k])) : p));
+                }
+                return prod;
+            });
+        }
+
+        //Unique Names
         public static string[] UniqueNames(string[] names1, string[] names2)
         {
             string[] newArray = new string[names1.Length + names2.Length];
