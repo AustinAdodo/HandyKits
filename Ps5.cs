@@ -262,6 +262,56 @@ namespace HandyKits
 
             return count;
         }
+
+        //Lady Bugs
+        public static string happyLadybugs(string b)
+        {
+            var distChars = b.Distinct().Where(x => x != '_').ToArray();
+            var occurence = new List<int>();
+
+            for (int i = 0; i < distChars.Length; i++)
+            {
+                var character = distChars[i];
+
+                int occCount = 0;
+
+                for (int j = 0; j < b.Length; j++)
+                {
+
+                    if (b[j] == character)
+                        occCount++;
+                }
+
+                occurence.Add(occCount);
+            }
+            if (occurence.Contains(1))
+                return "NO";
+            if (!b.Contains('_'))
+            {
+                bool alreadyHappy = false;
+                for (int j = 0; j < b.Length; j++)
+                {
+                    if (j > 0 && j < (b.Length - 1))
+                    {
+                        if (b[j] == b[j - 1] || b[j] == b[j + 1])
+                        {
+                            alreadyHappy = true;
+                        }
+                        else
+                        {
+                            alreadyHappy = false;
+                            break;
+                        }
+                    }
+                }
+                if (alreadyHappy)
+                    return "YES";
+                else
+                    return "NO";
+            }
+            else
+                return "YES";
+        }
     }
 
     /// <summary>

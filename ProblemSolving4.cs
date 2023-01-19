@@ -96,6 +96,7 @@ namespace HandyKits
         {
             return true;
         }
+
         //IS Pallindrome
         public static bool isPalindrome(string s)
         {
