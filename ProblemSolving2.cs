@@ -307,8 +307,8 @@ namespace HandyKits
             string result = String.Empty;
             return result;
         }
-       
-        
+
+
         //jumping clouds
         public static int jumpingOnClouds(List<int> c)
         {
@@ -438,6 +438,9 @@ namespace HandyKits
         //bigger is greater
         public static string biggerIsGreater(string w)
         {
+            string[] lower_case = new string[] { "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o",
+            "p","q","r","s","t","u","v","w","x","y","z"};
+            int[] val = new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 };
             string result = String.Empty; string a = "";
             string[] swap = new string[2]; string[] splitter = new string[2];
             string[] draft = new string[w.Length];

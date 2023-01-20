@@ -9,6 +9,29 @@ namespace HandyKits
 {
     internal class ProblemSolving4
     {
+        //ABsolute Permutation
+        public static List<int> absolutePermutation(int n, int k)
+        {
+            if (k == 0) return Enumerable.Range(1, n).ToList();
+
+            HashSet<int> result = new();
+
+            for (int i = 1; i <= n; i++)
+            {
+                var permutationElement = i > k ? i - k : i + k;
+                if (permutationElement > n || result.Contains(permutationElement))
+                {
+                    permutationElement = i < k ? i - k : i + k;
+                    if (permutationElement > n || result.Contains(permutationElement))
+                    {
+                        return new List<int> { -1 };
+                    }
+                }
+                result.Add(permutationElement);
+            }
+            return result.ToList();
+        }
+
         //CavityMap
         public static List<string> cavityMap(List<string> grid)
         {
@@ -128,7 +151,7 @@ namespace HandyKits
             {
                 string test = s.Substring(startIndex[i], endIndex[i] + 1);
                 if (IsValidSubstitutions(s, Subs[i]) && isPalindrome(test)) result += "1";
-                else { result += "0"; }   
+                else { result += "0"; }
             }
             return result;
         }
@@ -149,7 +172,7 @@ namespace HandyKits
             //results.Reverse();
             for (int i = 0; i < results.Count; i++)
             {
-                Console.WriteLine("{0} {1} {2}",results[i][0], results[i][1].ToString(), results[i][2].ToString());
+                Console.WriteLine("{0} {1} {2}", results[i][0], results[i][1].ToString(), results[i][2].ToString());
             }
         }
 
@@ -270,6 +293,40 @@ namespace HandyKits
             });
         }
 
+        //ACMTeam
+        public static List<int> acmTeam(List<string> topic)
+        {
+            List<int> ints = new List<int>();
+            List<int> results = new List<int>();
+            int max = 0;
+            for (int i = 0; i < topic.Count - 1; i++)
+            {
+                for (int y = i + 1; y < topic.Count; y++)
+                {
+                    int syc = 0;
+                    for (int z = 0; z < topic[i].Length; z++)
+                    {
+                        if (topic[i][z] == '1' || topic[y][z] == '1')
+                        {
+                            syc++;
+                        }
+                    }
+                    results.Add(syc);
+                    if (syc > max)
+                        max = syc;
+                }
+            }
+            ints.Add(max);
+            int syac = 0;
+            for (int i = 0; i < results.Count; i++)
+            {
+                if (results[i] == max)
+                    syac++;
+            }
+            ints.Add(syac);
+            return ints;
+        }
+
         //Unique Names
         public static string[] UniqueNames(string[] names1, string[] names2)
         {
@@ -383,6 +440,22 @@ namespace HandyKits
                 }
             }
             return max;
+        }
+
+        //Manasa Stones
+        public static List<int> stones(int n, int a, int b)
+        {
+            n -= 1;
+            List<int> result = new List<int>();
+            result.Add(a * n);
+            result.Add(b * n);
+            for (int i = 1; i <= (n / 2); i++)
+            {
+                result.Add((a * i) + (b * (n - i)));
+                result.Add((b * i) + (a * (n - i)));
+            }
+            result.Sort();
+            return result.Distinct().ToList();
         }
     }
     //Inorder Node is one which contains the smallest value but > value of the current Node after traversing the whole node 
