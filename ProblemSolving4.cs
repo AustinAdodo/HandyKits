@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -9,6 +10,38 @@ namespace HandyKits
 {
     internal class ProblemSolving4
     {
+        //Two Strings
+        public static int alternate(string s)
+        {
+            var permArray = (from item1 in s.Distinct().ToArray()
+                             from item2 in s.Distinct().ToArray()
+                             where item1 > item2
+                             select new[] { item1, item2 }).ToList();
+            int returnLength = 0;
+
+            if (Regex.IsMatch(s, "^([a-z])(?!\\1)([a-z])(?:\\1\\2)*\\1?$"))
+            {
+                return s.Length;
+            }
+            else
+            {
+                for (int i = 0; i < permArray.Count; i++)
+                {
+                    var charList = new string(s.Distinct().ToArray());
+                    String chars = "[" + String.Concat(permArray[i]) + "]";
+                    var charArray = Regex.Replace(charList, chars, String.Empty).ToCharArray();
+                    String chars2 = "[" + String.Concat(charArray) + "]";
+                    string result = Regex.Replace(s, chars2, String.Empty);
+
+                    if (Regex.IsMatch(result, "^([a-z])(?!\\1)([a-z])(?:\\1\\2)*\\1?$") && result.Length > returnLength)
+                    {
+                        returnLength = result.Length;
+                    }
+                }
+            }
+            return returnLength;
+        }
+
         //ABsolute Permutation
         public static List<int> absolutePermutation(int n, int k)
         {
@@ -117,6 +150,7 @@ namespace HandyKits
         //do they belong Andela
         static bool DoTheyBelong(int AB, int AC, int BC)
         {
+            //do they belong on a defined cartesian plane exisitng on a defined area
             return true;
         }
 

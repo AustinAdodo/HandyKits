@@ -65,6 +65,25 @@ namespace HandyKits
             return area;
         }
 
+        //Strange Encounter
+        public static long strangeCounter(long t)
+        {
+            // find range that t falls within
+            long startTime = 1;
+            long startValue = 3;
+
+            while (t >= ((startValue * 2) - 2))
+            {
+                startValue *= 2;
+                startTime = startValue - 2;
+            }
+
+            // find time offset
+            long offset = (t - startTime);
+
+            return (startValue - offset);
+        }
+
         //ALmost Sorted
         public static void AlmostSorted(List<int> arr)
         {
@@ -348,6 +367,75 @@ namespace HandyKits
             else
                 return "YES";
         }
+
+        //BomberMan
+        private const char Bomb = 'O';
+        private const char Empty = '.';
+
+        private static List<string> Flip(IReadOnlyList<string> grid)
+        {
+            var y = grid.Count;
+            var x = grid[0].Length;
+            var flipped = new List<string>();
+            for (var i = 0; i < y; i++)
+            {
+                var line = new char[x];
+                for (var j = 0; j < x; j++)
+                {
+                    char value;
+                    if (grid[i][j] == Bomb ||
+                        i > 0 && grid[i - 1][j] == Bomb ||
+                        i < y - 1 && grid[i + 1][j] == Bomb ||
+                        j > 0 && grid[i][j - 1] == Bomb ||
+                        j < x - 1 && grid[i][j + 1] == Bomb)
+                    {
+                        value = Empty;
+                    }
+                    else
+                    {
+                        value = Bomb;
+                    }
+                    line[j] = value;
+                }
+                flipped.Add(new string(line));
+            }
+            return flipped;
+        }
+
+        public static List<string> bomberMan(int n, List<string> grid)
+        {
+            if (n == 1) return grid;
+
+            if (n % 2 == 0)
+            {
+                var padded = "".PadLeft(grid[0].Length, Bomb);
+                return grid.Select(_ => padded).ToList();
+            }
+
+            grid = Flip(grid);
+            if (n % 4 == 1) grid = Flip(grid);
+            return grid;
+        }
+
+        //Larry's Array
+        public static string larrysArray(List<int> A)
+        {
+            int ctr = 0;
+            var arr = A;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                for (int j = i + 1; j < arr.Count; j++)
+                {
+                    if (arr[i] > arr[j])
+                    {
+                        ctr += 1;
+                    }
+                }
+            }
+            string result = (ctr % 2 == 0) ? "YES" : "NO";
+            return result;
+        }
+
     }
 
     /// <summary>
