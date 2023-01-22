@@ -436,6 +436,146 @@ namespace HandyKits
             return result;
         }
 
+        //Fraudulent Notifications
+        static double GetMedian(int[] count, int d)
+        {
+            // count array has frequencies
+            int medianFreq = 0;
+            int freqSum = 0;
+
+            if (d % 2 == 1)
+            { // odd
+                medianFreq = d / 2 + 1;
+                for (int i = 0; i < count.Length; i++)
+                {
+                    freqSum += count[i];
+                    if (freqSum >= medianFreq)
+                        return (double)i;
+                }
+            }
+            else // even
+            {
+                medianFreq = d / 2;
+                for (int i = 0; i < count.Length; i++)
+                {
+                    freqSum += count[i];
+
+                    if (freqSum >= medianFreq)
+                    {
+                        int first = i;
+                        int second = freqSum > medianFreq ? i : i + 1;
+                        return ((double)(first + second)) / 2;
+                    }
+                }
+            }
+
+            return 0.0;
+        }
+        public static int activityNotifications(List<int> expenditure, int d)
+        {
+            int[] arr = expenditure.ToArray();
+
+            int[] count = new int[201]; // holds count of each element
+
+            // fill the count array with first d elements 
+            for (int i = 0; i < d; i++)
+            {
+                count[arr[i]] += 1;
+            }
+
+            int ans = 0;
+            for (int i = d; i < arr.Length; i++)
+            {
+                double median = GetMedian(count, d);
+                //Console.WriteLine("median: " + median);
+                if (arr[i] >= 2 * median)
+                {
+                    ans++;
+                }
+
+                // add next remove last
+                count[arr[i]] += 1;
+                count[arr[i - d]] -= 1;
+            }
+
+            return ans;
+        }
+
+        //lily's Homework
+        static int sort(int[] arr, bool reverse)
+        {
+            var len = arr.Length;
+            var dic = Enumerable.Range(0, len).ToDictionary(x => arr[x]);
+            var count = 0;
+            var arrB = new int[len];
+            Array.Copy(arr, arrB, len);
+            Array.Sort(arr);
+            if (reverse)
+            {
+                Array.Reverse(arr);
+            }
+            for (var i = 0; i < len; ++i)
+            {
+                if (arrB[i] != arr[i])
+                {
+                    ++count;
+                    var index = dic[arr[i]];
+                    var temp = arrB[i];
+                    arrB[i] = arrB[index];
+                    arrB[index] = temp;
+                    dic[temp] = index;
+                }
+            }
+            return count;
+        }
+
+        static int lilysHomework(int[] arr)
+        {
+            var length = arr.Length;
+            var arrB = new int[length];
+            Array.Copy(arr, arrB, length);
+            return Math.Min(sort(arr, true), sort(arrB, false));
+        }
+
+        //Bigger Is Greater
+        public static string biggerIsGreater(string w)
+        {
+
+            char[] tempArray = w.ToCharArray();
+            int i = tempArray.Length - 2;
+            while (i >= 0 && tempArray[i] >= tempArray[i + 1]) i--;
+            if (i == -1) return "no answer";
+            int j = tempArray.Length - 1;
+            while (j > i && tempArray[j] <= tempArray[i]) j--;
+            swap(tempArray, i, j);
+            reverse(tempArray, i + 1);
+            return new string(tempArray);
+        }
+        private static void reverse(char[] c, int start)
+        {
+            int end = c.Length - 1;
+            while (start <= end)
+            {
+                swap(c, start, end);
+                start++; end--;
+            }
+        }
+        private static void swap(char[] tempArray, int i, int j)
+        {
+            char temp = tempArray[i];
+            tempArray[i] = tempArray[j];
+            tempArray[j] = temp;
+        }
+        public static string Reverse(string w)
+        {
+            char[] cArray = w.ToCharArray();
+            string reverse = String.Empty;
+            for (int i = 0; i < w.Length - 1; i++)
+            {
+                reverse += cArray[i];
+            }
+            return reverse;
+        }
     }
 
     /// <summary>
