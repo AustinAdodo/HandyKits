@@ -491,27 +491,33 @@ namespace HandyKits
             result.Sort();
             return result.Distinct().ToList();
         }
+
+        //public static int populateNode()
+        //{
+        //    int result = 0;
+        //    Node root = new Node(1, new Node(2, new Node(4), new Node(5))
+        //        , new Node(3, new Node(6), new Node(7)));
+        //    return result;
+        //}
     }
     //Inorder Node is one which contains the smallest value but > value of the current Node after traversing the whole node 
     class Node
     {
         public int value { get; set; }
-        public Node left { get; set; }
-        public Node right { get; set; }
-        public Node(int value, Node left, Node right)
+        public Node? left { get; set; }
+        public Node? right { get; set; }
+        public Node(int value)
         {
             this.value = value;
-            this.left = left;
-            this.right = right;
         }
     }
 
     class BinarySearchTree
     {
-        public Node root;
+        public Node? root;
         public bool Contains(int value)
         {
-            Node current = root;
+            Node? current = root;
             while (current != null)
             {
                 if (value < current.value)

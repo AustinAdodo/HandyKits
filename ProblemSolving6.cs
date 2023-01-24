@@ -1,14 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HandyKits
 {
+    //create software called bubbles to prevent plaigarisation
     internal class ProblemSolving6
     {
+        //    Write a function that takes 
+        //        a string as an argument and 
+        //        returns the string with the first letter of each word capitalized.Words are separated by spaces.
+        //        Test Cases
+        //1. welcome to andela => Welcome To Andela
+        //2. how are you doing today => How Are You Doing Today
+       public static string capitalize(string s)
+        {
+            char[] wordarr = s.ToCharArray();
+            char[] chararr2 = new char[s.Length];
+            string result = string.Empty;
+            for (int i = 0; i < wordarr.Length; i++)
+            {
+                if (i == 0) { result += wordarr[i].ToString().ToUpper(); i++; }
+                if (wordarr[i].ToString() == " ") { result += " " + wordarr[i + 1].ToString().ToUpper(); i++; }
+                else { result += wordarr[i]; }
+            }
+            return result;
+        }
+        public static string MaxMin(string s)
+        {
+            //string[] s1 = s.Split(" ");
+            int b;
+            List<string> resultarr = Array.ConvertAll(s.ToArray(), a => a.ToString()).ToList();
+            List<int> resultarr1 = Array.ConvertAll(resultarr.ToArray(), a => int.TryParse(a,out b)? b : b + 1).ToList();
+            string ans = (resultarr1.Max()).ToString() + " " + (resultarr1.Min()).ToString();
+            return ans;
+        }
         //Making Anagrams
         //remove similar characters, then count remaining characters
         public static int makingAnagrams(string s1, string s2)

@@ -5,11 +5,25 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace HandyKits
 {
+    //write Codinggame Feb 23
     internal class Ps5
     {
+        public static string BabyCorrection(string sum)
+        {
+            string result = "";
+            string[] sum1 = Array.ConvertAll(sum.Replace("+","").Trim().ToCharArray(), item => item.ToString());
+            List<int>sum2 = Array.ConvertAll(sum1, item => int.Parse(item)).ToList().OrderBy(a=>a).ToList();
+            for (int i = 0; i < sum2.Count-1; i++)
+            {
+                result+= sum2[i].ToString() + "+";
+            }
+            result +=sum2[sum2.ToArray().Length-1];
+            return result;
+        }
         //Beautiful Triplets
         public static int beautifulTriplets(int d, List<int> arr)
         {
