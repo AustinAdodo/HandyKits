@@ -7,10 +7,6 @@ internal class Program
     //Wollow
     private static void Main(string[] args)
     {
-        //string s = "welcome to andela";
-        //Console.WriteLine(ProblemSolving6.capitalize(s));
-        string s = "4 7 2 3 1";
-        Console.WriteLine(ProblemSolving6.MaxMin(s));
         //List<int> numbers = new List<int>() {12,3,4,53,55,34,56,6,7,13,10 };
         //ProblemSolving4.closestNumbers(numbers);
         //List<List<int>> queries = new();

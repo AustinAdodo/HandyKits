@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text;
+
 using System.Threading.Tasks;
 
 namespace HandyKits
@@ -14,12 +15,12 @@ namespace HandyKits
     internal class ProblemSolving6
     {
         //    Write a function that takes 
-        //        a string as an argument and 
-        //        returns the string with the first letter of each word capitalized.Words are separated by spaces.
-        //        Test Cases
+        //    a string as an argument and 
+        //    returns the string with the first letter of each word capitalized.Words are separated by spaces.
+        //    Test Cases
         //1. welcome to andela => Welcome To Andela
         //2. how are you doing today => How Are You Doing Today
-       public static string capitalize(string s)
+        public static string capitalize(string s)
         {
             char[] wordarr = s.ToCharArray();
             char[] chararr2 = new char[s.Length];
@@ -34,12 +35,71 @@ namespace HandyKits
         }
         public static string MaxMin(string s)
         {
-            //string[] s1 = s.Split(" ");
+            string[] s1 = s.Split(" ");
             int b;
-            List<string> resultarr = Array.ConvertAll(s.ToArray(), a => a.ToString()).ToList();
-            List<int> resultarr1 = Array.ConvertAll(resultarr.ToArray(), a => int.TryParse(a,out b)? b : b + 1).ToList();
+            List<string> resultarr = Array.ConvertAll(s1, a => a.ToString()).ToList();
+            List<int> resultarr1 = Array.ConvertAll(resultarr.ToArray(), a => int.Parse(a)).ToList();
+
             string ans = (resultarr1.Max()).ToString() + " " + (resultarr1.Min()).ToString();
             return ans;
+        }
+        private static void GetCombinations(List<int> listinit, int startSum, int n, int max)
+        {
+            for (int i = 1; i <= max; i++)
+            {
+                string list = listinit.Count > 0 ? listinit + " + " + i.ToString() : i.ToString();
+                int sum = startSum + i;
+                if (sum == n)
+                {
+                    Console.WriteLine(list);
+                }
+                else if (sum < n)
+                {
+                    GetCombinations(listinit, sum, n, i);
+                }
+            }
+        }
+        //
+        private static int[][] Solutions(int value, int startWith = -1)
+        {
+            if (value <= 0)
+                return new int[][] { new int[0] };
+
+            if (startWith < 0)
+                startWith = value - 1;
+
+            List<int[]> solutions = new List<int[]>();
+
+            for (int i = Math.Min(value, startWith); i >= 1; --i)
+                foreach (int[] solution in Solutions(value - i, i))
+                {
+                    int[] next = new int[solution.Length + 1];
+
+                    Array.Copy(solution, 0, next, 1, solution.Length);
+                    next[0] = i;
+
+                    solutions.Add(next);
+                }
+
+            // Or just (if we are allow a bit of Linq)
+            //   return solutions.ToArray();
+            int[][] answer = new int[solutions.Count][];
+
+            for (int i = 0; i < solutions.Count; ++i)
+                answer[i] = solutions[i];
+
+            return answer;
+        }
+        public static void CrazyBrackets(int n)
+        {
+            // the numbers to use to generate the combinations
+            int[] numbers = new int[] { 1, 2, 3 };
+
+            // create a list to store the combinations
+            List<List<int>> combinations = new List<List<int>>();
+            //output 3 -> [((())),(()()), (())(), ()(()),()()() ]
+            string[] t = new string[] {"()","(())","((()))","(((())))","((((()))))","(((((())))))","((((((()))))))",
+            "(((((((())))))))"};
         }
         //Making Anagrams
         //remove similar characters, then count remaining characters
