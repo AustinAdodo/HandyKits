@@ -7,9 +7,16 @@ internal class Program
     //Wollow
     private static void Main(string[] args)
     {
-        //List<int> numbers = new List<int>() {12,3,4,53,55,34,56,6,7,13,10 };
-        //ProblemSolving4.closestNumbers(numbers);
-        //List<List<int>> queries = new();
+        long[] a = Challenger.Solution(6);
+        for (int i = 0; i < a.Length; i++)
+        {
+            Console.WriteLine(a);
+        }
+ 
+    //    string s="><<><";
+    //    string s1 = "<";
+    //    string s2 = ">";
+    //    ProblemSolving6.Solutionx(s);
         //queries.Add(new List<int> { 2, 3, 603 });
         //queries.Add(new List<int> { 1 ,1, 286 });
         //queries.Add(new List<int> { 4 ,4, 882 });

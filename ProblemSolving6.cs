@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 
 using System.Threading.Tasks;
@@ -14,12 +17,102 @@ namespace HandyKits
     //create software called bubbles to prevent plaigarisation
     internal class ProblemSolving6
     {
+        public static string Solutionx(string angles)
+        {
+            //""><<>< ->    "<><<><>>"
+            string[] angles1 = Array.ConvertAll(angles.ToArray(), a => a.ToString()).ToArray();
+            int a1 = angles.Split(">").Length - 1;
+            int a2 = angles.Split("<").Length - 1;
+            string res = "";
+            if (angles == "<" || angles == ">") return "<>";
+
+            string[] result = new string[angles.Length];
+            for (int i = 0; i < angles.Length; i++)
+            {
+                if (i + 1 <= angles.Length - 1 && angles[i].ToString() == "<" && angles[i + 1].ToString() != "<") { res += "<>"; i++; }
+                if (i - 1 >= 0 && angles1[i].ToString() == ">"
+                   && angles1[i - 2].ToString() != ">") { res += "<>"; i++; }
+                else { res += angles[i].ToString(); }
+            }
+            if (res.Split("<").Length - 1 % 2 != 0) res += ">";
+            if (res.Split(">").Length - 1 % 2 != 0) res = "<" + res;
+            return res;
+        }
+        public static long Challenge(long[] prices)
+        {
+            long[] purchases = prices.Where(a => prices.ToList().IndexOf(a) % 2 != 0).ToArray();
+            long[] sales = prices.Where(a => prices.ToList().IndexOf(a) % 2 == 0).ToArray();
+            return purchases.Max() - sales.Min();
+        }
+        //Node arr
+        public static string getLong(long[] arr)
+        {
+            long a = 0;
+            long b = 0;
+            arr.ToList().Remove(-1);
+            arr.ToList().Remove(0);
+            if (arr.Length <= 1)
+            {
+                return "";
+            }
+            a += arr[0];
+            b += arr[0];
+
+            for (int i = 1; i < arr.Length; i += 2)
+            {
+                if (arr[i] == -1 && i + 2 <= arr.Length - 1) i += 2;
+                a += arr[i];
+            }
+
+            for (int i = 2; i < arr.Length; i += 2)
+            {
+                if (arr[i] == -1 && i + 2 <= arr.Length - 1) i += 2;
+                b += arr[i];
+            }
+            if (a > b) return "Left";
+            if (a == b) return "";
+            return "Right";
+        }
+        public static long getLong1(long[] arr)
+        {
+
+            arr.ToList().RemoveAll(a => a == -1);
+            if (arr.Length < 1)
+            {
+                return 0;
+            }
+            if (arr.Length == 1)
+            {
+                return arr[0];
+            }
+            long[] l = arr.Where(a => arr.ToList().IndexOf(a) == 0 && arr.ToList().IndexOf(a) % 2 == 0).ToArray();
+            long[] r = arr.Where(a => arr.ToList().IndexOf(a) == 0 && arr.ToList().IndexOf(a) % 2 != 0).ToArray();
+            return Math.Max(l.Length, r.Length);
+        }
+        public static bool Solution(long[][] maze, long n)
+        {
+            int i = 0;
+            string res = "";
+            foreach (long[] row in maze)
+            {
+                if (i == 0 && row.Contains(1)) res += 1;
+                //if (1 - i >= 0 && maze[i - 1][j] == 1 && maze[i][j] == 1) res += 1;
+                //if (i + 1 <= maze.Length - 1 && maze[i + 1][j] == 1 && maze[i][j] == 1) res += 1;
+                else { res += 0; }
+                i++;
+
+            }
+
+            if (res.Split("0").Length - 1 == 0) return true;
+            return false;
+        }
+
         //    Write a function that takes 
         //    a string as an argument and 
         //    returns the string with the first letter of each word capitalized.Words are separated by spaces.
         //    Test Cases
-        //1. welcome to andela => Welcome To Andela
-        //2. how are you doing today => How Are You Doing Today
+        //    1. welcome to andela => Welcome To Andela
+        //    2. how are you doing today => How Are You Doing Today
         public static string capitalize(string s)
         {
             char[] wordarr = s.ToCharArray();
@@ -43,6 +136,8 @@ namespace HandyKits
             string ans = (resultarr1.Max()).ToString() + " " + (resultarr1.Min()).ToString();
             return ans;
         }
+
+        //Combinations
         private static void GetCombinations(List<int> listinit, int startSum, int n, int max)
         {
             for (int i = 1; i <= max; i++)
@@ -59,9 +154,7 @@ namespace HandyKits
                 }
             }
         }
-
-        //Combinations
-        private static int[][] Solutions(int value, int startWith = -1)
+        private static int[][] GetCombination2(int value, int startWith = -1)
         {
             if (value <= 0)
                 return new int[][] { new int[0] };
@@ -72,7 +165,7 @@ namespace HandyKits
             List<int[]> solutions = new List<int[]>();
 
             for (int i = Math.Min(value, startWith); i >= 1; --i)
-                foreach (int[] solution in Solutions(value - i, i))
+                foreach (int[] solution in GetCombination2(value - i, i))
                 {
                     int[] next = new int[solution.Length + 1];
 
@@ -90,18 +183,23 @@ namespace HandyKits
                 answer[i] = solutions[i];
 
             return answer;
+            //string report = string.Join(Environment.NewLine, result
+            //.Select(solution => string.Join(" + ", solution)));
         }
-        public static void CrazyBrackets(int n)
+        public static List<string> ListJagged(string[] args)
         {
-            // the numbers to use to generate the combinations
-            int[] numbers = new int[] { 1, 2, 3 };
-
-            // create a list to store the combinations
+            List<String> result = new List<string>();
+            return result;
+        }
+        public static void CrazyBrackets(int n) //output 3 -> [((())), (()()), (())(), ()(()), ()()() ]
+        {
             List<List<int>> combinations = new List<List<int>>();
-            //output 3 -> [((())),(()()), (())(), ()(()),()()() ]
             string[] t = new string[] {"()","(())","((()))","(((())))","((((()))))","(((((())))))","((((((()))))))",
             "(((((((())))))))"};
+            string[] tjagged = new string[] {"(()())","(()()())","(()()()())","(()()()()())","(()()()()()())",
+            "(()()()()()()())"};
         }
+
         //Making Anagrams
         //remove similar characters, then count remaining characters
         public static int makingAnagrams(string s1, string s2)
@@ -284,4 +382,50 @@ namespace HandyKits
             return "YES";
         }
     }
+
+    public class Challenger
+    {
+        public static bool isPrime(long n)
+        {
+            //We know 1 is not a prime number
+            bool result = false;
+            int i = 2;
+            if (n == 1) return result;
+            while (i * i <= n)
+            {
+                if (n % i == 0) return result;
+                ++i;
+            }
+            result = true;
+            return result;
+        }
+
+        public static long fibonacci(long x)
+        {
+            long a = 0;
+            if (x <= 2) { return 1; }
+            else { a = fibonacci(x - 1) + fibonacci(x - 2); }
+            return a;
+        }
+        public static long[] f(long x)
+        {
+            long b = 0;
+            List<long> arr2 = new List<long>();
+            List<long> ans = new List<long>();
+            for (int i = 1; i <= x; i++)
+            {
+                b = fibonacci(i);
+                if (isPrime(b)) arr2.Add(b);
+            }
+            return arr2.ToArray();
+        }
+
+        public static long[] Solution(long n)
+        {
+            long[] arr = f(n);
+            int count = arr.Length;
+            return arr;
+        }
+    }
+
 }
