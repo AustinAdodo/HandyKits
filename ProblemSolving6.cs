@@ -111,19 +111,10 @@ namespace HandyKits
         //    1. welcome to andela => Welcome To Andela
         //    2. how are you doing today => How Are You Doing Today
         public static string capitalize(string s)
-        {
-            //char[] wordarr = s.ToCharArray();
-            //char[] chararr2 = new char[s.Length];
-            //string result = string.Empty;
-            //for (int i = 0; i < wordarr.Length; i++)
-            //{
-            //    if (i == 0) { result += wordarr[i].ToString().ToUpper(); i++; }
-            //    if (wordarr[i].ToString() == " ") { result += " " + wordarr[i + 1].ToString().ToUpper(); i++; }
-            //    else { result += wordarr[i]; }
-            //}
-            //return result;    
+        {   
             string[] arr = Array.ConvertAll(s.ToCharArray(), a => a.ToString());
-            string res = string.Join("", arr.ToList().Select(x => (s.IndexOf(x) == 0 || s[s.IndexOf(x) - 1].ToString() == " ") ? x.ToString().ToUpper() : x).ToList());
+            string res = string.Join("", arr.ToList().Select((x,i) => (i == 0 || arr[i - 1].ToString() == " ") 
+            ? x.ToString().ToUpper() : x).ToList());
             return res; 
         }
         public static string MaxMin(string s)
