@@ -8,20 +8,6 @@ namespace HandyKits
 {
     internal class GreedyMan
     {
-        public static int Permute(int num)
-        {
-            //recursive
-            if (num == 0)
-            {
-                return 1;
-            }
-            return num * GreedyMan.Permute(num - 1);
-        }
-        public static string Permutestring(string st)
-        {
-            string rand = new string(st.OrderBy(x => Guid.NewGuid()).ToArray());
-            return rand;
-        }
         public static string Reverse(string s)
         {
             string result = "";
@@ -31,14 +17,33 @@ namespace HandyKits
             }
             return result;
         }
+        public static int Permute(int num)
+        {
+            //recursive
+            if (num == 0)
+            {
+                return 1;
+            }
+            return num * Permute(num - 1);
+        }
+        public static string Permutestring(string st)
+        {
+            string rand = new string(st.OrderBy(x => Guid.NewGuid()).ToArray());
+            return rand;
+        }
+        public static string Determinecombinations(string st)
+        {
+            string rand = new string(st.OrderBy(x => Guid.NewGuid()).ToArray());
+            return rand;
+        }
         public static List<string> ProvideAllRandoms(string s)
         {
-            int permutationResult = GreedyMan.Permute(s.Length);
+            int permutationResult = Permute(s.Length);
             string[] Result = new string[permutationResult];
             Result[0] = s;
             for (int i = 1; i < Result.Length; i++)
             {
-                string rand = GreedyMan.Permutestring(s);
+                string rand = Permutestring(s);
                 if (!Result.Contains(rand))
                 {
                     Result[i] = rand;

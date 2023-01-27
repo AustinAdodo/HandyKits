@@ -92,6 +92,12 @@ namespace HandyKits
             }
             return result;
         }
+        //do they belong Andela
+        static bool DoTheyBelong(int AB, int AC, int BC)
+        {
+            //do they belong on a defined cartesian plane exisitng on a defined area
+            return true;
+        }
 
         //Viral Advertising
         public static int viralAdvertising(int n)
@@ -147,12 +153,6 @@ namespace HandyKits
             return "NO";
         }
 
-        //do they belong Andela
-        static bool DoTheyBelong(int AB, int AC, int BC)
-        {
-            //do they belong on a defined cartesian plane exisitng on a defined area
-            return true;
-        }
 
         //IS Pallindrome
         public static bool isPalindrome(string s)

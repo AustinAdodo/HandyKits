@@ -206,7 +206,7 @@ namespace HandyKits
             return count;
         }
 
-        //pangram
+        //pangram sentences that contain all alphabets.
         public static string pangrams(string s)
         {
             int count = 0; string result = "";

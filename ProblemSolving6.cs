@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -57,13 +58,11 @@ namespace HandyKits
             }
             a += arr[0];
             b += arr[0];
-
             for (int i = 1; i < arr.Length; i += 2)
             {
                 if (arr[i] == -1 && i + 2 <= arr.Length - 1) i += 2;
                 a += arr[i];
             }
-
             for (int i = 2; i < arr.Length; i += 2)
             {
                 if (arr[i] == -1 && i + 2 <= arr.Length - 1) i += 2;
@@ -95,14 +94,12 @@ namespace HandyKits
             string res = "";
             foreach (long[] row in maze)
             {
-                if (i == 0 && row.Contains(1)) res += 1;
-                //if (1 - i >= 0 && maze[i - 1][j] == 1 && maze[i][j] == 1) res += 1;
+                if (i == 0 && row.Contains(1) && row[0] == 1) res += 1;
+                if (1 - i >= 0 && row[i - 1] == 1 && row[i] == 1) res += 1;
                 //if (i + 1 <= maze.Length - 1 && maze[i + 1][j] == 1 && maze[i][j] == 1) res += 1;
                 else { res += 0; }
                 i++;
-
             }
-
             if (res.Split("0").Length - 1 == 0) return true;
             return false;
         }
@@ -115,16 +112,19 @@ namespace HandyKits
         //    2. how are you doing today => How Are You Doing Today
         public static string capitalize(string s)
         {
-            char[] wordarr = s.ToCharArray();
-            char[] chararr2 = new char[s.Length];
-            string result = string.Empty;
-            for (int i = 0; i < wordarr.Length; i++)
-            {
-                if (i == 0) { result += wordarr[i].ToString().ToUpper(); i++; }
-                if (wordarr[i].ToString() == " ") { result += " " + wordarr[i + 1].ToString().ToUpper(); i++; }
-                else { result += wordarr[i]; }
-            }
-            return result;
+            //char[] wordarr = s.ToCharArray();
+            //char[] chararr2 = new char[s.Length];
+            //string result = string.Empty;
+            //for (int i = 0; i < wordarr.Length; i++)
+            //{
+            //    if (i == 0) { result += wordarr[i].ToString().ToUpper(); i++; }
+            //    if (wordarr[i].ToString() == " ") { result += " " + wordarr[i + 1].ToString().ToUpper(); i++; }
+            //    else { result += wordarr[i]; }
+            //}
+            //return result;    
+            string[] arr = Array.ConvertAll(s.ToCharArray(), a => a.ToString());
+            string res = string.Join("", arr.ToList().Select(x => (s.IndexOf(x) == 0 || s[s.IndexOf(x) - 1].ToString() == " ") ? x.ToString().ToUpper() : x).ToList());
+            return res; 
         }
         public static string MaxMin(string s)
         {
@@ -213,9 +213,47 @@ namespace HandyKits
                     s2 = s2.Remove(s2.IndexOf(s1[i]), 1);
                     s1 = s1.Remove(i, 1);
                 }
-                else i++;
+                i++;
             }
             return s1.Length + s2.Length;
+        }
+
+        public static BigInteger Factorials(int n)
+        {
+            BigInteger result;
+            if (n == 0) result = 1;
+            else result = n * ProblemSolving2.Factorials(n - 1);
+            return result;
+        }
+
+        public static int comb(string s)
+        {
+            int result = s.Length;
+            return result;
+        }
+        public static string[] ListAllAnangrams(string s)
+        {
+            List<string> result = new List<string>();
+            if (s.Length == 1) { result.Add(s); return result.ToArray(); }
+            string p = new string(s.ToCharArray().OrderBy(x => Guid.NewGuid()).ToArray());
+            if (p.Length == 0) { result.Add(p); }
+            if (!result.Contains(p)) { result.Add(p); }
+            return result.ToArray();
+        }
+
+        public static List<int> stringAnagram(List<string> dictionary, List<string> query)
+        {
+            int count = 0;
+            List<int> result = new List<int>();
+            for (int i = 0; i < dictionary.Count; i++)
+            {
+                for (int j = 0; j < query.Count; j++)
+                {
+                    if (ListAllAnangrams(dictionary[i]).Contains(query[j])) count++;
+                }
+                result.Add(count);
+            }
+            return result;
         }
 
         //Maximum Pallindromes
@@ -385,6 +423,27 @@ namespace HandyKits
 
     public class Challenger
     {
+        //vowels:substring with highest occuring vowels.
+        public static string findSubstring(string s, int k)
+        {
+            List<string> result = new(); string test = "";
+            if (s.Length < k) return "";
+            string[] query = { "a", "e", "i", "o", "u" };
+            int count = 0; int maxcount = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (k <= s.Length - i) test = s.Substring(i, k);
+                count += test.Split("a").Length - 1;
+                count += test.Split("e").Length - 1;
+                count += test.Split("i").Length - 1;
+                count += test.Split("o").Length - 1;
+                count += test.Split("u").Length - 1;
+                if (count > maxcount) { maxcount = count; result.Clear(); result.Add(test); }
+            }
+            result.OrderBy(a => a).ToList();
+            return result.First();
+        }
         public static bool isPrime(long n)
         {
             //We know 1 is not a prime number
@@ -425,6 +484,51 @@ namespace HandyKits
             long[] arr = f(n);
             int count = arr.Length;
             return arr;
+        }
+
+        public static void matrixRotation(List<List<int>> matrix, int r)
+        {
+            int[,] result = new int[matrix.Count, matrix[0].Count];
+
+            for (int i = 0; i < Math.Min(matrix.Count / 2, matrix[0].Count / 2); i++)
+            {
+                int columnSize = matrix.Count - (i * 2); // row boundary
+                int rowSize = matrix[0].Count - (i * 2); // column boundary
+
+                // linearize each layer
+                int index = 0;
+                List<int> lin = new List<int>();
+                int j = i;
+                int k = (i + 1);
+                while (j < (i + columnSize)) lin.Add(matrix[j++][i]); // left column
+                j--;
+                while (k < (i + rowSize)) lin.Add(matrix[j][k++]); // bottom row
+                k--;
+                j--;
+                while (j >= i) lin.Add(matrix[j--][k]); // right column
+                j++;
+                k--;
+                while (k > i) lin.Add(matrix[j][k--]); // top row
+
+                // rotate the linearized inner layer
+                int[] rotated = new int[lin.Count];
+                for (int l = 0; l < lin.Count; l++) rotated[l] = lin[(rotated.Length - (r % rotated.Length) + l) % rotated.Length];
+
+                // insert back into original matrix
+                j = i;
+                k = (i + 1);
+                index = 0;
+                while (j < (i + columnSize)) matrix[j++][i] = rotated[index++]; // left column
+                j--;
+                while (k < (i + rowSize)) matrix[j][k++] = rotated[index++]; // bottom row
+                k--;
+                j--;
+                while (j >= i) matrix[j--][k] = rotated[index++];// right column
+                j++;
+                k--;
+                while (k > i) matrix[j][k--] = rotated[index++]; // top row
+            }
+            foreach (List<int> row in matrix) Console.WriteLine(string.Join(" ", row));
         }
     }
 
