@@ -111,11 +111,11 @@ namespace HandyKits
         //    1. welcome to andela => Welcome To Andela
         //    2. how are you doing today => How Are You Doing Today
         public static string capitalize(string s)
-        {   
+        {
             string[] arr = Array.ConvertAll(s.ToCharArray(), a => a.ToString());
-            string res = string.Join("", arr.ToList().Select((x,i) => (i == 0 || arr[i - 1].ToString() == " ") 
-            ? x.ToString().ToUpper() : x).ToList());
-            return res; 
+            string res = string.Join("", arr.ToList().Select((x, i) => (i == 0 || arr[i - 1].ToString() == " ")
+            ? x.ToUpper() : x).ToList());
+            return res;
         }
         public static string MaxMin(string s)
         {
@@ -144,51 +144,6 @@ namespace HandyKits
                     GetCombinations(listinit, sum, n, i);
                 }
             }
-        }
-        private static int[][] GetCombination2(int value, int startWith = -1)
-        {
-            if (value <= 0)
-                return new int[][] { new int[0] };
-
-            if (startWith < 0)
-                startWith = value - 1;
-
-            List<int[]> solutions = new List<int[]>();
-
-            for (int i = Math.Min(value, startWith); i >= 1; --i)
-                foreach (int[] solution in GetCombination2(value - i, i))
-                {
-                    int[] next = new int[solution.Length + 1];
-
-                    Array.Copy(solution, 0, next, 1, solution.Length);
-                    next[0] = i;
-
-                    solutions.Add(next);
-                }
-
-            // Or just (if we are allow a bit of Linq)
-            //   return solutions.ToArray();
-            int[][] answer = new int[solutions.Count][];
-
-            for (int i = 0; i < solutions.Count; ++i)
-                answer[i] = solutions[i];
-
-            return answer;
-            //string report = string.Join(Environment.NewLine, result
-            //.Select(solution => string.Join(" + ", solution)));
-        }
-        public static List<string> ListJagged(string[] args)
-        {
-            List<String> result = new List<string>();
-            return result;
-        }
-        public static void CrazyBrackets(int n) //output 3 -> [((())), (()()), (())(), ()(()), ()()() ]
-        {
-            List<List<int>> combinations = new List<List<int>>();
-            string[] t = new string[] {"()","(())","((()))","(((())))","((((()))))","(((((())))))","((((((()))))))",
-            "(((((((())))))))"};
-            string[] tjagged = new string[] {"(()())","(()()())","(()()()())","(()()()()())","(()()()()()())",
-            "(()()()()()()())"};
         }
 
         //Making Anagrams

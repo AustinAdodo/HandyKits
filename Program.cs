@@ -7,7 +7,7 @@ internal class Program
     //Wollow
     private static void Main(string[] args)
     {
-       Console.WriteLine(ProblemSolving6.capitalize("welcome to andela"));
+       //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
         //Challenger.findSubstring("azerdii",5);
  
     //    string s="><<><";
