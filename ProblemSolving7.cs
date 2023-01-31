@@ -75,10 +75,6 @@ namespace HandyKits
         //Area A = [ x1(y2 – y3) + x2(y3 – y1) + x3(y1-y2)]/2 
         //s=(A+B+C)/2  -> Math.Pow((S*(S-a)*(S-b)*(S-c)),0.5)
         //for An Arbitrary point P , in Triangle ABC PAB+PAC+PBC must be = ABC
-        public static bool DoTheyBelong(string[] args)
-        {
-            return false;
-        }
         public const int MAX = 256;
 
         // This function returns true if
@@ -215,36 +211,40 @@ namespace HandyKits
             return (int)(a / b * c);
         }
 
+        static double CalculateTriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
+        {
+            return 0.5 * Math.Abs((x1 * (y2 - y3)) + (x2 * (y1 - y3)) + (x3 * (y1 - y2)));
+        }
+        static double CalculateEucledianistance(int x1, int y1, int x2, int y2)
+        { return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)); }
         public static int pointsBelong(int x1, int y1, int x2, int y2, int x3, int y3, int xp, int yp, int xq, int yq)
         {
             int result = 0;
-            double abcArea = 0.5 * Math.Abs((x1 * (y2 - y3)) + (x2 * (y1 - y3)) + (x3 * (y1 - y2)));
-
+            double abcArea = CalculateTriangleArea(x1, y1, x2, y2, x3, y3);
+            //Eucledian
+            double AB = CalculateEucledianistance(x1, y1, x2, y2);
+            double BC = CalculateEucledianistance(x2, y2, x3, y3);
+            double AC = CalculateEucledianistance(x1, y1, x3, y3);
             //for point p
-            double abPArea = 0.5 * Math.Abs(xp * (y2 - y3) + (2 * (yp - y3)) + (x3 * (yp - y2)));
-            double bcPArea = 0.5 * Math.Abs(x1 * (yp - y3) + xp * (y1 - y3) + x3 * (y1 - yp));
-            double PabArea = 0.5 * Math.Abs((x1 * (y2 - yp) + x2 * (y1 - yp) + xp * (y1 - y2)));
+            double abPArea = CalculateTriangleArea(xp, yp, x2, y2, x3, y3);
+            double bcPArea = CalculateTriangleArea(x1, y1, xp, yp, x3, y3);
+            double PabArea = CalculateTriangleArea(x1, y1, x2, y2, xp, yp);
             // for Q
-            double abQArea = 0.5 * Math.Abs(xq * (y2 - y3) + (x2 * (yq - y3)) + (x3 * (yq - y2)));
-            double bcQArea = 0.5 * Math.Abs(x1 * (yq - y3) + (xq * (y1 - y3)) + (x3 * (y1 - yq)));
-            double QabArea = 0.5 * Math.Abs(x1 * (y2 - yq) + (x2 * (y1 - yq)) + (xq * (y1 - y2)));
+            double abQArea = CalculateTriangleArea(xq, yq, x2, y2, x3, y3);
+            double bcQArea = CalculateTriangleArea(x1, y1, xq, yq, x3, y3);
+            double QabArea = CalculateTriangleArea(x1, y1, x2, y2, xq, yq);
 
-            double resQ = abcArea + bcQArea + QabArea;
+            double resQ = abQArea + bcQArea + QabArea;
             double resP = abPArea + bcPArea + PabArea;
 
-            if (Math.Abs(x1 - x2) + Math.Abs(x2 - x3) > Math.Abs(x3 - x2)
-            && Math.Abs(x2 - x3) + Math.Abs(x3 - x2) > Math.Abs(x1 - x2)
-            && Math.Abs(x3 - x2) + Math.Abs(x1 - x2) > Math.Abs(x2 - x3)
-            ) { return 0; }
-
-            if (resQ == abcArea && resP != abcArea) result = 2;//q
+            if (AB + BC > AC && AC + BC > AB && AB + AC > BC) { return 0; }
             if (resQ != abcArea && resP == abcArea) result = 1;//p
-            if (resQ != abcArea && resP != abcArea) result = 4;
+            if (resQ == abcArea && resP != abcArea) result = 2;//q
             if (resQ == abcArea && resP == abcArea) result = 3;
+            if (resQ != abcArea && resP != abcArea) result = 4;
             if (abcArea == 0) result = 4;
 
             return result;
-
         }
 
         public static List<string> getPasswordStrength(List<string> passwords, List<string> common_words)
@@ -273,7 +273,6 @@ namespace HandyKits
             }
             return result;
         }
-
 
         //IS Pallindrome
         public static bool isPalindrome(string s)
