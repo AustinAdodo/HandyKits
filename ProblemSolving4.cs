@@ -92,13 +92,7 @@ namespace HandyKits
             }
             return result;
         }
-        //do they belong Andela
-        static bool DoTheyBelong(int AB, int AC, int BC)
-        {
-            //do they belong on a defined cartesian plane exisitng on a defined area
-            return true;
-        }
-
+ 
         //Viral Advertising
         public static int viralAdvertising(int n)
         {
@@ -151,63 +145,6 @@ namespace HandyKits
                 }
             }
             return "NO";
-        }
-
-
-        //IS Pallindrome
-        public static bool isPalindrome(string s)
-        {
-            var ch = s.ToCharArray();
-            Array.Reverse(ch);
-            return s.Equals(new string(ch));
-        }
-
-        //Equip With Substitutions
-        public static bool IsValidSubstitutions(string s, int subs)
-        {
-            int count = subs; int i = 0; int j = s.Length - 1;
-            bool result = false; string res = String.Empty;
-            if (subs == 0 && isPalindrome(s)) result = true;
-            while (count > 0)
-            {
-                res = s.Replace(s[i], s[j]);
-                if (isPalindrome(res)) { return true; }
-                count--; i++; j--;
-            }
-            return result;
-        }
-
-        //Can you detec a pallindrome.. Andela
-        static string CanYouMAkeaPallndrom(string s, List<int> startIndex, List<int> endIndex, List<int> Subs)
-        {
-            string result = String.Empty;
-            for (int i = 0; i < startIndex.Count; i++)
-            {
-                string test = s.Substring(startIndex[i], endIndex[i] + 1);
-                if (IsValidSubstitutions(s, Subs[i]) && isPalindrome(test)) result += "1";
-                else { result += "0"; }
-            }
-            return result;
-        }
-
-        //minimum absolute difference........Andela
-        public static void closestNumbers(List<int> numbers)
-        {
-            List<string> row = new List<string>();
-            List<List<int>> results = new List<List<int>>();
-            //save the first indexes of operands with each difference 
-            numbers = numbers.OrderBy(a => a).ToList();
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                if (i > 0) results.Add(new List<int> { (numbers[i] - numbers[i - 1]), numbers[i - 1], numbers[i] });
-            }
-            //sort
-            results.Sort((x, y) => x[0].CompareTo(y[0]));
-            //results.Reverse();
-            for (int i = 0; i < results.Count; i++)
-            {
-                Console.WriteLine("{0} {1} {2}", results[i][0], results[i][1].ToString(), results[i][2].ToString());
-            }
         }
 
         //create Pallindrome
