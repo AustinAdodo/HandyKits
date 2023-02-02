@@ -232,28 +232,28 @@ namespace HandyKits
             }
         }
 
-        static List<String> romanizer(List<int> numbers)
+        public static string ConvToRoman(int number, string res = "")
+        {
+            int a = -1; int b = -1; string result = res;
+            if (number == 0) return result;
+            else
+            {
+                List<int> num = new List<int> { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
+                List<String> sym = new List<String> { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
+                b = num.Where(a => a <= number).Last();
+                a = number % b;
+                res += sym[num.IndexOf(b)];
+                return ConvToRoman(a, res).ToString();
+            }
+        }
+        public static List<String> romanizer(List<int> numbers)
         {
             List<String> ans = new List<String>();
             List<int> num = new List<int> { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
             List<String> sym = new List<String> { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
-            foreach (int number in numbers)
-            {// traverse right to left
-                int i = 12;
-                string str = "";
-                while (number > 0)
-                {
-                    int div = number;
-                    // and the remainder after they are handled
-                    // number = number % num[i];// get symbol occurrences (integer floor division)// num[i]
-                    while (div > 0)
-                    {
-                        str += sym[i];
-                        div--;
-                        i--;
-                        ans.Add(str);// handle occurrences of the symbol
-                    }
-                }
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                ans.Add(ConvToRoman(numbers[i], ""));
             }
             return ans;
         }

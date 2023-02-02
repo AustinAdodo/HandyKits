@@ -15,9 +15,12 @@ internal class Program
         //{
         // Console.WriteLine(Difficult.GetCombination2(3));
         //}
-        List<string> common_words = new List<string>() {"International","Pannational","intercontinental","Continental","National"};
-        List<string> passwords = new List<string>() {"11258","lobo","Allintercontinenetal","International","$@shape1$@" };
-        Difficult.getPasswordStrength(passwords,common_words);
+        List<int> list = new List<int>() {945,44,173 };
+        var res = ProblemSolving3.romanizer(list);
+        for (int i = 0; i < 3; i++)
+        {
+            Console.WriteLine(res[i]);
+        }
         //    string s="><<><";
         //    string s1 = "<";
         //    string s2 = ">";
