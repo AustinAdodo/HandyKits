@@ -7,13 +7,17 @@ internal class Program
     //Wollow
     private static void Main(string[] args)
     {
-       //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
+        //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
         //Challenger.findSubstring("azerdii",5);
- 
-    //    string s="><<><";
-    //    string s1 = "<";
-    //    string s2 = ">";
-    //    ProblemSolving6.Solutionx(s);
+        for (int i = 0; i < 3; i++)
+        {
+         Console.WriteLine(Difficult.GetCombination2(3));
+        }
+
+        //    string s="><<><";
+        //    string s1 = "<";
+        //    string s2 = ">";
+        //    ProblemSolving6.Solutionx(s);
         //queries.Add(new List<int> { 2, 3, 603 });
         //queries.Add(new List<int> { 1 ,1, 286 });
         //queries.Add(new List<int> { 4 ,4, 882 });

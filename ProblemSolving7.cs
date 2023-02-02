@@ -30,8 +30,8 @@ namespace HandyKits
     }
     internal class Difficult
     {
-        //Crazy Brackets Problem.
-        private static int[][] GetCombination2(int value, int startWith = -1)
+        //Crazy Brackets Problem
+        public static int[][] GetCombination2(int value, int startWith = -1)
         {
             if (value <= 0)
                 return new int[][] { new int[0] };
@@ -67,8 +67,16 @@ namespace HandyKits
             List<List<int>> combinations = new List<List<int>>();
             string[] t = new string[] {"()","(())","((()))","(((())))","((((()))))","(((((())))))","((((((()))))))",
             "(((((((())))))))"};
-            string[] tjagged = new string[] {"(()())","(()()())","(()()()())","(()()()()())","(()()()()()())",
+            string[] tjagged = new string[] {"()","(())","(()())","(()()())","(()()()())","(()()()()())","(()()()()()())",
             "(()()()()()()())"};
+            int[][] njagged = GetCombination2(n);
+            for (int i = 0; i < njagged.Count(); i++)
+            {
+                for (int j = 0; j < njagged.GetLength(i); j++)
+                {
+                    //Console.WriteLine(t[j] + );
+                }
+            }
         }
 
         //Crazy Triangle
@@ -144,7 +152,6 @@ namespace HandyKits
         //    string pat = "ABCD";
         //    search(pat, txt);
         //}
-
 
         public static int Permute(int num)
         {
@@ -280,6 +287,36 @@ namespace HandyKits
             var ch = s.ToCharArray();
             Array.Reverse(ch);
             return s.Equals(new string(ch));
+        }
+        public static int palindromeIndex(string s)
+        {
+            if (isPalindrome(s))
+                return -1;
+            else
+            {
+                var len = s.Length;
+                for (int i = 0; i < len / 2; ++i)
+                {
+                    var left = s[i];
+                    var right = s[len - 1 - i];
+
+                    if (left != right)
+                    {
+                        var sub = s.Substring(i, len - i * 2);
+                        var sublen = sub.Length;
+                        if (isPalindrome(sub.Substring(0, sublen - 1)))
+                        {
+                            return i + sublen - 1;
+                        }
+                        else if (isPalindrome(sub.Substring(1, sublen - 1)))
+                        {
+                            return i;
+                        }
+                    }
+                }
+            }
+
+            return -1;
         }
 
         //Equip With Substitutions

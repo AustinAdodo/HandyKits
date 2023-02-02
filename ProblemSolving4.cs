@@ -149,36 +149,7 @@ namespace HandyKits
 
         //create Pallindrome
         //reversed is O(1) only when the collection conforms to RandomAccessCollection (which String does not!)
-        public static int palindromeIndex(string s)
-        {
-            if (isPalindrome(s))
-                return -1;
-            else
-            {
-                var len = s.Length;
-                for (int i = 0; i < len / 2; ++i)
-                {
-                    var left = s[i];
-                    var right = s[len - 1 - i];
-
-                    if (left != right)
-                    {
-                        var sub = s.Substring(i, len - i * 2);
-                        var sublen = sub.Length;
-                        if (isPalindrome(sub.Substring(0, sublen - 1)))
-                        {
-                            return i + sublen - 1;
-                        }
-                        else if (isPalindrome(sub.Substring(1, sublen - 1)))
-                        {
-                            return i;
-                        }
-                    }
-                }
-            }
-
-            return -1;
-        }
+        
 
         //Two Pluses Two Crosses
         private static int[,] mtx;
