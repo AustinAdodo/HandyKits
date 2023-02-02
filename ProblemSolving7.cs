@@ -222,8 +222,10 @@ namespace HandyKits
         {
             return 0.5 * Math.Abs((x1 * (y2 - y3)) + (x2 * (y1 - y3)) + (x3 * (y1 - y2)));
         }
+
         static double CalculateEucledianistance(int x1, int y1, int x2, int y2)
         { return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)); }
+
         public static int pointsBelong(int x1, int y1, int x2, int y2, int x3, int y3, int xp, int yp, int xq, int yq)
         {
             int result = 0;
@@ -254,31 +256,33 @@ namespace HandyKits
             return result;
         }
 
+        public static bool SubstringIsCommonWord(string password, string common_word)
+        {
+            bool result = false;
+            var vowels = new string[] { "a", "e", "i", "o", "u" };
+            string lowerCase = "abcdefghijklmnopqrstuvwxyz";
+            //substring is english.
+            if (password.Length > common_word.Length && password.Split(common_word).Length - 1 > 1) result = true;
+            return result;
+        }
         public static List<string> getPasswordStrength(List<string> passwords, List<string> common_words)
         {
-            List<string> result = new List<string>();
-            var vowels = new string[] { "a", "e", "i", "o", "u" };
+            string[] result = new string[passwords.Count];
+            var lower_Case = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z " };
             int b = 0;
             for (int i = 0; i < passwords.Count; i++)
             {
-                //substring is english.
-                for (int j = 0; j < passwords[i].Length; j++)//correct this
-                {
-                    if (j <= passwords[i].Length && common_words.Any(a => a == passwords[i].Substring(j, passwords[i].Length))) result.Add("weak");
-                }
-            }
-            for (int i = 0; i < passwords.Count; i++)
-            {
                 // is english
-                if (common_words.Any(a => a == passwords[i])) { result.Add("weak"); }
-                if (string.Join("", passwords).Length < 6) { result.Add("weak"); }
-                if (passwords[i].All(a => char.IsLower(a))) { result.Add("weak"); } //check for equivalent extension methods in python.
-                if (passwords[i].All(a => char.IsUpper(a))) { result.Add("weak"); }
-                if (passwords[i].All(a => int.TryParse(a.ToString(), out b) == true)) { result.Add("weak"); }
-                if (passwords[i].All(a => a.ToString() is string)) { result.Add("weak"); }
-                else { result.Add("strong"); }
+                if (common_words.Any(a => a == passwords[i])
+                || common_words.Any(a => SubstringIsCommonWord(passwords[i], a))
+                || (string.Join("", passwords).Length < 6)
+                || (passwords[i].All(a => char.IsLower(a)))  //check for equivalent extension methods in python.
+                || (passwords[i].All(a => char.IsUpper(a)))
+                || (passwords[i].All(a => int.TryParse(a.ToString(), out b) == true))
+                || passwords[i].All(a => lower_Case.Contains(a.ToString().ToLower()))) { result[i] = ("weak"); }
+                else { result[i] = "strong"; }
             }
-            return result;
+            return result.ToList();
         }
 
         //IS Pallindrome
@@ -323,8 +327,9 @@ namespace HandyKits
         public static bool IsValidSubstitutions(string s, int subs)
         {
             int count = subs; int i = 0; int j = s.Length - 1;
-            bool result = false; string res = String.Empty;
-            if (subs == 0 && isPalindrome(s)) result = true;
+            bool result = false; string res;
+            if (string.IsNullOrEmpty(s)) return false;
+            if (subs == 0 && isPalindrome(s)) return true;
             while (count > 0)
             {
                 res = s.Replace(s[i], s[j]);
@@ -337,10 +342,15 @@ namespace HandyKits
         //Can you detec a pallindrome.. Andela
         static string CanYouMAkeaPallndrom(string s, List<int> startIndex, List<int> endIndex, List<int> Subs)
         {
-            string result = String.Empty;
+            string result = String.Empty; string test = "";
+            if (string.IsNullOrEmpty(s)) return "";
             for (int i = 0; i < startIndex.Count; i++)
             {
-                string test = s.Substring(startIndex[i], endIndex[i] + 1);
+                if (endIndex[i] + 1 > s.Length || startIndex[i] < 0) return result += "";
+                if (i <= endIndex[i])
+                {
+                    test = s.Substring(startIndex[i], endIndex[i] - startIndex[i] + 1);
+                }
                 if (IsValidSubstitutions(s, Subs[i]) && isPalindrome(test)) result += "1";
                 else { result += "0"; }
             }
@@ -352,6 +362,7 @@ namespace HandyKits
         {
             List<string> row = new List<string>();
             List<List<int>> results = new List<List<int>>();
+            if (numbers.Count == 0) Console.WriteLine("Invalid");
             //save the first indexes of operands with each difference 
             numbers = numbers.OrderBy(a => a).ToList();
             for (int i = 0; i < numbers.Count; i++)

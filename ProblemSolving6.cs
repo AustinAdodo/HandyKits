@@ -119,13 +119,9 @@ namespace HandyKits
         }
         public static string MaxMin(string s)
         {
-            string[] s1 = s.Split(" ");
-            int b;
-            List<string> resultarr = Array.ConvertAll(s1, a => a.ToString()).ToList();
+            List<string> resultarr = Array.ConvertAll(s.Split(" "), a => a.ToString()).ToList();
             List<int> resultarr1 = Array.ConvertAll(resultarr.ToArray(), a => int.Parse(a)).ToList();
-
-            string ans = (resultarr1.Max()).ToString() + " " + (resultarr1.Min()).ToString();
-            return ans;
+            return $"{resultarr1.Max()} {resultarr1.Min()}";
         }
 
         //Combinations

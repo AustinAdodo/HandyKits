@@ -5,15 +5,19 @@ using System.Drawing;
 internal class Program
 {
     //Wollow
+    //SAML -> Security Assertion Mark-up Language. 
+
     private static void Main(string[] args)
     {
         //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
         //Challenger.findSubstring("azerdii",5);
-        for (int i = 0; i < 3; i++)
-        {
-         Console.WriteLine(Difficult.GetCombination2(3));
-        }
-
+        //for (int i = 0; i < 3; i++)
+        //{
+        // Console.WriteLine(Difficult.GetCombination2(3));
+        //}
+        List<string> common_words = new List<string>() {"International","Pannational","intercontinental","Continental","National"};
+        List<string> passwords = new List<string>() {"11258","lobo","Allintercontinenetal","International","$@shape1$@" };
+        Difficult.getPasswordStrength(passwords,common_words);
         //    string s="><<><";
         //    string s1 = "<";
         //    string s2 = ">";
