@@ -411,12 +411,13 @@ namespace HandyKits
     //Inorder Node is one which contains the smallest value but > value of the current Node after traversing the whole node 
     class Node
     {
-        public int value { get; set; }
+        public int data { get; set; }
         public Node? left { get; set; }
         public Node? right { get; set; }
+        public Node? parent { get; set; }
         public Node(int value)
         {
-            this.value = value;
+            this.data = value;
         }
     }
 
@@ -427,12 +428,12 @@ namespace HandyKits
         {
             Node? current = root;
             while (current != null)
-            {
-                if (value < current.value)
+            {   
+                if (value < current.data)
                 {
                     current = current.left;
                 }
-                else if (value > current.value)
+                else if (value > current.data)
                 {
                     current = current.right;
                 }

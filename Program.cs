@@ -1,6 +1,8 @@
 ﻿using HandyKits;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 internal class Program
 {
@@ -9,18 +11,26 @@ internal class Program
 
     private static void Main(string[] args)
     {
+        //test
+        //int[] arr = ProblemSolving7.Fibonacci1(6);
+        //Console.Write("[" + string.Join(", ", arr) + "]");
+        //for (int i = 0; i < arr.Length; i++)
+        //{
+
+        //}
+
         //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
         //Challenger.findSubstring("azerdii",5);
         //for (int i = 0; i < 3; i++)
         //{
         // Console.WriteLine(Difficult.GetCombination2(3));
         //}
-        List<int> list = new List<int>() {945,44,173 };
-        var res = ProblemSolving3.romanizer(list);
-        for (int i = 0; i < 3; i++)
-        {
-            Console.WriteLine(res[i]);
-        }
+        //List<int> list = new List<int>() {945,44,173 };
+        //var res = ProblemSolving3.romanizer(list);
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    Console.WriteLine(res[i]);
+        //}
         //    string s="><<><";
         //    string s1 = "<";
         //    string s2 = ">";
