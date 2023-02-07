@@ -16,7 +16,7 @@ internal class Program
         //Console.Write("[" + string.Join(", ", arr) + "]");
         //for (int i = 0; i < arr.Length; i++)
         //{
-
+        Console.WriteLine(ProblemSolving7.Cat("samurai","ai"));
         //}
 
         //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));

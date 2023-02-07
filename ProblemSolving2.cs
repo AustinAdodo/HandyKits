@@ -84,11 +84,6 @@ namespace HandyKits
             return string.Join(' ', result);
         }
 
-        //rotating Array
-        public static void matrixRotation(List<List<int>> matrix, int r)
-        {
-
-        }
         // flatlandSpaceStations.
         public static int flatlandSpaceStations(int n, int[] c)
         {

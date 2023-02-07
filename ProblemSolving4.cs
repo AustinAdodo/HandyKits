@@ -92,7 +92,7 @@ namespace HandyKits
             }
             return result;
         }
- 
+
         //Viral Advertising
         public static int viralAdvertising(int n)
         {
@@ -149,7 +149,7 @@ namespace HandyKits
 
         //create Pallindrome
         //reversed is O(1) only when the collection conforms to RandomAccessCollection (which String does not!)
-        
+
 
         //Two Pluses Two Crosses
         private static int[,] mtx;
@@ -428,7 +428,7 @@ namespace HandyKits
         {
             Node? current = root;
             while (current != null)
-            {   
+            {
                 if (value < current.data)
                 {
                     current = current.left;

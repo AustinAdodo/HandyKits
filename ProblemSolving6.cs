@@ -428,6 +428,7 @@ namespace HandyKits
             return arr;
         }
 
+        //rotating Array
         public static void matrixRotation(List<List<int>> matrix, int r)
         {
             int[,] result = new int[matrix.Count, matrix[0].Count];

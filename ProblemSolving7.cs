@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace HandyKits
 {
     // A binary tree node
-   
+
 
     public class BinaryTree
     {
@@ -28,7 +29,7 @@ namespace HandyKits
             if (node == null)
             {
                 return new Node(data);
-            } 
+            }
             else
             {
                 Node? temp = null;
@@ -116,7 +117,7 @@ namespace HandyKits
             // Go to right subtree
             else
             {
-               var pre = root;
+                var pre = root;
                 findPreSuc(root.right, key);
             }
         }
@@ -142,14 +143,14 @@ namespace HandyKits
 
         // Create a function that takes a single integer parameter, n, 
         //and returns the first n elements of the Fibonacci sequence.
-
+        // Rabin-Karp and Knuth-Morris-Pratt
         //        g(1) = [ 0 ]
         //        g(2) = [ 0, 1 ]
         //        g(3) = [ 0, 1, 1 ]
         //        g(4) = [ 0, 1, 1, 2 ]
         //        g(5) = [ 0, 1, 1, 2, 3 ]
 
-        static int getFibo (int n)
+        static int getFibo(int n)
         {
             if (n < 2) return n;
             else
@@ -157,9 +158,9 @@ namespace HandyKits
                 return getFibo(n - 1) + getFibo(n - 2);
             }
         }
-       public static int[] Fibonacci1(int n)
+        public static int[] Fibonacci1(int n)
         {
-            List<int> result = new ();
+            List<int> result = new();
             for (int i = 0; i < n; i++)
             {
                 result.Add(getFibo(i));
@@ -179,8 +180,13 @@ namespace HandyKits
         }
         //longest path on right
         // BST sucessor search
-
         //BST predecessor search
+
+        //public static IEnumerable<T> UniqueInOrder<T>(IEnumerable<T> iterable)
+        //{
+        //    List<T> lis = iterable.ToList<T>();
+        //    return lis.Cast<T>().Select((x, i) => (i != iterable.Count() - 1) ? x + "," : x);
+        //}
     }
 
     internal class Difficult
@@ -377,6 +383,10 @@ namespace HandyKits
         {
             return 0.5 * Math.Abs((x1 * (y2 - y3)) + (x2 * (y1 - y3)) + (x3 * (y1 - y2)));
         }
+        public static double DistanceBetweenPoints(Point a, Point b)
+        {
+            return Math.Sqrt(Math.Pow(b.X - a.X, 2) + Math.Pow(b.Y - a.Y, 2));
+        }
 
         static double CalculateEucledianistance(int x1, int y1, int x2, int y2)
         { return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)); }
@@ -420,6 +430,7 @@ namespace HandyKits
             if (password.Length > common_word.Length && password.Split(common_word).Length - 1 > 1) result = true;
             return result;
         }
+
         public static List<string> getPasswordStrength(List<string> passwords, List<string> common_words)
         {
             string[] result = new string[passwords.Count];
@@ -447,6 +458,7 @@ namespace HandyKits
             Array.Reverse(ch);
             return s.Equals(new string(ch));
         }
+
         public static int palindromeIndex(string s)
         {
             if (isPalindrome(s))
@@ -531,6 +543,27 @@ namespace HandyKits
             {
                 Console.WriteLine("{0} {1} {2}", results[i][0], results[i][1].ToString(), results[i][2].ToString());
             }
+        }
+
+        //Covert 2D Array to Jagged Array
+        public static int[][] Convert2DArrayToJaggedArray(int[,] twoDArray)
+        {
+            int rows = twoDArray.GetLength(0);
+            int columns = twoDArray.GetLength(1);
+
+            int[][] jaggedArray = new int[rows][];
+
+            for (int i = 0; i < rows; i++)
+            {
+                jaggedArray[i] = new int[columns];
+
+                for (int j = 0; j < columns; j++)
+                {
+                    jaggedArray[i][j] = twoDArray[i, j];
+                }
+            }
+
+            return jaggedArray;
         }
 
     }
