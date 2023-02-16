@@ -610,7 +610,6 @@ namespace HandyKits
     {
         private readonly AlertDAO storage = new AlertDAO();
         private readonly IAlertDAO _IAlertDAO;
-
         public AlertService(IAlertDAO iAlertDAO)
         {
             _IAlertDAO = iAlertDAO;
@@ -619,7 +618,6 @@ namespace HandyKits
         {
             return _IAlertDAO.AddAlert(DateTime.Now);
         }
-
         public DateTime GetAlertTime(Guid id)
         {
             return _IAlertDAO.GetAlert(id);

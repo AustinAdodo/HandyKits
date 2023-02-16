@@ -11,13 +11,9 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        //test
-        //int[] arr = ProblemSolving7.Fibonacci1(6);
-        //Console.Write("[" + string.Join(", ", arr) + "]");
-        //for (int i = 0; i < arr.Length; i++)
-        //{
-        Console.WriteLine(ProblemSolving7.Cat("samurai","ai"));
-        //}
+
+        List<int> t = Difficult.Task(10);
+        Console.Write(String.Join(",", t));
 
         //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));
         //Challenger.findSubstring("azerdii",5);

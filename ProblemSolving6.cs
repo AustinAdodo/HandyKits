@@ -404,8 +404,8 @@ namespace HandyKits
         public static long fibonacci(long x)
         {
             long a = 0;
-            if (x <= 2) { return 1; }
-            else { a = fibonacci(x - 1) + fibonacci(x - 2); }
+            if (x < 2) { return x;}
+            else { a += fibonacci(x - 1) + fibonacci(x - 2); }
             return a;
         }
         public static long[] f(long x)

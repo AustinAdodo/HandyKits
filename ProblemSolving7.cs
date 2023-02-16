@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace HandyKits
 {
     // A binary tree node
-
-
+    //Array(len).fill(val) is similar to Enumerable.Repeat(val, len).
     public class BinaryTree
     {
         static Node head;
@@ -150,23 +153,6 @@ namespace HandyKits
         //        g(4) = [ 0, 1, 1, 2 ]
         //        g(5) = [ 0, 1, 1, 2, 3 ]
 
-        static int getFibo(int n)
-        {
-            if (n < 2) return n;
-            else
-            {
-                return getFibo(n - 1) + getFibo(n - 2);
-            }
-        }
-        public static int[] Fibonacci1(int n)
-        {
-            List<int> result = new();
-            for (int i = 0; i < n; i++)
-            {
-                result.Add(getFibo(i));
-            }
-            return result.ToArray();
-        }
         //longest path on left
         public int FindLeftLongestPath(Node root)
         {
@@ -187,59 +173,52 @@ namespace HandyKits
         //    List<T> lis = iterable.ToList<T>();
         //    return lis.Cast<T>().Select((x, i) => (i != iterable.Count() - 1) ? x + "," : x);
         //}
+
+        //bool areEqual = brr.SequenceEqual(arr,comparer);
+        public static List<int> missingNumbers1(List<int> arr, List<int> brr)
+        {
+            List<int> result = new();
+            brr = brr.OrderBy(a => a).ToList();
+            for (int i = 0; i < brr.Count; i++)
+            {
+                int brrCount = String.Join("", brr).Split(brr[i].ToString()).Length - 1;
+                int arrCount = String.Join("", arr).Split(brr[i].ToString()).Length - 1;
+                if ((brrCount > arrCount || !arr.Contains(brr[i])) && !result.Contains(brr[i])) result.Add(brr[i]);
+            }
+            return result;
+        }
+
+        public static HashSet<int> compared = new HashSet<int>();
+        class AustinCustomComparer : IEqualityComparer<int>
+        {
+            bool IEqualityComparer<int>.Equals(int x, int y)
+            {
+                if (!compared.Contains(x.GetHashCode()) && !compared.Contains(y.GetHashCode()) && x != y)
+                {
+                    compared.Add(x);
+                    compared.Add(y);
+                    return false;
+                }
+                return true;
+            }
+            public int GetHashCode([DisallowNull] int element)//[DisallowNull]
+            {
+                int hashCode = 0;
+                hashCode ^= element.GetHashCode();
+                return hashCode;
+            }
+        }
+        public static List<int> missingNumbers(List<int> arr, List<int> brr)
+        {
+            List<int> result = new();
+            AustinCustomComparer comparer = new AustinCustomComparer();
+            result = brr.Except(arr, comparer).ToList();
+            return result.OrderBy(a => a).ToList();
+        }
     }
 
     internal class Difficult
     {
-        //Crazy Brackets Problem
-        public static int[][] GetCombination2(int value, int startWith = -1)
-        {
-            if (value <= 0)
-                return new int[][] { new int[0] };
-
-            if (startWith < 0)
-                startWith = value - 1;
-
-            List<int[]> solutions = new List<int[]>();
-
-            for (int i = Math.Min(value, startWith); i >= 1; --i)
-                foreach (int[] solution in GetCombination2(value - i, i))
-                {
-                    int[] next = new int[solution.Length + 1];
-
-                    Array.Copy(solution, 0, next, 1, solution.Length);
-                    next[0] = i;
-
-                    solutions.Add(next);
-                }
-
-            // Or just (if we are allow a bit of Linq)
-            //   return solutions.ToArray();
-            int[][] answer = new int[solutions.Count][];
-
-            for (int i = 0; i < solutions.Count; ++i) answer[i] = solutions[i];
-
-            return answer;
-            //string report = string.Join(Environment.NewLine, result
-            //.Select(solution => string.Join(" + ", solution)));
-        }
-        public static void CrazyBrackets(int n) //output 3 -> [((())), (()()), (())(), ()(()), ()()() ]
-        {
-            List<List<int>> combinations = new List<List<int>>();
-            string[] t = new string[] {"()","(())","((()))","(((())))","((((()))))","(((((())))))","((((((()))))))",
-            "(((((((())))))))"};
-            string[] tjagged = new string[] {"()","(())","(()())","(()()())","(()()()())","(()()()()())","(()()()()()())",
-            "(()()()()()()())"};
-            int[][] njagged = GetCombination2(n);
-            for (int i = 0; i < njagged.Count(); i++)
-            {
-                for (int j = 0; j < njagged.GetLength(i); j++)
-                {
-                    //Console.WriteLine(t[j] + );
-                }
-            }
-        }
-
         //Crazy Triangle
         //Area A = [ x1(y2 – y3) + x2(y3 – y1) + x3(y1-y2)]/2 
         //s=(A+B+C)/2  -> Math.Pow((S*(S-a)*(S-b)*(S-c)),0.5)
@@ -566,6 +545,24 @@ namespace HandyKits
             return jaggedArray;
         }
 
-    }
 
+        public static int fibb(int n)
+        {
+            if (n < 2) return n;
+            else
+            {
+                return fibb(n - 1) + fibb(n - 2);
+            }
+        }
+
+        public static List<int> Task(int n)
+        {
+            List<int> result = new();
+            for (int i = 0; i < n; i++)
+            {
+                result.Add(fibb(i));
+            }
+            return result;
+        }
+    }
 }
