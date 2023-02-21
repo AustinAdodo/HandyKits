@@ -188,20 +188,97 @@ namespace HandyKits
             return result;
         }
 
+        static List<int> GetListDifference(List<int> list1, List<int> list2, IComparer<int> comparer)
+        {
+            List<int> result = new List<int>();
+
+            Dictionary<int, int> count1 = new Dictionary<int, int>();
+            Dictionary<int, int> count2 = new Dictionary<int, int>();
+
+            // Count the occurrences of each element in both lists
+            foreach (int item in list1)
+            {
+                if (count1.ContainsKey(item))
+                {
+                    count1[item]++;
+                }
+                else
+                {
+                    count1[item] = 1;
+                }
+            }
+
+            foreach (int item in list2)
+            {
+                if (count2.ContainsKey(item))
+                {
+                    count2[item]++;
+                }
+                else
+                {
+                    count2[item] = 1;
+                }
+            }
+
+            // Compare the counts of each element in both lists
+            foreach (int item in count1.Keys.Union(count2.Keys))
+            {
+                int diff = count1.GetValueOrDefault(item, 0) - count2.GetValueOrDefault(item, 0);
+
+                // If the counts differ, add the difference to the result list
+                if (diff != 0)
+                {
+                    if (diff > 0)
+                    {
+                        for (int i = 0; i < diff; i++)
+                        {
+                            result.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < -diff; i++)
+                        {
+                            result.Add(item);
+                        }
+                    }
+                }
+            }
+
+            // Sort the result list using the provided comparer
+            result.Sort(comparer);
+            return result;
+        }
+
+        //Custom IComparer
+        class IntComparer : IComparer<int>
+        {
+            public int Compare(int x, int y)
+            {
+                return x.CompareTo(y);
+            }
+        }
+
         public static HashSet<int> compared = new HashSet<int>();
         class AustinCustomComparer : IEqualityComparer<int>
         {
             bool IEqualityComparer<int>.Equals(int x, int y)
             {
-                if (!compared.Contains(x.GetHashCode()) && !compared.Contains(y.GetHashCode()) && x != y)
+                if (!compared.Contains(x) && !compared.Contains(y) && x != y)
                 {
-                    compared.Add(x);
-                    compared.Add(y);
+                    compared.Add(x.GetHashCode());
+                    compared.Add(y.GetHashCode());
+                    return false;
+                }
+                //if (!compared.Contains(x.GetHashCode()) && !compared.Contains(y.GetHashCode()) && x == y)
+                {
+                    compared.Add(x.GetHashCode());
+                    compared.Add(y.GetHashCode());
                     return false;
                 }
                 return true;
             }
-            public int GetHashCode([DisallowNull] int element)//[DisallowNull]
+            public int GetHashCode([DisallowNull] int element)//[DisallowNull]^
             {
                 int hashCode = 0;
                 hashCode ^= element.GetHashCode();
@@ -211,8 +288,8 @@ namespace HandyKits
         public static List<int> missingNumbers(List<int> arr, List<int> brr)
         {
             List<int> result = new();
-            AustinCustomComparer comparer = new AustinCustomComparer();
-            result = brr.Except(arr, comparer).ToList();
+            //AustinCustomComparer comparer = new AustinCustomComparer();
+            //result = brr.Except(arr, comparer).ToList();
             return result.OrderBy(a => a).ToList();
         }
     }
