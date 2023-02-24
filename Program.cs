@@ -11,14 +11,15 @@ internal class Program
 
     private static void Main(string[] args)
     {
-
+        string s = "11111 10001 10001 10001 11111" ;
+        Console.WriteLine(Difficult.HollowSquare(s));
         //List<int> t = Difficult.Task(10);
         //Console.Write(String.Join(",", t));
         //int[] firstArray = { 11, 4, 11, 7, 3, 7, 10, 13, 4, 8, 12, 11, 10, 14, 12 };
         //int[] secondArray = { 11, 4, 11, 7, 13, 4, 12, 11, 10, 14 };
-        int[] firstArray = {7,7,7,7,7 };
-        int[] secondArray = { 7,7}; 
-        Console.Write(String.Join(",", ProblemSolving7.missingNumbers(secondArray.ToList(),firstArray.ToList())));
+        //int[] firstArray = {7,7,7,7,7 };
+        //int[] secondArray = { 7,7}; 
+        //Console.Write(String.Join(",", ProblemSolving7.missingNumbers(secondArray.ToList(),firstArray.ToList())));
 
 
         //Console.WriteLine(ProblemSolving6.capitalize("How Are You Doing Today"));

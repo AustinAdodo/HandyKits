@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -292,6 +293,32 @@ namespace HandyKits
             //result = brr.Except(arr, comparer).ToList();
             return result.OrderBy(a => a).ToList();
         }
+
+        static void Temperature(string[] args)
+        {
+            List<int> posi = new List<int>();
+            List<int> nega = new List<int>();
+            string[] emptyArr = { "0" };
+            int N = int.Parse(Console.ReadLine());
+            string[] inputs = Console.ReadLine().Split(' ');
+            if (N == 0 || inputs.Length == 0 || inputs == null)
+            {
+                Console.Write(0);
+            }
+            else
+            {
+                for (int i = 0; i < N; i++)
+                {
+                    int t = int.Parse(inputs[i]);
+                    if (Math.Sign(t) == 1) posi.Add(t);
+                }
+                posi.Sort((a, b) => a - b);
+                nega.Sort((a, b) => b - a);
+                if (posi.Count == 0) Console.Write(nega[0]);
+                if (nega.Count == 0) Console.Write(posi[0]);
+                Console.Write(Math.Min(posi[0] - 0, 0 - nega[0]));
+            }
+        }
     }
 
     internal class Difficult
@@ -563,13 +590,13 @@ namespace HandyKits
         }
 
         //Can you detec a pallindrome.. Andela
-        static string CanYouMAkeaPallndrom(string s, List<int> startIndex, List<int> endIndex, List<int> Subs)
+        static string palindromeChecker(string s, List<int> startIndex, List<int> endIndex, List<int> Subs)
         {
             string result = String.Empty; string test = "";
             if (string.IsNullOrEmpty(s)) return "";
             for (int i = 0; i < startIndex.Count; i++)
             {
-                if (endIndex[i] + 1 > s.Length || startIndex[i] < 0) return result += "";
+                if (endIndex[i] + 1 > s.Length || startIndex[i] < 0) return result += "0";
                 if (i <= endIndex[i])
                 {
                     test = s.Substring(startIndex[i], endIndex[i] - startIndex[i] + 1);
@@ -640,6 +667,125 @@ namespace HandyKits
                 result.Add(fibb(i));
             }
             return result;
+        }
+        //coding Game
+        static void UserName(string[] args)
+        {
+            Regex check = new Regex(@"^[0-9a-zA-Z]+$");
+            string u = Console.ReadLine();
+            bool res = false;
+            if (string.IsNullOrEmpty(u)) { Console.WriteLine(res); }
+            if (u.Length < 3 || u.Length > 20) { Console.WriteLine(res); }
+            if (check.IsMatch(u)) { Console.WriteLine(res); }
+
+
+            Console.WriteLine("answer");
+        }
+        static void RequestedOrder(string[] args)//ABCD 4321
+        {
+            string line = Console.ReadLine();
+            string[] inputs = Console.ReadLine().Split(' ');
+            int n = int.Parse(Console.ReadLine());
+            int[] numorder = line.Split(' ').Select(a => int.Parse(a)).ToArray();
+            string[] alphaarr = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
+                "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            string resul = string.Empty;
+            string space = " ";
+            try
+            {
+                inputs = Console.ReadLine().Split(' ');
+            }
+            catch (Exception e)
+            {
+
+                //Console.WriteLine("Empty");
+            }
+            for (int i = 0; i < n; i++)
+            {
+                int index = int.Parse(inputs[i]);
+                resul += $"{alphaarr.ToList().IndexOf(numorder[i].ToString())}{space}";
+            }
+
+            //Console.WriteLine(resul);
+        }
+        static StringBuilder Encode(string[] a, int length)
+        {
+            //string result = "";
+            string hash = "#";
+            string space = " ";
+            string hashN = "#\n";
+            string spaceN = " " + "\n";
+            string hashN1 = "#" + " " + "\n";
+            string spaceN1 = " " + " " + "\n";
+            int b = 0;
+            StringBuilder hashbuild = new StringBuilder();
+            string res = String.Empty;
+            List<List<string>> ans = new List<List<string>>();
+            if (length == 1)
+            {
+                string resolve = string.Empty;
+                for (int i = 0; i < a.Length; i += 5)
+                {
+                    if (a[i] == " ") ++i;
+                    List<string> row = new List<string>();
+                    for (int j = i; j < i + 5 && j < a.Length; ++j)
+                    {
+                        row.Add(a[j]);
+                    }
+                    ans.Add(row);
+                }
+                foreach (List<string> item in ans)
+                {
+                    for (int i = 0; i < item.Count; ++i)
+                    {
+                        if (i < item.Count - 1 && (item[i] == "0" || item[i] == " ")) resolve += space;
+                        if (i < item.Count - 1 && item[i] == "1") resolve += hash;
+                        if (i == item.Count - 1 && (item[i] == "0" || item[i] == " ")) resolve += spaceN1;
+                        if (i == item.Count - 1 && item[i] == "1") resolve += hashN1;
+                        //resolve.Trim();
+                    }
+                }
+                hashbuild.Append(resolve);
+            }
+            return hashbuild;
+        }
+        public static string HollowSquare(string s)
+        {
+            string[] arr = Array.ConvertAll(s.ToCharArray(), a => a.ToString());
+            StringBuilder result = new StringBuilder();
+            result.Append(Encode(arr, 1));
+            return result.ToString();
+        }
+        static void LargestNumberOfRobotVisits(string[] args)
+        {
+            // ˂ ˃ ˄ ˅
+            string move = string.Empty;
+            int l = move.Length;
+            int countUp = 0, countDown = 0;
+            int countLeft = 0, countRight = 0;
+            // traverse the instruction string
+            // 'move'
+            for (int i = 0; i < l; i++)
+            {
+                // for each movement increment
+                // its respective counter
+                if (move[i] == 'U')
+                    countUp++;
+
+                else if (move[i] == 'D')
+                    countDown++;
+
+                else if (move[i] == 'L')
+                    countLeft++;
+
+                else if (move[i] == 'R')
+                    countRight++;
+            }
+            // required final position of robot
+            Console.WriteLine("Final Position: ("
+                              + (countRight - countLeft) + ", "
+                              + (countUp - countDown) + ")");
+
         }
     }
 }
