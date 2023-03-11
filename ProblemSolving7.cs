@@ -176,123 +176,6 @@ namespace HandyKits
         //}
 
         //bool areEqual = brr.SequenceEqual(arr,comparer);
-        public static List<int> missingNumbers1(List<int> arr, List<int> brr)
-        {
-            List<int> result = new();
-            brr = brr.OrderBy(a => a).ToList();
-            for (int i = 0; i < brr.Count; i++)
-            {
-                int brrCount = String.Join("", brr).Split(brr[i].ToString()).Length - 1;
-                int arrCount = String.Join("", arr).Split(brr[i].ToString()).Length - 1;
-                if ((brrCount > arrCount || !arr.Contains(brr[i])) && !result.Contains(brr[i])) result.Add(brr[i]);
-            }
-            return result;
-        }
-
-        static List<int> GetListDifference(List<int> list1, List<int> list2, IComparer<int> comparer)
-        {
-            List<int> result = new List<int>();
-
-            Dictionary<int, int> count1 = new Dictionary<int, int>();
-            Dictionary<int, int> count2 = new Dictionary<int, int>();
-
-            // Count the occurrences of each element in both lists
-            foreach (int item in list1)
-            {
-                if (count1.ContainsKey(item))
-                {
-                    count1[item]++;
-                }
-                else
-                {
-                    count1[item] = 1;
-                }
-            }
-
-            foreach (int item in list2)
-            {
-                if (count2.ContainsKey(item))
-                {
-                    count2[item]++;
-                }
-                else
-                {
-                    count2[item] = 1;
-                }
-            }
-
-            // Compare the counts of each element in both lists
-            foreach (int item in count1.Keys.Union(count2.Keys))
-            {
-                int diff = count1.GetValueOrDefault(item, 0) - count2.GetValueOrDefault(item, 0);
-
-                // If the counts differ, add the difference to the result list
-                if (diff != 0)
-                {
-                    if (diff > 0)
-                    {
-                        for (int i = 0; i < diff; i++)
-                        {
-                            result.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < -diff; i++)
-                        {
-                            result.Add(item);
-                        }
-                    }
-                }
-            }
-
-            // Sort the result list using the provided comparer
-            result.Sort(comparer);
-            return result;
-        }
-
-        //Custom IComparer
-        class IntComparer : IComparer<int>
-        {
-            public int Compare(int x, int y)
-            {
-                return x.CompareTo(y);
-            }
-        }
-
-        public static HashSet<int> compared = new HashSet<int>();
-        class AustinCustomComparer : IEqualityComparer<int>
-        {
-            bool IEqualityComparer<int>.Equals(int x, int y)
-            {
-                if (!compared.Contains(x) && !compared.Contains(y) && x != y)
-                {
-                    compared.Add(x.GetHashCode());
-                    compared.Add(y.GetHashCode());
-                    return false;
-                }
-                //if (!compared.Contains(x.GetHashCode()) && !compared.Contains(y.GetHashCode()) && x == y)
-                {
-                    compared.Add(x.GetHashCode());
-                    compared.Add(y.GetHashCode());
-                    return false;
-                }
-                return true;
-            }
-            public int GetHashCode([DisallowNull] int element)//[DisallowNull]^
-            {
-                int hashCode = 0;
-                hashCode ^= element.GetHashCode();
-                return hashCode;
-            }
-        }
-        public static List<int> missingNumbers(List<int> arr, List<int> brr)
-        {
-            List<int> result = new();
-            //AustinCustomComparer comparer = new AustinCustomComparer();
-            //result = brr.Except(arr, comparer).ToList();
-            return result.OrderBy(a => a).ToList();
-        }
 
         static void Temperature(string[] args)
         {
@@ -464,16 +347,14 @@ namespace HandyKits
 
         static double CalculateTriangleArea(int x1, int y1, int x2, int y2, int x3, int y3)
         {
-            return 0.5 * Math.Abs((x1 * (y2 - y3)) + (x2 * (y1 - y3)) + (x3 * (y1 - y2)));
+            return 0.5 * (Math.Abs((x1 * (y2 - y3)) + (x2 * (y3 - y1)) + (x3 * (y1 - y2))));
         }
         public static double DistanceBetweenPoints(Point a, Point b)
         {
             return Math.Sqrt(Math.Pow(b.X - a.X, 2) + Math.Pow(b.Y - a.Y, 2));
         }
-
         static double CalculateEucledianistance(int x1, int y1, int x2, int y2)
         { return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)); }
-
         public static int pointsBelong(int x1, int y1, int x2, int y2, int x3, int y3, int xp, int yp, int xq, int yq)
         {
             int result = 0;
@@ -494,7 +375,7 @@ namespace HandyKits
             double resQ = abQArea + bcQArea + QabArea;
             double resP = abPArea + bcPArea + PabArea;
 
-            if (AB + BC > AC && AC + BC > AB && AB + AC > BC) { return 0; }
+            if (AB + BC <= AC && AC + BC <= AB && AB + AC <= BC) { return 0; }
             if (resQ != abcArea && resP == abcArea) result = 1;//p
             if (resQ == abcArea && resP != abcArea) result = 2;//q
             if (resQ == abcArea && resP == abcArea) result = 3;
@@ -516,19 +397,21 @@ namespace HandyKits
 
         public static List<string> getPasswordStrength(List<string> passwords, List<string> common_words)
         {
+            //|| passwords[i].All(a => lower_Case.Contains(a.ToString().ToLower()))
             string[] result = new string[passwords.Count];
             var lower_Case = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z " };
             int b = 0;
+            int[] nums = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             for (int i = 0; i < passwords.Count; i++)
             {
                 // is english
                 if (common_words.Any(a => a == passwords[i])
-                || common_words.Any(a => SubstringIsCommonWord(passwords[i], a))
-                || (string.Join("", passwords).Length < 6)
+                || common_words.Any(a => passwords[i].Split(a).Length - 1 > 0)
+                || (passwords[i].Length < 6)
                 || (passwords[i].All(a => char.IsLower(a)))  //check for equivalent extension methods in python.
                 || (passwords[i].All(a => char.IsUpper(a)))
-                || (passwords[i].All(a => int.TryParse(a.ToString(), out b) == true))
-                || passwords[i].All(a => lower_Case.Contains(a.ToString().ToLower()))) { result[i] = ("weak"); }
+                || (passwords[i].All(a => nums.Contains(a)))
+                ) { result[i] = ("weak"); }
                 else { result[i] = "strong"; }
             }
             return result.ToList();
@@ -756,36 +639,6 @@ namespace HandyKits
             result.Append(Encode(arr, 1));
             return result.ToString();
         }
-        static void LargestNumberOfRobotVisits(string[] args)
-        {
-            // ˂ ˃ ˄ ˅
-            string move = string.Empty;
-            int l = move.Length;
-            int countUp = 0, countDown = 0;
-            int countLeft = 0, countRight = 0;
-            // traverse the instruction string
-            // 'move'
-            for (int i = 0; i < l; i++)
-            {
-                // for each movement increment
-                // its respective counter
-                if (move[i] == 'U')
-                    countUp++;
 
-                else if (move[i] == 'D')
-                    countDown++;
-
-                else if (move[i] == 'L')
-                    countLeft++;
-
-                else if (move[i] == 'R')
-                    countRight++;
-            }
-            // required final position of robot
-            Console.WriteLine("Final Position: ("
-                              + (countRight - countLeft) + ", "
-                              + (countUp - countDown) + ")");
-
-        }
     }
 }

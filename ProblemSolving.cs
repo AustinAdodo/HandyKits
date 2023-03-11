@@ -323,31 +323,7 @@ namespace HandyKits
             result = t;
             return result;
         }
-
-        //circular Rotation //c
-        public static List<int> circularArrayRotation(List<int> a, int k, List<int> queries)
-        {
-            List<int> resultArr = new List<int>();
-            List<int> Match = new List<int>();
-            int d = a.Count - k;
-            for (int i = 0; i < a.Count; i++) Match.Add(a[i]);
-            List<int> c = new();
-            a.RemoveRange(d, k);
-            c.AddRange(Match.Except(a));
-            c.AddRange(a);
-            for (int i = 0; i < queries.Count; i++) { resultArr.Add(c[queries[i]]); }
-            return resultArr;
-        }
-        public static List<int> circularArrayRotation1(List<int> a, int k, List<int> queries)
-        {
-            List<int> result = new List<int>();
-            k = k % a.Count;
-            for (int i = 0; i < queries.Count; i++)
-            {
-                result.Add(a[(a.Count - k + queries[i]) % a.Count]);
-            }
-            return result;
-        }
+    
 
         //Largest SubArray with absolute difference == 1
         public static int pickingNumbers(List<int> a)
