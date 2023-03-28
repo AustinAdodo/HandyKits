@@ -532,7 +532,6 @@ namespace HandyKits
             return jaggedArray;
         }
 
-
         public static int fibb(int n)
         {
             if (n < 2) return n;
@@ -632,6 +631,7 @@ namespace HandyKits
             }
             return hashbuild;
         }
+
         public static string HollowSquare(string s)
         {
             string[] arr = Array.ConvertAll(s.ToCharArray(), a => a.ToString());
